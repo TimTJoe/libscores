@@ -1,8 +1,18 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-}
+/**
+ * @file styles.css
+ * 
+ * This file imports the foundational styles and utility classes for the project, 
+ * ensuring a consistent design system across all components.
+ */
 
-a {
-  color: #00B7FF;
-}
+/* Import global reset styles to normalize browser defaults */
+@import url("reset.css");
+
+/* Import color variables and palettes */
+@import url("colors.css");
+
+/* Import utility classes for layout, spacing, and typography */
+@import url("utilities.css");
+
+/* Import component-specific styles like buttons, cards, and other UI elements */
+@import url("components.css");

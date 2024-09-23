@@ -1,0 +1,10 @@
+
+<section class="row ">
+    <a class="chip <%= tab == 'results' ? 'active' : '' %>" href="/<%= page %>/results" id="results">Results</a>
+    <a  class="chip <%= tab == 'fixtures' ? 'active' : '' %>" href="/<%= page %>/fixtures" id="fixtures">Fixtures</a>
+    <a class="chip <%= tab == 'standings' ? 'active' : '' %>" href="/<%= page %>/standings" id="standings">Standings</a>
+    <% if (league == "cm") { %>
+    <a class="chip <%= tab == 'statistics' ? 'active' : '' %>" href="/<%= page %>/statistics" id="statistics">Statistics</a>
+    <% } %>
+ 
+</section>

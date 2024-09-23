@@ -1,0 +1,21 @@
+<%- include("./partial/head") %>
+<%- include("./partial/top-nav.ejs") %>
+
+
+
+<div class="container row">
+    <%- include("./partial/sidebar") %>
+        <form action="/create_leagues" method="post" enctype="multipart/form-data">
+           <fieldset>
+            <legend>Create New League</legend>
+
+            <label for="league_name">League Name</label>
+            <input type="text" name="league_name" id="league_name" required>
+
+            <label for="league_logo">League Logo</label>
+            <input type="file" name="league_logo" id="league_logo" required>
+            <br>
+            <button type="submit">Register</button>
+           </fieldset>
+    </form>
+</div>

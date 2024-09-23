@@ -1,0 +1,18 @@
+
+        <aside class="sidebar column border small-round sticky">
+            <div class="small-padding row">
+                <img src="/images/lfa_logo.png" alt="Logo" class="mid-logo no-round">
+                <h2 class="huge align-center capitalize max">Leagues</h2>
+            </div>
+            <section class="column menu padding list">
+                <a href="/" class="item <%= league == '/' ? 'active' : '' %>">
+                    <i class="fa-solid fa-house"></i>Home
+                </a>
+                <a href="/first_division/results" class="item 
+                <%= league == 'l1' ? 'active' : '' %>">
+                <img src="/images/league_1.png" alt="League 1">First Division</a>
+                <a href="/second_division/results" class="item <%= league == 'l2' ? 'active' : '' %>"> <img src="/images/league_2.jpg" alt="League 2">Second Division</a>
+                <a href="/women_league/results" class="item <%= league == 'wl' ? 'active' : '' %>"><img src="/images/women_league.jpg" alt="Women League">Women League</a>
+                <a href="/county_meet/results" class="item <%= league == 'cm' ? 'active' : '' %>"><img src="/images/county_meet.png" alt="County Meet">County Meet</a>
+            </section>
+        </aside>

@@ -1,0 +1,162 @@
+/**
+ * @file reset.css
+ * 
+ * This CSS file resets the default styles for HTML elements to ensure cross-browser consistency. 
+ * It removes unwanted margins, paddings, and styles for elements such as lists, tables, form controls, and buttons.
+ * Additionally, it sets baseline styles for typography, layout, and media elements like images and videos.
+ */
+
+/* Remove default margins and paddings */
+*,
+*::before,
+*::after {
+  box-sizing: border-box; /* Ensure consistent box-sizing */
+  margin: 0; /* Remove default margin */
+  padding: 0; /* Remove default padding */
+}
+
+/* Set a baseline font size and line height */
+html {
+  font-size: 100%; /* Set base font size to 16px */
+  line-height: 1.5; /* Set default line height */
+  font-family: Arial Fallback, Arial, sans-serif; /* Use fallback for Arial */
+  height: 100%; /* Set height to 100% */
+}
+
+/* Remove default list styling */
+ul,
+ol {
+  list-style: none; /* Remove bullets or numbers */
+}
+
+/* Remove default table styles */
+table {
+  border-collapse: collapse; /* Merge table borders */
+  border-spacing: 0; /* Remove spacing between cells */
+}
+
+/* Remove default styles for form elements */
+button,
+input,
+textarea,
+select {
+  font: inherit; /* Inherit font from parent */
+  color: inherit; /* Inherit text color */
+  padding: 0; /* Remove default padding */
+  margin: 0; /* Remove default margin */
+  overflow: visible; /* Allow overflow */
+  display: block; /* Set as block-level elements */
+}
+
+button {
+  background: none; /* Remove default button background */
+  border: none; /* Remove default button border */
+}
+
+/* Remove default link styles */
+a {
+  display: inline-block; /* Set as inline-block */
+  text-decoration: none; /* Remove underline from links */
+  color: var(--blue-light); /* Set link color */
+}
+
+/* Set a baseline for images */
+img {
+  max-width: 100%; /* Ensure images don't exceed container width */
+  height: auto; /* Maintain aspect ratio */
+  display: block; /* Set as block element */
+}
+
+/* Set a baseline for form layout */
+form {
+  display: flex; /* Use flexbox layout */
+  flex-direction: column; /* Arrange children in column */
+}
+
+/* Remove default border for fieldset and legend */
+fieldset {
+  border-color: var(--light-gray); /* Set border color */
+  padding: var(--spacing-sm); /* Apply padding */
+  margin: var(--spacing-sm); /* Apply margin */
+}
+
+label {
+  cursor: pointer; /* Change cursor to pointer for labels */
+}
+
+/* Remove default border styles for horizontal rules */
+hr {
+  border: none; /* Remove default border */
+  border-top: 1px solid currentColor; /* Set a top border */
+  color: inherit; /* Inherit current color */
+}
+
+/* Ensure consistent styling for the body */
+body {
+  font-family: Arial, sans-serif, system-ui, sans-serif; /* Use system default font */
+  font-weight: normal; /* Set font weight to normal */
+  color: #000; /* Set text color to black */
+  background-color: var(--gray); /* Set background color */
+  height: inherit; /* Inherit height from parent */
+  position: relative;
+}
+
+/* Ensure a baseline for sections and articles */
+article,
+section {
+  display: block; /* Set as block-level elements */
+}
+
+/* Ensure consistent link color */
+a {
+  color: black; /* Set link color to black */
+}
+
+/* Ensure consistent header styling */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: normal; /* Set font weight to normal */
+  margin: 0; /* Remove default margin */
+}
+
+/* Ensure consistent text block styling */
+p {
+  margin: 0; /* Remove default margin */
+}
+
+/* Ensure bold text styles are consistent */
+strong,
+b {
+  font-weight: bold; /* Set text to bold */
+}
+
+/* Ensure italic text styles are consistent */
+em,
+i {
+  font-style: italic; /* Set text to italic */
+}
+
+/* Set custom scrollbar width */
+::-webkit-scrollbar {
+  width: 5px; /* Set scrollbar width */
+}
+
+/* Set custom scrollbar track style */
+::-webkit-scrollbar-track {
+  border-radius: 10px; /* Add rounded corners to track */
+}
+
+/* Set custom scrollbar handle style */
+::-webkit-scrollbar-thumb {
+  background: var(--smoke); /* Set scrollbar color */
+  border-radius: 17px; /* Add rounded corners to handle */
+}
+
+/* Change scrollbar handle color on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--shadow); /* Darken scrollbar color on hover */
+}

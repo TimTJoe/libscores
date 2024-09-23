@@ -1,0 +1,17 @@
+<%- include("./partial/head") %>
+<%- include("./partial/top-nav.ejs") %>
+
+<div class="container row">
+    <%- include("./partial/sidebar") %>
+    <div class="column full max">
+        <%- include("./partial/league-header") %>
+        <%- include("./partial/league-tabs") %>
+
+        <div id="l1" class="league-container column ">
+            <center id="loader">
+                <div class="margin loader" ></div>
+            </center>
+        </div>
+</div>
+<script type="module" src="/javascripts/jquery.js"></script>
+<script type="module" src="/javascripts/women-league.js"></script>

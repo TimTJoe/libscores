@@ -1,0 +1,63 @@
+/**
+ * @file colors.css
+ * 
+ * This file defines the custom CSS variables (CSS custom properties) 
+ * for background, text, fill, and border colors, as well as shadow definitions 
+ * used throughout the project.
+ */
+
+ :root {
+  /* Background colors */
+  --frost: rgba(255, 255, 255, 0.12); /* Light frosted overlay background */
+  --mist: rgba(255, 255, 255, 0.08); /* Misty white overlay */
+  --white: #ffffff; /* Pure white */
+  --rose: #ff0050; /* Vibrant rose color */
+  --slate: rgba(136, 136, 136, 0.50); /* Soft grayish color */
+  --crimson: #fe2c55; /* Bold crimson color */
+  --charcoal: #1b1b1b; /* Dark charcoal */
+  --noir: rgba(22, 24, 35, 0.059); /* Soft black overlay */
+  --gray: #ebebeb; /* Light gray */
+  --navy-blue: #002E82; /* Deep navy blue */
+  --dark-gray: #D9D9D9; /* Darker gray for elements */
+  --red: #FC0427; /* Vivid red */
+  --dark-blue: #001E54; /* Deep dark blue */
+
+  /* Text colors */
+  --pearl: rgba(255, 255, 255, 0.90); /* Soft pearly white for text */
+  --frosty: rgba(255, 255, 255, 0.75); /* Frosty white text */
+  --misty: #7F7F7F; /* Misty gray text */
+  --cloud: #f6f6f6; /* Cloudy white text */
+  --midnight: #161823; /* Deep midnight black text */
+  --coal: #000000; /* Pure black for text */
+
+  /* Fill colors */
+  --ice: #25f4ee; /* Ice blue for fill */
+  --sky: #cadbf5; /* Sky blue for fill */
+  --aqua: #20d5ec; /* Aqua color for fill */
+  --azure: #1da1f2; /* Azure blue for fill */
+  --blue: #0074D9; /* Primary blue for fill */
+  --sun: #fbbc04; /* Sunny yellow fill */
+  --green: #34a853; /* Standard green fill */
+  --royal: #0075fa; /* Royal blue fill */
+  --shadow: rgba(22, 24, 35, 0.6); /* Deep shadow fill */
+  --smoke: rgba(22, 24, 35, 0.341); /* Light smoke gray fill */
+  --cobalt: #2b5db9; /* Cobalt blue fill */
+  --black: #000000; /* Black for fill */
+  --blue-light: #00B7FF; /* Light blue fill */
+  --yellow: #FFDC00; /* Bright yellow fill */
+  --red-light: #fa453c4d; /* Light transparent red fill */
+  --purple: #8b058b; /* Bold purple fill */
+
+  /* Border colors */
+  --light-gray: rgba(22, 24, 35, 0.12); /* Soft light gray for borders */
+  --ash: rgb(227, 227, 229); /* Ash gray border */
+  --light-red: rgba(255, 119, 146, 0.50); /* Light red border */
+  --fog: rgba(22, 24, 35, 0.122); /* Light foggy overlay border */
+  --whisper: rgba(22, 24, 35, 0.031); /* Whisper-light border */
+
+  /* Shadows for dark mode */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.2); /* Small shadow */
+  --shadow-md: 0 2px 4px rgba(0, 0, 0, 0.3); /* Medium shadow */
+  --shadow-lg: 0 4px 8px rgba(0, 0, 0, 0.4); /* Large shadow */
+  --shadow-xl: 0 8px 16px rgba(0, 0, 0, 0.5); /* Extra-large shadow */
+}

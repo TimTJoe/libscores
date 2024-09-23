@@ -1,0 +1,396 @@
+/*
+  This CSS file contains custom properties (CSS variables) and utility classes
+  for backgrounds, text colors, borders, font sizes, spacing, and positioning.
+  Use these class tokens within HTML by applying the class names to elements.
+  For example:
+
+  <div class="font-medium padding-lg border"></div>
+
+  The above example would apply a medium font size, large padding, and a border
+  around the div element.
+*/
+
+:root {
+   /* Roundness sizes */
+   --round-sm: 4px;
+   --round-md: 16px;
+   --round-lg: 17px;
+   --round-full: 50%;
+   --round: 50%;
+   
+     /* Responsive font sizes */
+  --tiny: 0.75rem;
+  --small: 16px;
+  --mid: 1.438em;
+  --large: 23px;
+  --huge: 36px;
+
+  /* Spacing sizes */
+  --spacing-xs: 0.3rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+
+
+  /* Roundness sizes */
+  --round-sm: 4px;
+  --round-md: 8px;
+  --round-lg: 16px;
+  --round-full: 50%;
+}
+
+
+/* Font size classes */
+/** Apply various font sizes based on utility classes **/
+.font-small { font-size: var(--small); } /* Small font */
+.font-medium { font-size: var(--medium); } /* Medium font */
+.font-large { font-size: var(--large); } /* Large font */
+.font-huge { font-size: 24px; } /* Custom large font */
+.tiny { font-size: var(--tiny); } /* Tiny font */
+.small { font-size: var(--small); } /* Small font (rem unit) */
+.large { font-size: var(--large); font-weight: bold; } /* Large font with bold */
+.huge { font-size: var(--huge); font-weight: bold; } /* Huge font with bold */
+.bold { font-weight: 700; } /* Bold font */
+.error { color: var(--red); } /* Error color */
+.muted { color: var(--shadow); } /* Muted color */
+.success { color: var(--green); } /* Success color */
+.warning { color: var(--yellow); } /* Warning color */
+.black { color: var(--black); } /* Black color */
+
+/* Spacing classes */
+/** Utility classes to manage padding **/
+.spacing { gap: var(--spacing-sm); } /* Small padding */
+.spacing-sm { padding: var(--spacing-sm); } /* Small padding */
+.spacing-md { padding: var(--spacing-md); } /* Medium padding */
+.spacing-lg { padding: var(--spacing-lg); } /* Large padding */
+.spacing-xl { padding: var(--spacing-xl); } /* Extra large padding */
+
+/* Border classes */
+/** Utility classes for adding and removing borders **/
+.border { border: 1px solid var(--light-gray); } /* Standard border */
+.border-top { border-top: 1px solid var(--light-gray); } /* Top border */
+.border-right { border-right: 1px solid var(--light-gray); } /* Right border */
+.border-bottom { border-bottom: 1px solid var(--light-gray); } /* Bottom border */
+.border-left { border-left: 1px solid var(--light-gray); } /* Left border */
+.no-border, .no-right, .no-left, .no-top, .no-bottom { border: unset !important; } /* Remove specific borders */
+.invalid { border-color: var(--red) !important; } /* Invalid border color */
+.hide { display: none; } /* Hide element */
+.show { display: block; } /* Show element */
+
+/* Text transformation */
+/** Utility classes for text transformations **/
+.uppercase { text-transform: uppercase; } /* Uppercase text */
+.lowercase { text-transform: lowercase; } /* Lowercase text */
+.capitalize { text-transform: capitalize !important; } /* Capitalize text */
+.cap { text-transform: capitalize !important; } /* Capitalize text */
+
+/* Set font size to tiny */
+.tiny { font-size: var(--tiny); }
+
+/* Set font size to small */
+.small { font-size: var(--small); }
+
+/* Set font size to large and make text bold */
+.large { font-size: var(--large); font-weight: bold; }
+
+/* Set font size to huge and make text bold */
+.huge { font-size: var(--huge); font-weight: bold; }
+
+/* Set font weight to bold (700) */
+.bold { font-weight: 700;}
+
+/* Set text color to red */
+.error { color: var(--red); }
+
+/* Set text color to muted (shadow) */
+.muted { color: var(--shadow); }
+
+/* Set text color to green */
+.success { color: var(--green); }
+
+/* Set text color to yellow */
+.warning { color: var(--yellow); }
+
+/* Set text color to black */
+.black { color: var(--coal); }
+
+/* Set text color to crimson */
+.crimson { color: var(--crimson); }
+
+/* Set text color to blue */
+.blue { color: var(--blue); }
+
+/* Set text color to royal */
+.royal { color: var(--royal); }
+
+/* Set text color to red */
+.red { color: var(--red); }
+
+/* Set text color to green */
+.green { color: var(--green); }
+
+/* Apply ellipsis for overflowed text */
+.ellipsis { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+
+/* Align text to the left */
+.align-left { text-align: left !important; }
+.left { text-align: left !important; }
+
+/* Align text to the center */
+.align-center { text-align: center !important; }
+
+/* Align text to the right */
+.align-right { text-align: right; }
+
+/* Set font weight to bold */
+.bold { font-weight: bold; }
+
+/* Set font weight to light (300) */
+.light { font-weight: 300; }
+
+/* Set display to inline */
+.inline { display: inline; }
+
+/* Set display to block */
+.block { display: block; }
+
+/* Set display to inline-block */
+.inline-block { display: inline-block; }
+
+/* Set high z-index */
+.z-top { z-index: 1000; }
+
+/* Set low z-index */
+.z-bottom { z-index: -1; }
+
+/* Remove default border and apply top border with spacing */
+hr.divider { border: 0; border-top: 1px solid var(--onyx); margin: var(--spacing-lg) 0; }
+
+/* Apply large vertical spacing */
+.space { display: block; margin-bottom: var(--spacing-lg); }
+
+/* Apply small vertical spacing */
+.space.small { margin-bottom: var(--spacing-sm); }
+
+/* Remove all margins */
+.no-margin { margin: 0 !important; }
+
+/* Apply medium right margin */
+.margin-right { margin-right: var(--spacing-md); }
+
+/* Apply medium left margin */
+.margin-left { margin-left: var(--spacing-md); }
+
+/* Apply medium top margin */
+.margin-top { margin-top: var(--spacing-md); }
+
+/* Apply medium bottom margin */
+.margin-bottom { margin-bottom: var(--spacing-md); }
+
+/* Apply medium padding */
+.padding { padding: var(--spacing-md); }
+
+/* Apply small padding */
+.small-padding { padding: var(--spacing-sm); }
+.tiny-padding { padding: var(--spacing-xs); }
+
+/* Remove all padding */
+.no-padding { padding: 0 !important; }
+
+/* Apply medium right padding */
+.padding-right { padding-right: var(--spacing-md); }
+
+/* Apply medium left padding */
+.padding-left { padding-left: var(--spacing-md); }
+
+/* Apply medium top padding */
+.padding-top { padding-top: var(--spacing-md); }
+
+/* Apply medium bottom padding */
+.padding-bottom { padding-bottom: var(--spacing-md); }
+
+/* Flex container in a row direction */
+.row { display: flex; flex-direction: row; }
+
+/* Flex container in a column direction */
+.column { display: flex; flex-direction: column; }
+
+/* Move element to the right */
+.move-right { margin-left: auto; }
+
+/* Move element to the left */
+.move-left { margin-right: auto; }
+
+/* Move element upwards */
+.move-up { margin-bottom: auto; }
+
+/* Move element downwards */
+.move-down { margin-top: auto; }
+
+/* Set full roundness */
+.round { border-radius: var(--round-full); }
+.no-round { border-radius: unset !important; }
+
+/* Set small roundness */
+.small-round { border-radius: var(--round-sm); }
+
+/* Set medium roundness */
+.mid-round { border-radius: var(--round-md); }
+
+/* Set large roundness */
+.large-round { border-radius: var(--round-lg); }
+
+/* Center elements in a flex row and apply gap */
+.row { display: flex; flex-direction: row; align-items: center; gap: var(--spacing-sm); }
+
+/* Remove gap between flex items */
+.no-gap { gap: unset !important; row-gap: unset !important; }
+
+/* Flex child elements grow 2x */
+.flex > * { flex: 2; }
+
+/* Display flex in column direction */
+.column { display: flex; flex-direction: column; gap: var(--spacing-sm); }
+
+/* Apply small gap between flex items */
+.gap { gap: var(--spacing-sm); }
+
+/* Flex child elements grow 2x */
+.max { flex: 2; }
+
+/* Set auto flex-basis and flex-grow to small */
+.sm { flex-basis: auto; flex-grow: var(--flex-sm); }
+
+/* Justify content to center */
+.center-justify { justify-content: center; }
+
+/* Align items to center */
+.center-align { align-items: center; align-content: center; }
+
+/* Align items to the top */
+.top-align { align-items: flex-start; }
+
+/* Justify content with space-around */
+.around { justify-content: space-around; }
+
+/* Justify content with space-between */
+.between { justify-content: space-between; }
+
+/* Justify content with space-evenly */
+.evenly { justify-content: space-evenly; }
+
+/* Set grid display and define template columns */
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(var(--spacing-md), 1fr)); gap: var(--spacing-md); }
+
+/* Grid column spans small size */
+.sm { grid-column: span var(--grid-sm); }
+
+/* Grid column spans medium size */
+.md { grid-column: span var(--grid-md); }
+
+/* Grid column spans large size */
+.lg { grid-column: span var(--grid-lg); }
+
+/* Repeat columns to auto-fit available space */
+.fit { grid-template-columns: repeat(auto-fit, minmax(var(--spacing-md), 1fr)); }
+
+/* Repeat 4 equal columns */
+.even { grid-template-columns: repeat(4, minmax(var(--spacing-md), 1fr)); }
+
+/* Grid column for small child */
+.sm-child { grid-column: var(--grid-sm); }
+
+/* Grid column for medium child */
+.md-child { grid-column: var(--grid-md); }
+
+/* Grid column for large child */
+.lg-child { grid-column: var(--grid-lg); }
+
+/* Sticky positioned element */
+.sticky { position: sticky; top: 0; z-index: 1000; }
+
+/* Fixed positioned element */
+.fixed { position: fixed; }
+
+/* Relative positioned element */
+.relative { position: relative; }
+
+/* Absolute positioned element */
+.absolute { position: absolute; overflow: hidden; }
+
+/* Float element to the left */
+.float-left { float: left; }
+
+/* Float element to the right */
+.float-right { float: right; }
+
+/* Small box shadow */
+.small-elevate { box-shadow: var(--shadow-sm); }
+
+/* Medium box shadow */
+.medium-elevate { box-shadow: var(--shadow-md); }
+
+/* Large box shadow */
+.large-elevate { box-shadow: var(--shadow-lg); }
+
+/* Huge box shadow */
+.huge-elevate { box-shadow: var(--shadow-xl); }
+
+/* Set full roundness */
+.round { border-radius: var(--round-full); }
+
+/* Set small roundness */
+.small-round { border-radius: var(--round-sm); }
+
+/* Set medium roundness */
+.medium-round { border-radius: var(--round-md); }
+
+/* Set large roundness */
+.large-round { border-radius: var(--round-lg); }
+
+/* Remove additional line height */
+.no-line { line-height: 1 !important; }
+
+/* Set small line height */
+.small-line { line-height: 1.2; }
+
+/* Set medium line height */
+.medium-line { line-height: 1.5; }
+
+/* Set large line height */
+.large-line { line-height: 1.8; }
+
+/* Set extra line height */
+.extra-line { line-height: 2; }
+
+/* Center content inside a container */
+.center { display: grid; place-items: center; width: 100%; height: inherit; text-align: unset !important; }
+
+/* Set full height */
+.full { min-height: 100%; }
+
+/* Set full width and height for viewport */
+.full-view { width: 100vw; height: 100vh; }
+
+/* Set full width */
+.full-width { width: 100vh; }
+
+/* Set full height */
+.full-height { min-height: 100vh; }
+
+/* Set background color to white */
+.bg-white { background-color: white; }
+
+/* Set background color to gray */
+.bg-gray { background-color: var(--dark-gray); }
+
+.light-gray { background-color: #edecec94;}
+
+/* set color to gray */
+.gray { color: var(--light-gray);}
+
+/* set overflow to hidden */
+.no-overflow {
+  overflow: hidden;
+}
