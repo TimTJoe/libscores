@@ -1,5 +1,5 @@
 var express = require('express');
-const upload = require('../middlewares/upload');
+const upload = require('@middleware/restrict');
 var router = express.Router();
 
 

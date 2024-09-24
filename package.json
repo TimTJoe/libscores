@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "babel-node ./bin/www",
-    "dev": "babel-node ./bin/www"
+    "dev": "nodemon -e ejs,js,css,html ./bin/www"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",

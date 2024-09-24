@@ -1,5 +1,5 @@
 var express = require('express');
-const upload = require('../middlewares/upload');
+const upload = require('@middleware/upload');
 var router = express.Router();
 
 /* GET users listing. */
