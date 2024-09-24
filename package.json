@@ -1,36 +1,26 @@
 {
-  "name": "node-js-final-project-group-3-libscores",
+  "name": "timothyjoe",
   "version": "0.0.0",
   "private": true,
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon -e ejs,js,css,html index.js"
+    "start": "babel-node ./bin/www",
+    "dev": "babel-node ./bin/www"
   },
   "dependencies": {
-    "axios": "^1.7.7",
-    "cheerio": "^1.0.0",
-    "connect-sqlite3": "^0.9.15",
     "cookie-parser": "~1.4.4",
-    "cors": "^2.8.5",
     "debug": "~2.6.9",
-    "dotenv": "^16.4.5",
-    "ejs": "^3.1.10",
-    "express": "^4.19.2",
-    "express-session": "^1.18.0",
+    "express": "~4.16.1",
+    "gray-matter": "^4.0.3",
     "http-errors": "~1.6.3",
-    "module-alias": "^2.2.3",
+    "markdown-it": "^13.0.1",
     "morgan": "~1.9.1",
-    "multer": "^1.4.5-lts.1",
-    "sharp": "^0.33.5",
-    "sqlite3": "^5.1.7"
+    "pug": "^3.0.2"
   },
-  "_moduleAliases": {
-    "@": "public",
-    "@js": "public/javascripts",
-    "@css": "public/stylesheets",
-    "@middleware": "middleware",
-    "@routes": "routes",
-    "@views": "views"
+  "devDependencies": {
+    "@babel/core": "^7.22.5",
+    "@babel/node": "^7.22.5",
+    "@babel/preset-env": "^7.22.5",
+    "nodemon": "^2.0.22"
   }
 }

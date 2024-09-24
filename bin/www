@@ -4,15 +4,15 @@
  * Module dependencies.
  */
 
-var app = require('../app');
-var debug = require('debug')('libscores:server');
-var http = require('http');
+const app = require("../index")
+var debug = require('debug')('verpug:server');
+const http = require("http"); 
 
 /**
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '3500');
+var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
 /**
