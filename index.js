@@ -78,7 +78,6 @@ app.use('/', indexRouter);
 app.use('/live', liveRouter);
 app.use('/leagues', leaguesRouter);
 app.use('/teams', teamsRouter);
-app.use('/api', apiRouter);
 app.use('/create_leagues', createLeaguesRouter);
 app.use('/first_division', firstDivisionRouter);
 app.use('/second_division', secondDivisionRouter);
