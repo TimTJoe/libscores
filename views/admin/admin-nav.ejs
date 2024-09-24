@@ -1,0 +1,17 @@
+<%- include("../partial/head") %>
+<script defer type="module" src="/javascripts/admin.js"></script>
+<nav class="row between border-bottom padding-right padding-left">
+    <a href="/admin" class="row">
+        <img src="/images/lfa_logo.png" class="nav-logo" >
+        <h4 class="large bold">Dashboard</h4>
+    </a>
+    <span class="row">
+        <a href="/admin/cm" class="padding nav-button bold <%= page == 'cm' ? 'active' : '' %>  ">County Meet</a>
+        <a href="/admin/fd" class="padding nav-button bold <%= page == 'fd' ? 'active' : '' %>">First Division</a>
+        <a href="/admin/sd" class="padding nav-button bold <%= page == 'sd' ? 'active' : '' %>">Second Division</a>
+        <a href="/admin/wl" class="padding nav-button bold <%= page == 'wl' ? 'active' : '' %>">Women League</a>
+    </span>
+    <span class="avatar border">
+        <img src="/images/yellow_card.png" alt="" srcset="" class="">
+    </span>
+</nav>

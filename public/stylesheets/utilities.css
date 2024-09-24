@@ -45,6 +45,7 @@
 /** Apply various font sizes based on utility classes **/
 .font-small { font-size: var(--small); } /* Small font */
 .font-medium { font-size: var(--medium); } /* Medium font */
+.medium,.mid { font-size: var(--medium); } /* Medium font */
 .font-large { font-size: var(--large); } /* Large font */
 .font-huge { font-size: 24px; } /* Custom large font */
 .tiny { font-size: var(--tiny); } /* Tiny font */
@@ -153,7 +154,7 @@
 .inline { display: inline; }
 
 /* Set display to block */
-.block { display: block; }
+.block { display: block !important; }
 
 /* Set display to inline-block */
 .inline-block { display: inline-block; }
@@ -378,6 +379,13 @@ hr.divider { border: 0; border-top: 1px solid var(--onyx); margin: var(--spacing
 
 /* Set full height */
 .full-height { min-height: 100vh; }
+.fill-height { min-height: 100%; }
+.max-fill { 
+  height: 100%; 
+  max-height: 93vh; 
+  overflow-y: auto;
+  overflow-x: hidden;
+ }
 
 /* Set background color to white */
 .bg-white { background-color: white; }

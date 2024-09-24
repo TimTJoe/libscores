@@ -34,10 +34,12 @@
 
 /* Label styling */
 .label {
-    display: block; /* Make the label a block element */
-    margin-bottom: 4px; /* Add space below the label */
+    display: flex; /* Make the label a block element */
     font-weight: bold; /* Make the text bold */
     color: var(--midnight); /* Set label text color */
+    font-size: var(--small);
+    margin: 0;
+    margin-top: var(--spacing-sm);
 }
 
 /* Sidebar component */
@@ -104,10 +106,22 @@
 
 /* Button styles */
 .link-button {
-    padding: var(--spacing-sm); /* Apply padding */
+    padding:  var(--spacing-sm) var(--spacing-md); /* Apply padding */
     color: white; /* Set text color to white */
-    background-color: var(--dark-blue); /* Set background color to dark blue */
-    border-radius: var(--round-md); /* Apply medium border radius */
+    background-color: var(--navy-blue);
+    border: solid transparent;
+    cursor: pointer;
+}
+
+.nav-button {
+    padding:  var(--spacing-sm) var(--spacing-md); /* Apply padding */
+    color: var(--navy-blue); /* Set text color to white */
+    border: solid transparent; 
+}
+
+.nav-button:hover, .nav-button.active {
+    border-bottom-color: var(--red);
+    color: var(--red);
 }
 
 .icon-button {
@@ -136,7 +150,6 @@
     padding: var(--spacing-md); /* Apply padding */
     display: none;
     position: fixed;
-    z-index: 1;
     right: 0;
     left: 0;
     top: 15%;
@@ -144,12 +157,8 @@
     background-color: rgb(0,0,0); 
     background-color: rgba(0,0,0,0.4); 
     padding-top: 60px;
+    z-index: 9000;
 }
-
-
-
-
-
 
 /* Centered layout with constraint */
 .constrant {
@@ -187,8 +196,10 @@
     border-radius: 50%; /* Make logo circular */
 }
 
-
-
+.nav-logo {
+    width: 28px;
+    height: 28px;
+}
 
 table {
     width: 100%;
@@ -242,24 +253,6 @@ table, th, td {
     /* height: 150px; */
 }
 
-
-  /* HTML: <div class="loader"></div> */
-/* .loader {
-    width: 50px;
-    --b: 8px; 
-    aspect-ratio: 1;
-    border-radius: 50%;
-    padding: 1px;
-    background: conic-gradient(#0000 10%,#f03355) content-box;
-    mask:
-      repeating-conic-gradient(#0000 0deg,#000 1deg 20deg,#0000 21deg 36deg),
-      radial-gradient(farthest-side,#0000 calc(100% - var(--b) - 1px),#000 calc(100% - var(--b)));
-    -webkit-mask-composite: destination-in;
-    mask-composite: intersect;
-    animation:spin 1s infinite steps(10);
-  }
-  @keyframes spin {to{transform: rotate(1turn)}} */
-
   .dash {
     margin: var(--spacing-lg) 0;
     border-left: 4px solid black;
@@ -274,7 +267,6 @@ table, th, td {
   .dash.gray {
     border-color: var(--misty);
   }
-
 
   .loader {
     width: 100%;
@@ -311,11 +303,45 @@ table, th, td {
     cursor: pointer;
   }
 
-
   .constraint {
     max-height: 75vh;
     overflow-x: auto;
     padding-bottom: 5rem;
     position: relative;
+  }
+
+  .avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: var(--round);
+    overflow: hidden;
+    & > * {
+        width: 100%;
+    }
+  }
+
+  /* Input */
+.input {
+    width: 100%;
+    padding: var(--spacing-xs);
+    border: 1px solid var(--light-gray);
+    font-size: var(--small);
+    background-color: var(--white);
+    color: var(--midnight);
+    caret-color: var(--red);
+    height: 38px;
+    font-weight: bold;
+    margin:0;
+  }
+
+  .input:focus {
+    outline: none;
+  }
+
+  .button {
+    padding: var(--spacing-sm);
+    height: 38px;
+    width: 100%;
+    border-radius: var(--round-sm);
   }
 

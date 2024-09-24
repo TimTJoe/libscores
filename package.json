@@ -1,5 +1,5 @@
 {
-  "name": "timothyjoe",
+  "name": "node-js-final-project-group-3-libscores",
   "version": "0.0.0",
   "private": true,
   "main": "index.js",
@@ -15,12 +15,31 @@
     "http-errors": "~1.6.3",
     "markdown-it": "^13.0.1",
     "morgan": "~1.9.1",
-    "pug": "^3.0.2"
+    "pug": "^3.0.2",
+    "axios": "^1.7.7",
+    "cheerio": "^1.0.0",
+    "connect-sqlite3": "^0.9.15",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "ejs": "^3.1.10",
+    "express-session": "^1.18.0",
+    "module-alias": "^2.2.3",
+    "multer": "^1.4.5-lts.1",
+    "sharp": "^0.33.5",
+    "sqlite3": "^5.1.7"
+  },
+  "_moduleAliases": {
+    "@": "public",
+    "@js": "public/javascripts",
+    "@css": "public/stylesheets",
+    "@middleware": "middleware",
+    "@routes": "routes",
+    "@views": "views"
   },
   "devDependencies": {
     "@babel/core": "^7.22.5",
     "@babel/node": "^7.22.5",
     "@babel/preset-env": "^7.22.5",
-    "nodemon": "^2.0.22"
+    "nodemon": "^3.1.4"
   }
 }

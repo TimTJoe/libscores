@@ -1,0 +1,52 @@
+<%- include("../partial/head") %>
+<body class="column no-gap">
+    <%- include("./admin-nav") %>
+    <main class="row flex max top-align">
+        <section class="border-right max-fill">
+            
+            <h4 class="large align-center small-padding">Add New Editions</h4>
+            <section class="padding">
+
+                <span class="row">
+                    <span>
+                        <label for="edition" class="label">County Meet Edition</label>
+                        <input type="text" name="edition" id="edition" class="input">
+                    </span>
+                    <span>
+                        <label for="editionHost" class="label">Host</label>
+                        <input type="text" name="editionHost" id="editionHost" class="input">
+                    </span>
+                </span>
+
+
+                <section class="row flex">
+                    <span class="column no-gap">
+                        <label for="edition" class="label block">Start Date</label>
+                        <input type="date" name="editionStart" id="editionStart" class="input block">
+                    </span>
+                    <span class="column no-gap">
+                        <label for="edition" class="label block">End Date</label>
+                        <input type="date" name="editionEnd" id="editionEnd" class="input block">
+                    </span>
+                </section>
+
+                
+                <button class="button margin-top" id="saveEdition">Save Edition</button>
+            </section>
+
+            <section class="border-top">
+                <!-- <h4 class="large align-center small-padding border-bottom">All Editions</h4> -->
+                <div id="editionList" class="padding column">
+                  
+                </div>
+            </section>
+            
+        </section>
+
+
+        <section class="border-right fill-height">Match</section>
+        <section class="fill-height">actions</section>
+    </main>
+    <script type="module" src="/javascripts/jquery.js"></script>
+    <script type="module" src="/javascripts/cm.admin.js"></script>
+</body>

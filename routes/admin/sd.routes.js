@@ -1,12 +1,11 @@
 var router = require('express').Router();
 
-/* GET home page. */
 router.get('/', async function(req, res, next) {
        let options = {
-              title: "Action Center",
-              page: "admin"
+              title: "Update Second Division League | Action Center",
+              page: "sd"
        }
-       res.render('admin/dashboard.ejs', options);
+       res.render('admin/sd-admin.ejs', options);
 });
 
 module.exports = router;
