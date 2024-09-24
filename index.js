@@ -59,18 +59,18 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(
-  session({
-    store: new SQLiteStore,
-    secret: "RSTUVWXYZabcdefghijklmyz0123456789!@#$%^&*()_+[]{}|;:,.<>?",
-    resave: true,
-    saveUninitialized: false,
-    cookie: { 
-      secure: false, 
-      // maxAge: 7*24*60*60*1000, //1 week
-      maxAge: 60*60*1000, //1 min
-    },
-  }));
+// app.use(
+//   session({
+//     store: new SQLiteStore,
+//     secret: "RSTUVWXYZabcdefghijklmyz0123456789!@#$%^&*()_+[]{}|;:,.<>?",
+//     resave: true,
+//     saveUninitialized: false,
+//     cookie: { 
+//       secure: false, 
+//       // maxAge: 7*24*60*60*1000, //1 week
+//       maxAge: 60*60*1000, //1 min
+//     },
+//   }));
   app.use(cors())
 
 // Routes handlers
