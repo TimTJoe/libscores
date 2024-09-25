@@ -30,3 +30,16 @@ let segments = url.replace(/\/\s*$/, "").split('/');
 return segments.length > 1 ? segments[segments.length - 2] : null;
   }
   
+
+  export function showSnackbar(message) {
+    var snackbar = $('#snackbar');
+    snackbar.text(message); // Set the dynamic text
+  
+    snackbar.addClass('show');
+  
+    // After 3 seconds, remove the show class to hide the snackbar
+    setTimeout(function() {
+      snackbar.removeClass('show');
+    }, 3000);
+  }
+  

@@ -1,0 +1,64 @@
+
+
+<button data-ui="#matchDialog" class="button secondary round">
+    <i class="fa fa-plus"></i> Add New Match    
+</button>
+
+<dialog class="dialog" data-ui="matchDialog">
+    <header class="dialog-header">
+        <h1 class="large small-padding max">Add New Match</h1>
+        <button class="icon-button">
+            <i class="fa fa-close" data-ui="#matchDialog"></i>
+        </button>
+    </header>
+
+  <div class="dialog-content">
+    
+        <label class="label" for="matchEdition">Select Edition</label>
+        <select name="matchEdition" id="matchEdition" class="block input">
+        </select>
+    
+        <section class="row flex">
+            <span>
+                <label class="label" for="matchHomeTeam">Home Team</label>
+                <select name="matchHomeTeam" id="matchHomeTeam" class="block input">
+                </select>
+            </span>
+            <span>
+                <label class="label" for="matchAwayTeam">Away Team</label>
+                <select name="matchAwayTeam" id="matchAwayTeam" class="block input">
+                </select>
+            </span>
+        </section>
+    
+        <section class="row flex">
+            <span>
+                <label class="label" for="matchDate">Date </label>
+                <input type="date" name="matchDate" id="matchDate" class="input">
+            </span>
+            <span>
+                <label class="label" for="matchTime">Start </label>
+                <input type="time" name="matchTime" id="matchTime" class="input">
+            </span>
+            
+        </section>
+
+        <section class="row flex">
+            <span>
+                <label class="label" for="matchHomeTeamScore">Home Team Score </label>
+                <input type="number" name="matchHomeTeamScore" id="matchHomeTeamScore" class="input">
+            </span>
+            <span>
+                <label class="label" for="matchAwayTeamScore">Away Team Score </label>
+                <input type="number" name="matchAwayTeamScore" id="matchAwayTeamScore" class="input">
+            </span>
+            
+        </section>
+
+    </div>
+
+    <footer class="dialog-footer ">
+        <button class="button move-right" id="saveMatch">Save Match</button>
+    </footer>
+
+</dialog>

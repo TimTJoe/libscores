@@ -1,4 +1,4 @@
-import { formatDate, removeWordFromEnd } from "/javascripts/utils.js";
+import { formatDate, showSnackbar } from "/javascripts/utils.js";
     let year = new Date().getFullYear();
     let years = Array.from(new Array(5), (v, idx) => year - idx);
 
@@ -30,6 +30,7 @@ $(document).ready(function () {
                         <option value="${edition.id}">${edition.edition}</option>
                      `).prependTo("#matchEdition");
                 })
+
                 
             } else {
                 console.error("An error occurred")
@@ -131,6 +132,8 @@ $(document).ready(function () {
                       </span>
                   </section>
                   `).prependTo("#editionList");
+                showSnackbar("Match Added Successfully")
+
             },
             error: function (err) {
                 console.error(err)

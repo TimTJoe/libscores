@@ -1,48 +1,12 @@
-<section class="box small-elevate small-padding">
-    <h1 class="padding">Add New Match</h1>
-
-    <label class="label" for="matchEdition">Select Edition</label>
-    <select name="matchEdition" id="matchEdition" class="block input">
-    </select>
-
-    <section class="row flex">
-        <span>
-            <label class="label" for="matchHomeTeam">Home Team</label>
-            <select name="matchHomeTeam" id="matchHomeTeam" class="block input">
-            </select>
-        </span>
-        <span>
-            <label class="label" for="matchAwayTeam">Away Team</label>
-            <select name="matchAwayTeam" id="matchAwayTeam" class="block input">
-            </select>
-        </span>
-    </section>
-
-    <section class="row flex">
-        <span>
-            <label class="label" for="matchDate">Date </label>
-            <input type="date" name="matchDate" id="matchDate" class="input">
-        </span>
-        <span>
-            <label class="label" for="matchTime">Start </label>
-            <input type="time" name="matchTime" id="matchTime" class="input">
-        </span>
-        
-    </section>
-    <section class="row flex">
-        <span>
-            <label class="label" for="matchHomeTeamScore">Home Team Score </label>
-            <input type="number" name="matchHomeTeamScore" id="matchHomeTeamScore" class="input">
-        </span>
-        <span>
-            <label class="label" for="matchAwayTeamScore">Away Team Score </label>
-            <input type="number" name="matchAwayTeamScore" id="matchAwayTeamScore" class="input">
-        </span>
-        
-    </section>
-
-    <button class="button margin-top" id="saveMatch">Save Match</button>
-</section>
+<!-- Button that triggers the dialog -->
+<div class="row">
+    <%- include("./match.dialog.ejs") %>
+    <button class="button secondary round"><i class="fa fa-plus"></i> Group </button>
+    <button class="button secondary round"><i class="fa fa-plus"></i> Substitution</button>
+    <button class="button secondary round"><i class="fa fa-plus"></i> Goals</button>
+    <button class="button secondary round"><i class="fa fa-plus"></i> Cards</button>
+    <button class="button secondary round"><i class="fa fa-plus"></i> Corner</button>
+</div>
 <section id="matchList" class="column margin-top">
-
 </section>
+<div id="snackbar">Match added successfully!</div>
