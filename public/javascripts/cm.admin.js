@@ -39,7 +39,7 @@ $(document).ready(function () {
         "json"
     );
 
-    $.get("/counties",
+    $.get("/admin/cm/counties",
         function (data, textStatus, jqXHR) {
             if(textStatus == "success") {
                 data.counties.forEach(county => {
@@ -93,7 +93,7 @@ $(document).ready(function () {
     );
 
      years.map((year,idx) =>  {
-        console.log(year)
+        // console.log(year)
         $(`<option value="${year}">${year}</option>`).prependTo("#edition")
     })
 

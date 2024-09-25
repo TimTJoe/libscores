@@ -105,6 +105,21 @@ router.get('/editions', async function(req, res, next) {
        res.render('admin/cm/edition.cm.ejs', options);
 });
 
+router.get('/counties', function(req, res, next) {
+       try {
+       db.all("SELECT * FROM counties", function (err, rows) {
+              if(err) {
+                     throw new Error(err);
+              } else {
+                     console.log(rows)
+                     res.status(200).json({counties: rows})
+              }
+              });
+       } catch (error) {
+              res.status(400).json(error)
+       }
+});
+
 
 
 module.exports = router;
