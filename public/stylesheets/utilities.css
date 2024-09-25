@@ -212,7 +212,7 @@ hr.divider { border: 0; border-top: 1px solid var(--onyx); margin: var(--spacing
 .padding-bottom { padding-bottom: var(--spacing-md); }
 
 /* Flex container in a row direction */
-.row { display: flex; flex-direction: row; }
+.row { display: flex; flex-direction: row; flex-wrap: wrap; }
 
 /* Flex container in a column direction */
 .column { display: flex; flex-direction: column; }
@@ -256,6 +256,7 @@ hr.divider { border: 0; border-top: 1px solid var(--onyx); margin: var(--spacing
 
 /* Apply small gap between flex items */
 .gap { gap: var(--spacing-sm); }
+.sm-gap { gap: var(--spacing-xs); }
 
 /* Flex child elements grow 2x */
 .max { flex: 2; }
@@ -393,7 +394,7 @@ hr.divider { border: 0; border-top: 1px solid var(--onyx); margin: var(--spacing
 /* Set background color to gray */
 .bg-gray { background-color: var(--dark-gray); }
 
-.light-gray { background-color: #edecec94;}
+.light-gray { background-color: #edecec;}
 
 /* set color to gray */
 .gray { color: var(--light-gray);}

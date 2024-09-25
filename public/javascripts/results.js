@@ -3,6 +3,7 @@ const leagueApiMap = {
     'l1': 'https://www.scorebar.com/api/league//tournament/1534/liberia-first-division',
     'l2': 'https://www.scorebar.com/api/league//tournament/2315/liberia-second-division',
     'wl': 'https://www.scorebar.com/api/league//tournament/1565/liberia-national-league-women',
+    'cm': "/admin/cm/matches/all"
   };
 
 function fetchLeagueData(apiUrl, page) {
@@ -66,6 +67,62 @@ function fetchLeagueData(apiUrl, page) {
       }
     });
   }
+function fetchCMGames(page) {
+  $.get("/admin/cm/matches/all",
+    function (data, textStatus, jqXHR) {
+
+        if(textStatus == "success") {
+            $(".loader").hide();
+            let games = data.matches
+            let currentDate = new Date();
+
+            const sortedGames = Object.values(games).filter(item => {
+                    const gameDate = new Date(item.match_date.replace(' ', 'T'))
+
+                    switch (page) {
+                      case 'results':
+                        return gameDate < currentDate
+                        case 'fixtures':
+                          return gameDate >= currentDate;  // Future games
+                      case 'past':
+                        return gameDate < currentDate;  // Past games
+                      default:
+                        return [];  // Return an empty array if no valid page parameter is provided
+                    }
+                  }).sort((a, b) => new Date(b.match_date) - new Date(a.match_date));
+
+           if (sortedGames.length > 1) {
+                sortedGames.forEach(match => {
+                    $(
+                    `<section class="box row padding matches">
+                    <h3 class="${'black'} margin-right column center-align small">
+                        <span>${match.start_time}</span>
+                        <span>${formatDate(match.match_date)}</span>
+                    </h3>
+                    <section class="column max cap">
+                        <span class="row">
+                            <img src="/images/shield.webp" alt="" class="sm-logo">
+                            <h3 class="bold max">${match.home_team}</h3>
+                            <h3 class="${ new Date(match.match_date) < new Date() ?   'black' : 'red'}">${ new Date(match.match_date) < new Date() ?   match.score_1 : ''}</h3>
+                        </span>
+                        <span class="row">
+                            <img src="/images/shield.webp" alt="" class="sm-logo">
+                            <h3 class="bold max">${match.away_team}</h3>
+                            <h3 class="${ new Date(match.match_date) < new Date() ?   'black' : 'red'}">${ new Date(match.match_date) < new Date() ?   match.score_2 : ''}</h3>
+                        </span>
+                    </section>`
+                ).appendTo("#container")})
+           } else {
+            $(`<h1 class="hugh center">No upcoming game found</h1>`).appendTo("#container")
+           }
+
+        }  else {
+            console.error("An error occurred fetching martches")
+        }
+    },
+    "json"
+);
+  }
   
 
   $(document).ready(function () {
@@ -104,6 +161,17 @@ function fetchLeagueData(apiUrl, page) {
             break;
         }
         break;
+
+        case "county_meet":
+          switch (page) {
+            case "results":
+              fetchCMGames(page)
+              break;
+              case "fixtures":
+                fetchCMGames(page)
+              break;
+           
+          }
     }
     
   });

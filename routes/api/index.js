@@ -1,11 +1,12 @@
 var express = require('express');
-const upload = require('@middleware/upload');
 var router = express.Router();
+var county = require('@routes/api/county.routes');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-    res.render('match-info', { title: 'Match Info' });
+    res.render('api', { title: 'Api Testing' });
 });
 
+router.get('/counties', county.getAll);
 
 module.exports = router;

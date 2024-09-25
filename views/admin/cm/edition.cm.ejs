@@ -1,0 +1,48 @@
+<%- include("../../partial/head") %>
+<body class="column no-gap">
+    <%- include("../admin-nav") %>
+    <main class="max">
+        <div class="small-container full-height">
+            <%- include("./tab.cm.ejs") %>
+
+            <div class="box small-padding">
+                <h4 class="large align-center">New County Meet Editions</h4>
+                <section class="padding">
+                    <span class="row flex">
+                        <span>
+                            <label for="edition" class="label">County Meet Edition</label>
+                            <select name="edition" id="edition" class="block input">
+                            </select>
+                        </span>
+                        <span>
+                            <label for="editionHost" class="label">Host County</label>
+                            <select name="editionHost" id="editionHost" class="block input">
+                            </select>
+                        </span>
+                    </span>
+                    <section class="row flex">
+                        <span class="column no-gap">
+                            <label for="edition" class="label block">Start Date</label>
+                            <input type="date" name="editionStart" id="editionStart" class="input block">
+                        </span>
+                        <span class="column no-gap">
+                            <label for="edition" class="label block">End Date</label>
+                            <input type="date" name="editionEnd" id="editionEnd" class="input block">
+                        </span>
+                    </section>
+                
+                    <button class="button margin-top" id="saveEdition">Save Edition</button>
+                </section>
+            </div>
+
+            <section class="border-top">
+                <h4 class="large align-center small-padding">All Editions</h4>
+                <div id="editionList" class="padding column">
+                  
+                </div>
+            </section>
+        </div>
+    </main>
+    <script type="module" src="/javascripts/jquery.js"></script>
+    <script type="module" src="/javascripts/cm.admin.js"></script>
+</body>

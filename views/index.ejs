@@ -1,8 +1,9 @@
-<%- include("./partial/head") %>
-<%- include("./partial/top-nav.ejs") %>
 
-<div class="container row ">
-    <%- include("./partial/sidebar") %>
+<%- include("./partial/head") %>
+<body class="no-overflow">
+    <%- include("./partial/top-nav.ejs") %>
+    <div class="container row constraint">
+        <%- include("./partial/sidebar") %>
     <div class="column full max padding">
         <%- include("./partial/tabs") %>
            
@@ -17,8 +18,6 @@
         </div>
 </div>
 </div>
-</div>
-
-
+</body>
 <script type="module" src="/javascripts/jquery.js"></script>
 <script type="module" src="/javascripts/fetch.js"></script>

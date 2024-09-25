@@ -3,6 +3,7 @@ export function formatDate(date) {
     let formatedDate = new Intl.DateTimeFormat("us-EN", {
       month: "short",
       day: "2-digit",
+      year: "numeric"
     }).format(_date);
   
     return formatedDate;

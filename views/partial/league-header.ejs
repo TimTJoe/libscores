@@ -1,7 +1,12 @@
+<script type="module" src=""defer></script>
 <div class="border row max bg-white tiny-padding mid-round">
     <img src="<%= logo %>" class="lg-logo"  alt="">
     <span>
         <h1 class="large"><%= title %></h1>
-        <h4 class="muted bold">2024/2025</h4>
+        <h4 class="muted bold" id="leagueEdition">2024/2025</h4>
     </span>
+    <% if (league == "cm") { %>
+        <select id="cmEditions" name="cmEditions" class="small-round inline-block move-right margin-right">
+        </select>
+    <% } %>
 </div>
