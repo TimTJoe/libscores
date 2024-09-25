@@ -347,8 +347,14 @@ table, th, td {
   background-color: var(--crimson);
   color: var(--white); 
   cursor: pointer;
+
   }
 
+  .button.large {
+    min-width: 278px;
+    padding: unset;
+    height: unset;
+  }
   .button.round {
     border-radius: 14px;
   }

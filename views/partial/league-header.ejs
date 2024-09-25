@@ -1,4 +1,4 @@
-<script type="module" src=""defer></script>
+
 <div class="border row max bg-white tiny-padding mid-round">
     <img src="<%= logo %>" class="lg-logo"  alt="">
     <span>
@@ -7,6 +7,14 @@
     </span>
     <% if (league == "cm") { %>
         <select id="cmEditions" name="cmEditions" class="small-round inline-block move-right margin-right">
+            <% if (editions) { %>
+            <% editions.map(edition => { %>
+             <option class="cap" value="<%= edition.id %>">
+             <%= edition.edition %> /
+             <%= Number(edition.edition) + 1 %>
+            </option>
+            <% }) }%>
         </select>
-    <% } %>
-</div>
+        <% } %>
+    </div>
+    <script type="module" src="/javascripts/county-meet.js" defer></script>

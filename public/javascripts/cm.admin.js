@@ -39,7 +39,7 @@ $(document).ready(function () {
         "json"
     );
 
-    $.get("/api/counties",
+    $.get("/counties",
         function (data, textStatus, jqXHR) {
             if(textStatus == "success") {
                 data.counties.forEach(county => {
