@@ -92,6 +92,7 @@ app.use('/signup', signupRouter);
 
 app.use("/counties", countyRouter)
 app.use('/api', apiRouter);
+app.use('admin/api', apiRouter);
 
 // dashboard route handlers
 app.use('/login', loginRouter);
