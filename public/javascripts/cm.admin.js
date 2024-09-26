@@ -32,9 +32,9 @@ $(document).ready(function () {
                     $( `
                         <option value="${edition.id}">${edition.edition}</option>
                      `).prependTo("#groupEdition");
-                    $( `
-                        <option value="${edition.id}">${edition.edition}</option>
-                     `).prependTo("#edition");
+                    // $( `
+                    //     <option value="${edition.id}">${edition.edition}</option>
+                    //  `).prependTo("#edition");
                 })
                 
             } else {
@@ -138,7 +138,7 @@ $(document).ready(function () {
                   </section>
                   `).prependTo("#editionList");
                 showSnackbar("Match Added Successfully")
-
+                window.location.reload()
             },
             error: function (err) {
                 console.error(err)
