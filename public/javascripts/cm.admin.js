@@ -32,8 +32,10 @@ $(document).ready(function () {
                     $( `
                         <option value="${edition.id}">${edition.edition}</option>
                      `).prependTo("#groupEdition");
+                    $( `
+                        <option value="${edition.id}">${edition.edition}</option>
+                     `).prependTo("#edition");
                 })
-
                 
             } else {
                 console.error("An error occurred")
@@ -59,7 +61,6 @@ $(document).ready(function () {
                    $( `
                        <option value="${county.id}">${county.county}</option>
                     `).prependTo("#counties");
-                   
                 })
             } else {
                 console.error("An error occurred")
@@ -100,9 +101,9 @@ $(document).ready(function () {
 
 
 
-     years.map((year,idx) =>  {
-        $(`<option value="${year}">${year}</option>`).prependTo("#edition")
-    })
+    //  years.map((year,idx) =>  {
+    //     $(`<option value="${year}">${year}</option>`).prependTo("#edition")
+    // })
 
     $("#saveEdition").on("click", function saveEdition(evt) {
         $("#saveEdition").disabled = true
@@ -115,7 +116,7 @@ $(document).ready(function () {
 
         $.ajax({
             type: "POST",
-            url: "/admin/cm",
+            url: "/admin/cm/editions",
             data: newData,
             dataType: "json",
             success: function (response) {

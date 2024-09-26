@@ -1,0 +1,18 @@
+<%- include("../../partial/head") %>
+<body class="column no-gap">
+    <%- include("../admin-nav") %>
+    <main class="max">
+        <div class="small-container full-height">
+            <%- include("./tab.cm.ejs") %>
+            <%- include("./player.dialog.ejs") %>
+            
+            <div id="playerList" class="padding column">
+               
+            </div>
+        </div>
+    </main>
+    <script type="module" src="/javascripts/jquery.js"></script>
+    <script type="module" src="/javascripts/dialog.js"></script>
+    <script type="module" src="/javascripts/cm.admin.js"></script>
+    <script type="module" src="/javascripts/players.cm.js"></script>
+</body>

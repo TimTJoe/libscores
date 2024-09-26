@@ -2,6 +2,7 @@ var router = require('express').Router();
 const getDbInstance = require('@js/getDBInstance');
 var sqlite3 = require("sqlite3").verbose();
 var db = getDbInstance(sqlite3)
+const upload = require('@middleware/upload');
 
 router.get('/', async function(req, res, next) {
        let options = {
@@ -11,7 +12,8 @@ router.get('/', async function(req, res, next) {
        res.render('admin/cm-admin.ejs', options);
 });
 
-router.post('/', async function(req, res, next) {
+
+router.post('/editions', async function(req, res, next) {
        try {
               let {edition,start,end,host} = req.body
               db.run(
@@ -115,7 +117,6 @@ router.get('/groups', async function(req, res, next) {
        res.render('admin/cm/group.cm.ejs', options);
 });
 
-
 router.post('/groups', async function(req, res, next) {
        try {
               let{edition,county,group}= req.body
@@ -154,6 +155,58 @@ router.get('/groups/all', async function(req, res, next) {
                             throw new Error(err);
                      } else {
                             res.status(200).json({groups:rows})
+                            };
+                     }
+                     );
+       } catch (error) {
+              res.status(400).json({error})
+       }
+});
+
+
+router.get('/players', async function(req, res, next) {
+       let options = {
+              title: "Add New Player ",
+              page: "players"
+       }
+       res.render('admin/cm/players.cm.ejs', options);
+});
+
+router.post('/players', upload.single("photo"), async function(req, res, next) {
+       let options = {
+              title: "Add New Player ",
+              page: "players"
+       }
+       try {
+              let photo = req.file.filename
+              let{firstName,middleName,lastName,county,DOB}= req.body
+              db.run(
+              "INSERT INTO county_meet_players VALUES (?,?,?,?,?,?,?)",
+              [null,firstName,middleName,lastName,DOB, photo,county],
+              function (err) {
+                     if(err) {
+                            throw new Error(err);
+                     } else {
+                            res.render('admin/cm/players.cm.ejs', options);
+                     }
+              }
+              );
+       } catch (error) {
+              res.status(400).json({error})
+       }
+});
+
+
+router.get('/players/all', async function(req, res, next) {
+       try {
+              
+              db.all(
+                     "SELECT *, county_meet_players.id FROM county_meet_players LEFT OUTER JOIN counties ON counties.id=county_meet_players.county_id",
+                     function (err, rows) {
+                            if (err) {
+                            throw new Error(err);
+                     } else {
+                            res.status(200).json({players:rows})
                             };
                      }
                      );
