@@ -16,30 +16,33 @@
 
     <section class="dialog-content">
         <span class="row flex">
-                <span>
-                    <label for="edition" class="label">County Meet Edition</label>
-                    <input name="edition" id="edition" class="block input">
-                </span>
-                <span>
-                    <label for="editionHost" class="label">Host County</label>
-                    <select name="editionHost" id="editionHost" class="block input">
-                    </select>
-                </span>
+            <span>
+                <label for="match" class="label">Match</label>
+                <select name="match" id="match" class="block input">
+                </select>
+            </span>
+            <span class="column no-gap">
+                <label for="counties" class="label block">Team</label>
+                <select name="team" id="counties" class="block input">
+                </select>
+            </span>
         </span>
         
         <section class="row flex">
             <span class="column no-gap">
-                <label for="edition" class="label block">Start Date</label>
-                <input type="date" name="editionStart" id="editionStart" class="input block">
+                <label for="player" class="label block">Player</label>
+                <select name="player" id="player" class="block input">
+                </select>
             </span>
             <span class="column no-gap">
-                <label for="edition" class="label block">End Date</label>
-                <input type="date" name="editionEnd" id="editionEnd" class="input block">
+                <label for="number" class="label block">Number</label>
+                <input type="number" name="number" id="number" class="input block">
+                
             </span>
         </section>
     </section>
     
     <footer class="dialog-footer">
-        <button class="button move-right" id="saveEdition">Save Edition</button>
+        <button class="button move-right" id="saveLineup">Save Edition</button>
     </footer>
 </dialog>
