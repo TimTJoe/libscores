@@ -1,0 +1,99 @@
+<%- include("../../partial/head") %>
+<body class="column no-gap">
+    <%- include("../admin-nav") %>
+    <main class="max">
+        <div class="small-container full-height">
+            
+            <%- include("./tab.cm.ejs") %>
+            <%- include("./group.dialog.ejs") %>
+
+            
+            <div class="column">
+
+                <section class="bg-white  mid-round small-padding">
+                    <h2 class="large align-center">Group A</h2>
+                    <table class="table">
+                        <thead class="thead">
+                            <tr class="tr">
+                                <th class="th">#</th>
+                                <th class="first th left cap">Team</th>
+                                <th class="th">GP</th>
+                                <th class="th">W</th>
+                                <th class="th">D</th>
+                                <th class="th">L</th>
+                                <th class="th cap">Goals</th>
+                                <th class="th">PTS</th>
+                            </tr>
+                        </thead>
+                        <tbody class="tbody" id="tabody">
+                        </tbody>
+                    </table>
+                </section>
+                <section class="bg-white  mid-round small-padding">
+                    <h2 class="large align-center">Group B</h2>
+                    <table class="table">
+                        <thead class="thead">
+                            <tr class="tr">
+                                <th class="th">#</th>
+                                <th class="first th left cap">Team</th>
+                                <th class="th">GP</th>
+                                <th class="th">W</th>
+                                <th class="th">D</th>
+                                <th class="th">L</th>
+                                <th class="th cap">Goals</th>
+                                <th class="th">PTS</th>
+                            </tr>
+                        </thead>
+                        <tbody class="tbody" id="tbbody">
+                        </tbody>
+                    </table>
+                </section>
+                <section class="bg-white  mid-round small-padding">
+                    <h2 class="large align-center">Group C</h2>
+                    <table class="table">
+                        <thead class="thead">
+                            <tr class="tr">
+                                <th class="th">#</th>
+                                <th class="first th left cap">Team</th>
+                                <th class="th">GP</th>
+                                <th class="th">W</th>
+                                <th class="th">D</th>
+                                <th class="th">L</th>
+                                <th class="th cap">Goals</th>
+                                <th class="th">PTS</th>
+                            </tr>
+                        </thead>
+                        <tbody class="tbody" id="tcbody">
+                        </tbody>
+                    </table>
+                </section>
+                <section class="bg-white  mid-round small-padding">
+                    <h2 class="large align-center">Group D</h2>
+                    <table class="table">
+                        <thead class="thead">
+                            <tr class="tr">
+                                <th class="th">#</th>
+                                <th class="first th left cap">Team</th>
+                                <th class="th">GP</th>
+                                <th class="th">W</th>
+                                <th class="th">D</th>
+                                <th class="th">L</th>
+                                <th class="th cap">Goals</th>
+                                <th class="th">PTS</th>
+                            </tr>
+                        </thead>
+                        <tbody class="tbbody" id="tdbody">
+                        </tbody>
+                    </table>
+                </section>
+            </div>
+            
+        </div>
+    </main>
+    <div id="snackbar">Group added successfully!</div>
+
+    <script type="module" src="/javascripts/jquery.js"></script>
+    <script type="module" src="/javascripts/dialog.js"></script>
+    <script type="module" src="/javascripts/cm.admin.js"></script>
+    <script type="module" src="/javascripts/group.cm.js"></script>
+</body>

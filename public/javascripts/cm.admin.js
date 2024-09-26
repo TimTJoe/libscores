@@ -29,6 +29,9 @@ $(document).ready(function () {
                     $( `
                         <option value="${edition.id}">${edition.edition}</option>
                      `).prependTo("#matchEdition");
+                    $( `
+                        <option value="${edition.id}">${edition.edition}</option>
+                     `).prependTo("#groupEdition");
                 })
 
                 
@@ -39,7 +42,7 @@ $(document).ready(function () {
         "json"
     );
 
-    $.get("/admin/cm/counties",
+    $.get("/admin/counties/all",
         function (data, textStatus, jqXHR) {
             if(textStatus == "success") {
                 data.counties.forEach(county => {
@@ -53,6 +56,9 @@ $(document).ready(function () {
                    $( `
                        <option value="${county.county}">${county.county}</option>
                     `).prependTo("#matchAwayTeam");
+                   $( `
+                       <option value="${county.id}">${county.county}</option>
+                    `).prependTo("#counties");
                    
                 })
             } else {
@@ -92,13 +98,11 @@ $(document).ready(function () {
         "json"
     );
 
+
+
      years.map((year,idx) =>  {
-        // console.log(year)
         $(`<option value="${year}">${year}</option>`).prependTo("#edition")
     })
-
-
-    // $("#edition").prependTo()
 
     $("#saveEdition").on("click", function saveEdition(evt) {
         $("#saveEdition").disabled = true

@@ -41,7 +41,7 @@ router.get('/:tab', function(req, res, next) {
                     res.render('results', options) 
                     break;
                 case "standings":
-                    res.render('standings', options) 
+                    res.render('cm-standings', options) 
                     break;
                 case "fixtures":
                     res.render('fixtures', options) 

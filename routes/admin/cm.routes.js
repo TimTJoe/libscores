@@ -11,20 +11,6 @@ router.get('/', async function(req, res, next) {
        res.render('admin/cm-admin.ejs', options);
 });
 
-router.get('/editions/all', async function(req, res, next) {
-       try {
-       db.all("SELECT * FROM editions", function (err, rows) {
-              if(err) {
-                     throw new Error(err);
-              } else {
-                     res.status(200).json({editions: rows})
-              }
-              });
-       } catch (error) {
-              res.status(400).json(error)
-       }
-});
-
 router.post('/', async function(req, res, next) {
        try {
               let {edition,start,end,host} = req.body
@@ -50,6 +36,29 @@ router.post('/', async function(req, res, next) {
        }
 });
 
+router.get('/editions/all', async function(req, res, next) {
+       try {
+       db.all("SELECT * FROM editions", function (err, rows) {
+              if(err) {
+                     throw new Error(err);
+              } else {
+                     res.status(200).json({editions: rows})
+              }
+              });
+       } catch (error) {
+              res.status(400).json(error)
+       }
+});
+
+router.get('/editions', async function(req, res, next) {
+       let options = {
+              title: "Count Meet Editions",
+              page: "editions"
+       }
+       res.render('admin/cm/edition.cm.ejs', options);
+});
+
+// county meet matches routes
 router.post('/matches', async function(req, res, next) {
        try {
               let {home_team, away_team, score_1, score_2,match_date, start_time, edition_id} = req.body
@@ -97,28 +106,62 @@ router.get('/matches', async function(req, res, next) {
        res.render('admin/cm/match.cm.ejs', options);
 });
 
-router.get('/editions', async function(req, res, next) {
+// county meet groups routes
+router.get('/groups', async function(req, res, next) {
        let options = {
-              title: "Count Meet Editions",
-              page: "cme"
+              title: "Create Grouping ",
+              page: "groups"
        }
-       res.render('admin/cm/edition.cm.ejs', options);
+       res.render('admin/cm/group.cm.ejs', options);
 });
 
-router.get('/counties', function(req, res, next) {
+
+router.post('/groups', async function(req, res, next) {
        try {
-       db.all("SELECT * FROM counties", function (err, rows) {
-              if(err) {
+              let{edition,county,group}= req.body
+              db.run(
+              "INSERT INTO groups VALUES (?,?,?,?)",
+              [null, edition, county, group],
+              function (err) {
+                     if(err) {
                      throw new Error(err);
-              } else {
-                     console.log(rows)
-                     res.status(200).json({counties: rows})
+                     } else {
+                     db.all(
+                            "SELECT *, groups.id FROM groups LEFT OUTER JOIN counties ON counties.id=groups.county_id LEFT OUTER JOIN editions ON editions.id=groups.edition_id WHERE groups.groups=?",
+                            [group],
+                            function (err, rows) {
+                                   if (err) {
+                                   throw new Error(err);
+                            } else {
+                                   res.status(200).json({group:rows})
+                                   };
+                            }
+                            );
+                     }
               }
-              });
+              );
        } catch (error) {
-              res.status(400).json(error)
+              res.status(400).json({error})
        }
 });
+router.get('/groups/all', async function(req, res, next) {
+       try {
+              
+              db.all(
+                     "SELECT *, groups.id FROM groups LEFT OUTER JOIN counties ON counties.id=groups.county_id LEFT OUTER JOIN editions ON editions.id=groups.edition_id",
+                     function (err, rows) {
+                            if (err) {
+                            throw new Error(err);
+                     } else {
+                            res.status(200).json({groups:rows})
+                            };
+                     }
+                     );
+       } catch (error) {
+              res.status(400).json({error})
+       }
+});
+
 
 
 

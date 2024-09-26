@@ -411,6 +411,7 @@ table, th, td {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   z-index: 9100;
   border-radius: var(--round-md);
+  min-width: 320px;
 }
 
 .dialog-header, .dialog-footer {
@@ -441,6 +442,7 @@ body.dialog-active::before {
 }
 
 .dialog-footer {
+  margin-top: var(--spacing-md);
   border-top: thin solid var(--fog);
 }
 

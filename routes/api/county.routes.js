@@ -11,7 +11,6 @@ router.get('/', function(req, res, next) {
               if(err) {
                      throw new Error(err);
               } else {
-                     console.log(rows)
                      res.status(200).json({counties: rows})
               }
               });

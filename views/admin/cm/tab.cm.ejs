@@ -1,5 +1,5 @@
 <nav class="btn-group">
-    <a href="/admin/cm" class="active">Matches</a>
-    <a href="/admin/cm/groups">Groups</a>
-    <a href="/admin/cm/editions">Editions</a>
+    <a href="/admin/cm" class="<%= page == 'cm' ? 'active' : ''%>">Matches</a>
+    <a href="/admin/cm/groups" class="<%= page == 'groups' ? 'active' : '' %>">Groups</a>
+    <a href="/admin/cm/editions" class="<%= page == 'editions' ? 'active' : '' %>">Editions</a>
 </nav>

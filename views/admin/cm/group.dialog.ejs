@@ -1,0 +1,51 @@
+
+
+<section class="row between">
+    <span class="row max">
+        <h4 class="large small-padding">All Group</h4>
+        <!-- <select name="matchEdition" id="matchEdition" class="input">
+        </select> -->
+    </span>
+    <button data-ui="#groupDialog" class="chip">
+        <i class="fa fa-plus"></i> Add New Group   
+    </button>
+</section>
+
+<dialog class="dialog" data-ui="groupDialog">
+    <header class="dialog-header">
+        <h1 class="large small-padding max">New Grouping</h1>
+        <button class="icon-button">
+            <i class="fa fa-close" data-ui="#groupDialog"></i>
+        </button>
+    </header>
+
+  <div class="dialog-content">
+    
+        <label class="label" for="groupEdition">Select Edition</label>
+        <select name="groupEdition" id="groupEdition" class="block input">
+        </select>
+    
+        <section class="row flex">
+            <span>
+                <label class="label" for="counties">Team</label>
+                <select name="counties" id="counties" class="block input" required>
+                </select>
+            </span>
+            <span>
+                <label class="label" for="group">Group</label>
+                <select name="group" id="group" class="block input" required>
+                    <option value="a">A</option>
+                    <option value="b">B</option>
+                    <option value="c">C</option>
+                    <option value="d">D</option>
+                </select>
+            </span>
+        </section>
+
+    </div>
+
+    <footer class="dialog-footer ">
+        <button class="button move-right" id="saveGroup">Save Group</button>
+    </footer>
+
+</dialog>
