@@ -100,7 +100,6 @@ $(document).ready(function () {
     );
 
 
-
     //  years.map((year,idx) =>  {
     //     $(`<option value="${year}">${year}</option>`).prependTo("#edition")
     // })
