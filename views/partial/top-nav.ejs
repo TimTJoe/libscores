@@ -1,45 +1,39 @@
-<nav class="row between nav padding sticky">
-    <a href="/"><img class="logo" src="/images/logo.png" alt="Logo"></a>
-    <span class="row">
-        <button class="icon-button margin-right" id="openPopup">
-            <i class="fa-sharp fa-solid fa-magnifying-glass"></i>
-        </button>
-        <a href="/login" class="link-button" id="contribute"> + Contribute</a>
-    </span>
-</nav>
+<header>
+    <nav class="row between nav padding relative">
+        <i class="fas fa-bars menu-toggle" id="mobile-menu"></i>
+        <a href="/"><img class="logo" src="/images/logo.png" alt="Logo"></a>
+        
+        <span class="row">
+            <button class="icon-button margin-right" id="openPopup">
+                <i class="fa-sharp fa-solid fa-magnifying-glass"></i>
+            </button>
+            <button class="link-button" id="contribute"> + Contribute</button>
+        </span>
+    </nav>
+</header>
 <div id="overlay"></div>
 <div id="popup" class="pop border bg-white padding box huge-elevate">
-    <div class="pop-content">
-        <i class="fa-solid fa-close red large" id="closePopup" style="cursor: pointer;"></i>
-    <div class="row">
-        <input type="text" name="text" placeholder="Enter your team here" class=" form-input padding border" required >
-        <i class="fa-sharp fa-solid fa-magnifying-glass"></i>
-    </div>
-    <p>Popular Search</p>
-    <a class="margin-bottom margin-top light-gray row mid-round">
-        <img src="/images/watanga_logo.png" alt="" class="lg-logo">
-        <div class="column">
-            <h4 class="bold">Watanga FC</h4>
-            <p>Orange First Division League</p>
+    <i class="fa-solid fa-close red large icon-button padding" id="closePopup"></i>
+    <div class="pop-content margin-top">
+        <div class="row" style="position: relative;">
+            <input type="text" name="text" placeholder="Enter your team here" class="form-input padding border" required id="search-bar" oninput="performSearch()">
+            <ul id="search-results" class="dropdown"></ul>
         </div>
-    </a>
-    <a class="margin-bottom light-gray row mid-round">
-        <img src="/images/nimba_kwado.jpg" alt="" class="lg-logo">
-        <div class="column">
-            <h4 class="bold">Nimba Kwado</h4>
-            <p>Orange Second Division League</p>
-        </div>
-    </a>
-    <a class="margin-bottom light-gray row mid-round">
-        <img src="/images/Paynesville_FC.png" alt="" class="lg-logo">
-        <div class="column">
-            <h4 class="bold">FC Paynesville</h4>
-            <p>Orange First Division League</p>
-        </div>
-    </a>
     </div>
 </div>
 
-
-
+<div id="overactive"></div>
+<div class="pop border bg-white padding box huge-elevate" id="contributeButton">
+    <i class="fa-solid fa-close red large icon-button padding" id="closeBtn"></i>
+    <div class="align-center">
+        <h1 class="huge margin-bottom">Login</h1>
+    <form action="/login" method="POST">
+        <input type="email" name="email" placeholder="Enter your Email" class=" form-input padding border margin-bottom required">
+        <input type="password" name="password" placeholder="Enter your password" required class=" form-input padding border margin-bottom">
+        <button type="submit" class="form-input border" style="background-color: red; color: white; cursor: pointer;">Login</button>
+        <p class="margin-top">You don't have an account?</p>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLScq4_j1NquFzSMxXI5Qu7iyj0gMVcULoNDcZAOpJSIm18kfRg/viewform?usp=pp_url" ><strong><u>Register now</u></strong>  </a>
+    </form>
+    </div>
+</div>
 <script src="/javascripts/pop.js"></script>

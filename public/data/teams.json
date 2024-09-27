@@ -1,0 +1,241 @@
+{
+    "LFA_First_Division": [
+        {
+            "name": "Watanga FC",
+            "logo": "/images/watanga_logo.png",
+            "league": "LFA First Division"
+        },
+        {
+            "name": "LISCR FC",
+            "logo": "/images/liscr_logo.png",
+            "league": "LFA First Division"
+        },
+        {
+            "name": "FC BEA Mountain",
+            "logo": "/images/bea_logo_lg.png",
+            "league": "LFA First Division"
+        },
+        {
+            "name": "Nimba Kwado",
+            "logo": "/images/nimba_kwado.png",
+            "league": "LFA First Division"
+        },
+        {
+            "name": "Mighty Barrolle",
+            "logo": "mighty_barrolle_logo.png",
+            "league": "LFA First Division"
+        },
+        {
+            "name": "LPRC Oilers",
+            "logo": "/images/lprc_logo.png",
+            "league": "LFA First Division"
+        },
+        {
+            "name": "Paynesville FC",
+            "logo": "/images/Paynesville_FC.png",
+            "league": "LFA First Division"
+        },
+        {
+            "name": "Freeport FC",
+            "logo": "https://example.com/freeport_fc_logo.png",
+            "league": "LFA First Division"
+        },
+        {
+            "name": "Heaven Eleven",
+            "logo": "https://example.com/heaven_eleven_logo.png",
+            "league": "LFA First Division"
+        },
+        {
+            "name": "Invincible Eleven",
+            "logo": "https://example.com/invincible_eleven_logo.png",
+            "league": "LFA First Division"
+        }
+    ],
+    "LFA_Second_Division": [
+        {
+            "name": "Cece United Football Academy",
+            "logo": "https://example.com/cece_united_logo.png",
+            "league": "LFA Second Division"
+        },
+        {
+            "name": "NPA Anchors",
+            "logo": "https://example.com/npa_anchors_logo.png",
+            "league": "LFA Second Division"
+        },
+        {
+            "name": "Jubilee FC",
+            "logo": "https://example.com/jubilee_fc_logo.png",
+            "league": "LFA Second Division"
+        },
+        {
+            "name": "Tony FC",
+            "logo": "https://example.com/tony_fc_logo.png",
+            "league": "LFA Second Division"
+        },
+        {
+            "name": "St. Joseph Warriors",
+            "logo": "https://example.com/st_joseph_warriors_logo.png",
+            "league": "LFA Second Division"
+        },
+        {
+            "name": "Gardnersville FC",
+            "logo": "https://example.com/gardnersville_fc_logo.png",
+            "league": "LFA Second Division"
+        },
+        {
+            "name": "Muscat FC",
+            "logo": "https://example.com/muscat_fc_logo.png",
+            "league": "LFA Second Division"
+        },
+        {
+            "name": "Mighty Blue Angels",
+            "logo": "https://example.com/mighty_blue_angels_logo.png",
+            "league": "LFA Second Division"
+        },
+        {
+            "name": "Sandi FC",
+            "logo": "https://example.com/sandi_fc_logo.png",
+            "league": "LFA Second Division"
+        },
+        {
+            "name": "Pags FC",
+            "logo": "https://example.com/pags_fc_logo.png",
+            "league": "LFA Second Division"
+        }
+    ],
+    "LFA_Women_League": [
+        {
+            "name": "Determine Girls FC",
+            "logo": "https://example.com/determine_girls_logo.png",
+            "league": "LFA Women's League"
+        },
+        {
+            "name": "Earth Angels",
+            "logo": "https://example.com/earth_angels_logo.png",
+            "league": "LFA Women's League"
+        },
+        {
+            "name": "Blanco FC",
+            "logo": "https://example.com/blanco_fc_logo.png",
+            "league": "LFA Women's League"
+        },
+        {
+            "name": "Senior Pro",
+            "logo": "https://example.com/senior_pro_logo.png",
+            "league": "LFA Women's League"
+        },
+        {
+            "name": "World Girls FC",
+            "logo": "https://example.com/world_girls_fc_logo.png",
+            "league": "LFA Women's League"
+        },
+        {
+            "name": "Pro Sisters FC",
+            "logo": "https://example.com/pro_sisters_fc_logo.png",
+            "league": "LFA Women's League"
+        },
+        {
+            "name": "Ambassadors FC",
+            "logo": "https://example.com/ambassadors_fc_logo.png",
+            "league": "LFA Women's League"
+        },
+        {
+            "name": "Island Queens",
+            "logo": "https://example.com/island_queens_logo.png",
+            "league": "LFA Women's League"
+        },
+        {
+            "name": "Hippo FC",
+            "logo": "https://example.com/hippo_fc_logo.png",
+            "league": "LFA Women's League"
+        },
+        {
+            "name": "Shaita Angels",
+            "logo": "https://example.com/shaita_angels_logo.png",
+            "league": "LFA Women's League"
+        }
+    ],
+    "County_Meet": [
+        {
+            "name": "Lofa County",
+            "logo": "/images/lofa_flag.png",
+            "league": "County Meet"
+        },
+        {
+            "name": "Grand Bassa County",
+            "logo": "/images/grand_bassa_flag.png",
+            "league": "County Meet"
+        },
+
+        {
+            "name": "Grand Kru County",
+            "logo": "/images/grand_kru_flag.png",
+            "league": "County Meet"
+        },
+        {
+            "name": "River Gee County",
+            "logo": "/images/rivergee_flag.png",
+            "league": "County Meet"
+        },
+        {
+            "name": "River Cess County",
+            "logo": "/images/rivercess_flag.png",
+            "league": "County Meet"
+        }, 
+        {
+            "name": "Margibi County",
+            "logo": "/images/margibi_flag.png",
+            "league": "County Meet"
+        },
+        {
+            "name": "Maryland County",
+            "logo": "/images/maryland_logo.png",
+            "league": "County Meet"
+        },
+        {
+            "name": "Montserrado County",
+            "logo": "/images/monsterrado_flag.png",
+            "league": "County Meet"
+        },
+        {
+            "name": "Nimba County",
+            "logo": "/images/nimba_flag.png",
+            "league": "County Meet"
+        },
+        {
+            "name": "Gbarpolu County",
+            "logo": "/images/gbarpolu_flag.png",
+            "league": "County Meet"
+        },
+        {
+            "name": "Grand Gedeh",
+            "logo": "/images/grand_gedeh_flag.png",
+            "league": "County Meet"
+        },
+        {
+            "name": "Bomi County",
+            "logo": "/images/bomi_flag.png",
+            "league": "County Meet"
+        },
+        {
+            "name": "Bong County",
+            "logo": "/images/bong_flag.png",
+            "league": "County Meet"
+        },
+        {
+            "name": "Sinoe County",
+            "logo": "/images/sinoe_flag.png",
+            "league": "County Meet"
+        },
+        {
+            "name": "Grand Cape Mount County",
+            "logo": "/images/grand_cape_mount_flag.png",
+            "league": "County Meet"
+        },
+        {
+            "name": "Sinoe County",
+            "logo": "/images/sinoe_flag.png",
+            "league": "County Meet"
+        }
+    ]
+}

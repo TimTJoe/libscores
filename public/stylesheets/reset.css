@@ -160,3 +160,79 @@ i {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--shadow); /* Darken scrollbar color on hover */
 }
+
+/* Hamburger Menu */
+#mobile-menu {
+  display: none;
+  cursor: pointer;
+  font-size: 1.5em;
+  color: #f4f4f4; /* Light color */
+  padding: 1em;
+  position: relative;
+}
+
+.menu-toggle i {
+  pointer-events: none;
+}
+
+@media (min-width: 160px) and (max-width: 920px) {
+
+
+  .constraint{
+    max-width: 100%;
+  }
+
+#mobile-menu {
+      display: block;
+      width: 100%;
+  }
+
+  .nav-menu {
+      display: none;
+      flex-direction: column;
+      width: 100%;
+      text-align: left;
+  }
+
+  .nav-menu.active {
+      display: flex;
+      width: 100%;
+  }
+
+  .nav-menu a {
+      display: block;
+  }
+  #sidebar{
+    display: block;
+    background: none;
+    position: relative;
+    min-height: 0;
+    max-height: 42vh;
+    width: 100%;
+  }
+  #main-body{
+    width: inherit;
+  }
+  #sidebar h2, #sidebar img{
+    display: none;
+  }
+  #sidebar .item{
+    font-size: 12px;
+    background-color: none;
+    width: 100px;
+  }
+
+  #credit{
+    display: none;
+  }
+
+  #sidebar #item{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+  }
+
+  #main-body{
+    width: 100%;
+  }
+}
