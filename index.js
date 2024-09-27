@@ -11,7 +11,6 @@ var indexRouter = require('./routes/index.routes');
 var liveRouter = require('./routes/live.routes');
 var leaguesRouter = require('./routes/league.routes');
 var teamsRouter = require('./routes/team.routes');
-var apiRouter = require('./routes/api.routes');
 var createLeaguesRouter = require('./routes/create.leagues.routes');
 var firstDivisionRouter = require('./routes/first.division.routes');
 var countyMeetRouter = require('./routes/county.meet.routes');
@@ -24,13 +23,11 @@ var cmRouter = require('./routes/admin/cm.routes');
 var fdRouter = require('./routes/admin/fd.routes');
 var sdRouter = require('./routes/admin/sd.routes');
 var wlRouter = require('./routes/admin/wl.routes');
-
 var cors = require("cors");
 const getDbInstance = require('@js/getDBInstance');
 var app = express();
 var port = process.env.PORT || '3000'
 var sqlite3 = require("sqlite3").verbose();
-var restrict = require("@middleware/restrict");
 var session = require("express-session");
 var SQLiteStore = require("connect-sqlite3")(session)
 
