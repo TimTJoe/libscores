@@ -1,0 +1,77 @@
+<%- include("./dash.nav.ejs") %>
+<body class="bg-rose">
+    <main class="wall row top-align">
+        <% if (competition) { %>
+            <div class="bg-white padding column no-gap small-pane" aria-live="polite">
+                <img src="/images/<%= competition.logo %>" alt="<%= competition.competition %> Logo" class="xl-logo">
+                <h3 class="mid bold cap info" id="competition"><%= competition.competition %></h3>
+                <hr class="divider">
+                <section class="column">
+                    <small>
+                        <strong>Type:</strong>
+                        <span class="info" id="type"><%= competition.type %></span>
+                    </small>
+                    <small>
+                        <strong>Founded:</strong>
+                        <span class="info" id="founded"><%= competition.founded %></span>
+                    </small>
+                    <small>
+                        <strong>Country:</strong>
+                        <span class="info" id="country"><%= competition.country_id %></span>
+                    </small>
+                    <small>
+                        <strong>Market Value:</strong>
+                        <span class="info" id="market_value"><%= competition.market_value %></span>
+                    </small>
+                    <small>
+                        <strong>Continent:</strong>
+                        <span class="info" id="continent"><%= competition.continent %></span>
+                    </small>
+                    <small style="visibility: hidden;">
+                        <span class="info" id="id"><%= competition.id %></span>
+                    </small>
+                </section>
+                <hr class="divider">
+                <small id="message" aria-live="assertive" class="tiny error"></small>
+                <button id="editteam" class="link-btn">
+                    <i class="fa fa-pen"></i>
+                    Update Info
+                </button>
+            </div>
+            <div class="max padding">
+            <%- include("./competition.bar.ejs") %>
+
+            <ul id="phaseList"></ul>
+
+                <section class="bg-white padding margin-top">
+                    <table class="table tiny">
+                        <thead class="thead">
+                            <tr class="tr tiny">
+                                <th>-</th>
+                                <th>Player</th>
+                                <th>Position</th>
+                                <th>Age</th>
+                                <th>Country</th>
+                                <th>Market Value</th>
+                                <th>Agent</th>
+                            </tr>
+                        </thead>
+                        <tbody class="tbody" id="">
+                            <!-- Players will be dynamically added here -->
+                        </tbody>
+                    </table>
+                </section>
+            </div>
+        <% } else { %>
+            <div class="bg-white padding column no-gap" aria-live="polite">
+                <h3 class="large info">Competition Not Found</h3>
+                <small class="tiny error"><%= msg %></small>
+            </div>
+        <% } %>
+    </main>
+    <%- include("./dash.foot.ejs") %>
+    <script type="module" src="/javascripts/updators/competition.update.js"></script>
+    <script type="module" src="/javascripts/creators/season.create.js"></script>
+    <script type="module" src="/javascripts/creators/phase.create.js"></script>
+    <script type="module" src="/javascripts/readers/phase.reader.js"></script>
+</body>

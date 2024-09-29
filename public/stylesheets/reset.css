@@ -109,7 +109,7 @@ section {
 
 /* Ensure consistent link color */
 a {
-  color: black; /* Set link color to black */
+  color: var(--blue); /* Set link color to black */
 }
 
 /* Ensure consistent header styling */

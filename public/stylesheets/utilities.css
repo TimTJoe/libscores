@@ -166,7 +166,7 @@
 .z-bottom { z-index: -1; }
 
 /* Remove default border and apply top border with spacing */
-hr.divider { border: 0; border-top: 1px solid var(--onyx); margin: var(--spacing-lg) 0; }
+hr.divider { border: 0; border-top: 1px solid var(--light-gray); margin: var(--spacing-sm) 0; }
 
 /* Apply large vertical spacing */
 .space { display: block; margin-bottom: var(--spacing-lg); }

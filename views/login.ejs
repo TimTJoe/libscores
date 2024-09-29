@@ -3,18 +3,31 @@
 <body class="no-overflow">
     <%- include("./partial/top-nav.ejs") %>
     <div class="container center">
+        <div method="post" class="border box padding small-round small-box column">
+            <h1 class="huge align-center">Contributor Login</h1>
+
+            <hr class="divider">
     
-        <div class="align-center">
-            <h1 class="huge margin-bottom">Login</h1>
+            <label for="username" class="label bold">What's your usename?</label>
+            <input type="text" id="username" name="username" placeholder="Enter your username" class="form-input large-input" required>
+            
+            <label for="password" class="label bold">Password</label>
+            <input type="password" id="password" name="password" placeholder="********" required class="form-input large-input">
+
+            <small class="small error" id="errorMsg">Email or password incorrect. Try again.</small>
     
-            <input type="email" id="email" name="email" placeholder="Enter your Email" class="form-input margin-bottom" required>
+            <button  class="button large center" id="loginBtn">
+                <div id="loader"></div> 
+                <p id="text">Log in</p>
+            </button>
     
-            <input type="password" id="password" name="password" placeholder="Enter your password" required class="form-input">
-    
-            <button  class="button large margin-top"">Log in</button>
-    
-            <p class="margin-top">You don't have an account?</p>
-            <a class="bold" href="https://docs.google.com/forms/d/e/1FAIpQLScq4_j1NquFzSMxXI5Qu7iyj0gMVcULoNDcZAOpJSIm18kfRg/viewform?usp=pp_url" >Register now </a>
-        </div>
+            <span>
+                <p class="margin-top align-center ">You're not a contributor?
+                <a class="bold link" href="https://docs.google.com/forms/d/e/1FAIpQLScq4_j1NquFzSMxXI5Qu7iyj0gMVcULoNDcZAOpJSIm18kfRg/viewform?usp=pp_url" target="_blank" > Fill in contributor form </a>
+            </p>
+            </span>
+        </d>
 </div>
+<script type="module" src="/javascripts/jquery.js"></script>
+<script type="module" src="/javascripts/login.js"></script>
 </body>

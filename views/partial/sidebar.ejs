@@ -1,32 +1,45 @@
-
-        <aside class="sidebar column border small-round sticky">
-            <div class="small-padding row">
-                <img src="/images/lfa_logo.png" alt="Logo" class="mid-logo no-round">
-                <h2 class="huge align-center capitalize max">Leagues</h2>
-            </div>
-            <section class="column menu padding list">
-                <a href="/" class="item <%= league == '/' ? 'active' : '' %>">
-                    <i class="fa-solid fa-house"></i>Home
-                </a>
-                <a href="/first_division/results" class="item 
-                <%= league == 'l1' ? 'active' : '' %>">
-                <img src="/images/league_1.png" alt="League 1">First Division</a>
-                <a href="/second_division/results" class="item <%= league == 'l2' ? 'active' : '' %>"> <img src="/images/league_2.jpg" alt="League 2">Second Division</a>
-                <a href="/women_league/results" class="item <%= league == 'wl' ? 'active' : '' %>"><img src="/images/women_league.jpg" alt="Women League">Women League</a>
-                <a href="/county_meet/results" class="item <%= league == 'cm' ? 'active' : '' %>"><img src="/images/county_meet.png" alt="County Meet">County Meet</a>
-            </section>
-            <section class="muted tiny move-down row sm-gap  small-padding">
-                <strong>Credit: </strong>
-                    <a href="http://github.com/timtjoe" target="_blank"  class="blue">Tim T. Joe</a>
-                    &middot;
-                    <a href="https://github.com/ikelsylvester" target="_blank" class="blue">Ikel Sylvester
-                    </a>
-                    &middot;
-                    <a href="https://github.com/TerrysonTarr" target="_blank" class="blue">Terryson Tarr</a>
-                    &middot;
-                    <a href="https://github.com/smartdosso" target="_blank" class="blue">Souleymane Dosso
-                    </a>
-                    &middot;
-                    <a href="/admin" class="blue" target="_blank">Admin</a>
-            </section>
-        </aside>
+<div class="nav-menu">
+    <aside class="sidebar column border small-round sticky" id="sidebar">
+    <div class="small-padding row" >
+        <img src="/images/lfa_logo.png" alt="Logo" class="mid-logo no-round">
+        <h2 class="huge align-center capitalize max">Leagues</h2>
+    </div>
+    <ul class="column menu padding list" id="item">
+        <li>
+            <a href="/" class="item <%= league == '/' ? 'active' : '' %>">
+            <i class="fa-solid fa-house"></i>Home
+            </a>
+        </li>
+        <li>
+            <a href="/first_division/" class="item 
+            <%= league == 'l1' ? 'active' : '' %>">
+            <img src="/images/league_1.png" alt="League 1">First Division</a>
+        </li>
+        <li>
+            <a href="/second_division/" class="item <%= league == 'l2' ? 'active' : '' %>"> <img src="/images/league_2.jpg" alt="League 2">Second Division</a>
+        </li>
+        <li>
+            <a href="/women_league/" class="item <%= league == 'wl' ? 'active' : '' %>"><img src="/images/women_league.jpg" alt="Women League">Women League</a>
+        </li>
+        <li>
+            <a href="/county_meet/" class="item <%= league == 'cm' ? 'active' : '' %>"><img src="/images/county_meet.png" alt="County Meet">County Meet</a>
+        </li>
+    </ul>
+    <section class="muted tiny move-down column sm-gap  small-padding" id="credit">
+        <strong>Credit: </strong>
+        <span class="row sm-gap">
+            <a href="https://github.com/timtjoe" target="_blank"  class="blue">Tim T. Joe</a>
+            &middot;
+            <a href="https://github.com/smartdosso" target="_blank" class="blue">Souleymane Dosso
+            </a>
+        </span> 
+        <span class="row row sm-gap">
+            <a href="https://github.com/ikelsylvester" target="_blank" class="blue">Ikel Sylvester
+            </a>&middot;
+            <a href="https://github.com/TerrysonTarr" target="_blank" class="blue">Terryson Tarr</a>
+            
+        </span>
+        <a href="/admin" class="blue" target="_blank">Admin</a>
+    </section>
+</aside>
+</div>

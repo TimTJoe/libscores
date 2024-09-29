@@ -1,0 +1,17 @@
+[
+    {"country": "Benin", "flag": "https://upload.wikimedia.org/wikipedia/commons/9/9a/Flag_of_Benin.svg"},
+    {"country": "Burkina Faso", "flag": "https://upload.wikimedia.org/wikipedia/commons/3/31/Flag_of_Burkina_Faso.svg"},
+    {"country": "Cabo Verde", "flag": "https://upload.wikimedia.org/wikipedia/commons/3/38/Flag_of_Cape_Verde.svg"},
+    {"country": "Ivory Coast", "flag": "https://upload.wikimedia.org/wikipedia/commons/8/84/Flag_of_Ivory_Coast.svg"},
+    {"country": "Gambia", "flag": "https://upload.wikimedia.org/wikipedia/commons/6/6c/Flag_of_the_Gambia.svg"},
+    {"country": "Ghana", "flag": "https://upload.wikimedia.org/wikipedia/commons/1/19/Flag_of_Ghana.svg"},
+    {"country": "Guinea", "flag": "https://upload.wikimedia.org/wikipedia/commons/e/e9/Flag_of_Guinea.svg"},
+    {"country": "Guinea-Bissau", "flag": "https://upload.wikimedia.org/wikipedia/commons/0/0a/Flag_of_Guinea-Bissau.svg"},
+    {"country": "Liberia", "flag": "https://upload.wikimedia.org/wikipedia/commons/b/b8/Flag_of_Liberia.svg"},
+    {"country": "Mali", "flag": "https://upload.wikimedia.org/wikipedia/commons/9/9d/Flag_of_Mali.svg"},
+    {"country": "Niger", "flag": "https://upload.wikimedia.org/wikipedia/commons/f/f4/Flag_of_Niger.svg"},
+    {"country": "Nigeria", "flag": "https://upload.wikimedia.org/wikipedia/commons/7/7c/Flag_of_Nigeria.svg"},
+    {"country": "Senegal", "flag": "https://upload.wikimedia.org/wikipedia/commons/f/fc/Flag_of_Senegal.svg"},
+    {"country": "Sierra Leone", "flag": "https://upload.wikimedia.org/wikipedia/commons/b/b9/Flag_of_Sierra_Leone.svg"},
+    {"country": "Togo", "flag": "https://upload.wikimedia.org/wikipedia/commons/3/3e/Flag_of_Togo.svg"}
+]

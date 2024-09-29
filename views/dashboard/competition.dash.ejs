@@ -1,0 +1,45 @@
+<%- include("./dash.nav.ejs") %>
+<body class="bg-rose">
+    
+    <main class="wall row top-align">
+        <%- include("./competition.dialog.ejs") %>
+        <table id="leagueTable" class="table tiny">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>League Name</th>
+                    <th>Founded</th>
+                    <th>Country</th>
+                    <th>Market Value</th>
+                    <th>Continent</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% if (leagues.length === 0) { %>
+                    <tr>
+                        <td colspan="6" class="align-center"><%= message %></td>
+                    </tr>
+                <% } else { %>
+                    <% leagues.forEach(function(league) { %>
+                        <tr id="<%= league.id %>">
+                            <td><img src="/images/<%= league.logo %>" class="tiny-logo"></td>
+                            <td>
+                                <a href="/dashboard/competitions/<%= league.id %>">
+                                    <%= league.competition %>   
+                                </a>
+                            </td>
+                            <td><%= league.founded %></td>
+                            <td><%= league.country_id %></td>
+                            <td><%= league.market_value %></td>
+                            <td><%= league.continent %></td>
+                        </tr>
+                    <% }); %>
+                <% } %>
+            </tbody>
+        </table>
+        
+    </main>
+    <%- include("./dash.foot.ejs") %>
+    <script type="module" src="/javascripts/readers/competition.read.js"></script>
+    <script type="module" src="/javascripts/creators/competition.create.js"></script>
+</body>

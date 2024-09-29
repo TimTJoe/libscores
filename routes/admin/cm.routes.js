@@ -216,32 +216,6 @@ router.get('/players/all', async function(req, res, next) {
 });
 
 
-router.get('/lineups', async function(req, res, next) {
-       let options = {
-              title: "Add Lineup ",
-              page: "lineup"
-       }
-       res.render('admin/cm/lineup.cm.ejs', options);
-});
-
-router.get('/lineup/:id', async function(req, res, next) {
-       try {
-              db.all(
-                     "SELECT *, county_meet_players.id FROM county_meet_players LEFT OUTER JOIN counties ON counties.id=county_meet_players.county_id",
-                     function (err, rows) {
-                            if (err) {
-                            throw new Error(err);
-                     } else {
-                            res.status(200).json({players:rows})
-                            };
-                     }
-                     );
-       } catch (error) {
-              res.status(400).json({error})
-       }
-});
-
-
 
 
 module.exports = router;

@@ -1,0 +1,75 @@
+<%- include("./dash.nav.ejs") %>
+<body class="bg-rose">
+    <main class="wall row top-align">
+        <% if (club) { %>
+            <div class="bg-white padding column no-gap" aria-live="polite">
+                <img src="/images/<%= club.badge %>" alt="<%= club.club %> Badge" class="xl-logo">
+                <h3 class="large teaminfo" id="club"><%= club.club %></h3>
+                <section class="column">
+                <small>
+                    <strong>Coach:</strong> 
+                    <span class="teaminfo" id="coach"><%= club.coach || 'Mark K. Paye' %></span>
+                </small>
+                <small>
+                    <strong>Founded:</strong> 
+                    <span class="teaminfo" id="founded"><%= club.founded %></span>
+                </small>
+                <small>
+                    <strong>Stadium:</strong> 
+                    <span class="teaminfo" id="stadium"><%= club.stadium %></span>
+                </small>
+                    <small>
+                        <strong>Squad:</strong>
+                        <span class="teaminfo" id="squad"><%= club.squad %></span>
+                    </small>
+                    <small>
+                        <strong>Market Value:</strong>
+                        <span class="teaminfo" id="market_value"><%= club.market_value %></span>
+                    </small>
+                    <small>
+                        <strong>Competition:</strong>
+                        <span class="teaminfo" id="competition"><%= club.competition || 'League Name' %></span>
+                    </small>
+                    <small>
+                        <strong>Country:</strong>
+                        <span class="teaminfo" id="team_country"><%= club.country_id == 1 ? 'Liberia' : club.country_id %></span>
+                    </small>
+                    <small style="visibility: hidden;" >
+                        <span class="teaminfo" id="id" ><%= club.id %></span>
+                    </small>
+                </section>
+                    <hr class="divider">
+                    <small id="message" aria-live="assertive" class="tiny error"></small>
+                    <button id="editteam" class="link-btn">
+                        <i class="fa fa-pen"></i>
+                        Update Info
+                    </button>
+            </div>
+            <div class="max">
+                <section class="bg-white  padding long ">
+                    <table class="table tiny">
+                        <thead class="thead">
+                            <tr class="tr tiny">
+                                <th>-</th>
+                                <th>Player</th>
+                                <th>Position</th>
+                                <th>Age</th>
+                                <th>Country</th>
+                                <th>Market Value</th>
+                                <!-- <th>Status</th> -->
+                                <th>Agent</th>
+                            </tr>
+                        </thead>
+                        <tbody class="tbody" id="">
+                        </tbody>
+                    </table>
+                </section>
+            </div>
+         <% }  else {%>
+            <% msg %>
+        <% }%>
+    </main>
+    <%- include("./dash.foot.ejs") %>
+    <script type="module" src="/javascripts/clubs.dash.js"></script>
+    <script type="module" src="/javascripts/updators/club.update.js"></script>
+</body>

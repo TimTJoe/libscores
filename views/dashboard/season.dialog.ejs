@@ -1,0 +1,53 @@
+<!-- Button to open dialog -->
+<button class="small-button" data-ui="#seasonDialog">
+    <i class="fa fa-plus"></i>
+    New Season
+</button>
+
+<!-- Dialog to add season -->
+<dialog class="dialog small" data-ui="seasonDialog">
+    <header class="dialog-header">
+        <h4 class="large align-center">New Season</h4>
+        <button class="icon-button" id="closeDialog">
+            <i class="fa fa-close" data-ui="#seasonDialog"></i>
+        </button>
+    </header>
+
+    <section class="dialog-content">
+        <div id="dialogMsg" class="message align-center" style="display:none;"></div> <!-- Success/Error Message -->
+        
+        <!-- Hidden input for competition_id -->
+        <input type="hidden" id="competition_id" name="competition_id" value="">
+
+        <!-- Form Fields -->
+        <section class="row flex">
+            <span>
+                <label for="start" class="label">Start Date</label>
+                <input type="date" name="start" id="start" class="block input">
+            </span>
+            <span>
+                <label for="end" class="label">End Date</label>
+                <input type="date" name="end" id="end" class="block input">
+            </span>
+        </section>
+        <section class="row flex">
+            <span>
+                <label for="games" class="label">Number of Games</label>
+                <input type="number" name="games" id="games" class="block input">
+            </span>
+            <span>
+                <label for="status" class="label">Status</label>
+                <input type="text" name="status" id="status" class="block input" disabled>
+            </span>
+        </section>
+    </section>
+
+    <footer class="dialog-footer">
+        <button type="submit" class="button center" id="saveSeason">
+            <span>Save Season</span>
+            <span id="spinner" style="display:none;">
+                <i class="fa fa-spinner fa-spin"></i> Saving...
+            </span>
+        </button> 
+    </footer>
+</dialog>

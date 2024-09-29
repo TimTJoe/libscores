@@ -60,4 +60,18 @@
   --shadow-md: 0 2px 4px rgba(0, 0, 0, 0.3); /* Medium shadow */
   --shadow-lg: 0 4px 8px rgba(0, 0, 0, 0.4); /* Large shadow */
   --shadow-xl: 0 8px 16px rgba(0, 0, 0, 0.5); /* Extra-large shadow */
+
+  --skywhisper: #a5cce9;
+  --meadowlight: #afd179;
+  --rosemist: #f8a7a3;
+  --rosemist: #f3dad8;
+  --stoneveil: #bbbbbb;
+  --oceanflow: #5ca6ff;
+  --blue: #4285f5;
+  --ocean-wave: #1d75a3;
+  --fire: #d2003c;
+  --nightsteel: #1a3151;
+  --navy: #051455;
+  --abysss: #00193f;
+  --void: #000000;
 }

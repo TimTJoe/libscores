@@ -1,0 +1,107 @@
+<main>
+    <h1>Search Results for "<%= searchTerm %>"</h1>
+
+    <!-- Players Table -->
+    <h2>Players</h2>
+    <% if (players.length > 0) { %>
+    <table>
+        <thead>
+            <tr>
+                <th>Player</th>
+                <th>Club</th>
+                <th>Position</th>
+                <th>Age</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% players.forEach(player => { %>
+            <tr>
+                <td><%= player.name %></td>
+                <td><%= player.club %></td>
+                <td><%= player.position %></td>
+                <td><%= player.age %></td>
+            </tr>
+            <% }) %>
+        </tbody>
+    </table>
+    <% } else { %>
+        <p>No players found for "<%= searchTerm %>".</p>
+    <% } %>
+
+    <!-- Clubs Table -->
+    <h2>Clubs</h2>
+    <% if (clubs.length > 0) { %>
+    <table>
+        <thead>
+            <tr>
+                <th>Club</th>
+                <th>Country</th>
+                <th>Founded</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% clubs.forEach(club => { %>
+            <tr>
+                <td><%= club.name %></td>
+                <td><%= club.country %></td>
+                <td><%= club.founded %></td>
+            </tr>
+            <% }) %>
+        </tbody>
+    </table>
+    <% } else { %>
+        <p>No clubs found for "<%= searchTerm %>".</p>
+    <% } %>
+
+    <!-- Games Table -->
+    <h2>Games</h2>
+    <% if (games.length > 0) { %>
+    <table>
+        <thead>
+            <tr>
+                <th>Home Team</th>
+                <th>Away Team</th>
+                <th>Date</th>
+                <th>Score</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% games.forEach(game => { %>
+            <tr>
+                <td><%= game.home_team %></td>
+                <td><%= game.away_team %></td>
+                <td><%= game.date %></td>
+                <td><%= game.score %></td>
+            </tr>
+            <% }) %>
+        </tbody>
+    </table>
+    <% } else { %>
+        <p>No games found for "<%= searchTerm %>".</p>
+    <% } %>
+
+    <!-- Competitions Table -->
+    <h2>Competitions</h2>
+    <% if (competitions.length > 0) { %>
+    <table>
+        <thead>
+            <tr>
+                <th>Competition</th>
+                <th>Country</th>
+                <th>Season</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% competitions.forEach(competition => { %>
+            <tr>
+                <td><%= competition.name %></td>
+                <td><%= competition.country %></td>
+                <td><%= competition.season %></td>
+            </tr>
+            <% }) %>
+        </tbody>
+    </table>
+    <% } else { %>
+        <p>No competitions found for "<%= searchTerm %>".</p>
+    <% } %>
+</main>

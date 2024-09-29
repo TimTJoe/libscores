@@ -3,5 +3,5 @@
     <a class="chip <%= league == 'live' ? 'active' : '' %>" href="/live">Live</a>
     <a class="chip <%= league == 'results' ? 'active' : '' %>" href="/results">Results</a>
     <a class="chip <%= league == 'fixtures' ? 'active' : '' %>" href="/fixtures">Fixtures</a>
-    <input class="chip move-right no-border" type="date">
+    <input class="chip move-right no-border <%= league == 'live' ? 'none' : '' %>" type="date"> 
 </section>

@@ -1,0 +1,63 @@
+<body>
+    <!-- Button to open dialog -->
+    <button data-ui="#clubDialog" class="chip ">
+        <i class="fa fa-plus"></i> Add Club
+    </button>
+
+    <!-- Dialog to add team -->
+    <dialog class="dialog small" data-ui="clubDialog">
+        <header class="dialog-header">
+            <h4 class="large align-center">Add Team</h4>
+            <button class="icon-button" id="closeDialog">
+                <i class="fa fa-close" data-ui="#clubDialog"></i>
+            </button>
+        </header>
+
+        <section class="dialog-content">
+            <div id="message" class="message align-center" style="display:none;"></div> <!-- Success/Error Message -->
+            <section class="row flex">
+                <span>
+                    <label for="club" class="label">Team Name</label>
+                    <input name="club" id="club" class="block input" placeholder="Watanga FC">
+                </span>
+                <span>
+                    <label for="founded" class="label">Year Founded</label>
+                    <input name="founded" id="founded" class="block input" placeholder="Feb 18, 1980">
+                </span>
+            </section>
+            
+            <section class="row flex">
+                <span>
+                    <label for="country" class="label">Country</label>
+                    <select name="country" id="countries" class="block input">
+                        <option value="1">Liberia</option>
+                    </select>
+                </span>
+                <span class="column no-gap">
+                    <label for="stadium" class="label block">Stadium</label>
+                    <input placeholder="Samuel K. Doe Sport Complex" type="text" name="stadium" id="stadium" class="input block">
+                </span>
+            </section>
+
+            <section class="row flex">
+                <span class="column no-gap">
+                    <label for="value" class="label block">Market Value</label>
+                    <input type="number" name="value" id="value" class="input block" placeholder="US$ 300,3500">
+                </span>
+                <span class="column no-gap">
+                    <label for="badge" class="label block">Team badge</label>
+                    <input type="file" name="badge" id="badge" class="input block">
+                </span>
+            </section>
+        </section>
+
+        <footer class="dialog-footer">
+            <button type="submit" class="button move-right" id="saveClub">Save Club</button>
+            <span id="spinner" style="display:none;">
+                <i class="fa fa-spinner fa-spin"></i> Saving...
+            </span>
+        </footer>
+    </dialog>
+
+    <!-- Include your JS file -->
+</body>

@@ -1,0 +1,48 @@
+ {
+    "players": [
+      {
+        "playerName": "Chancy Freeman",
+        "position": "midfielder",
+        "age": "29",
+        "team": "Watanga FC"
+      },
+      {
+        "playerName": "Emmenuel Sieh",
+        "position": "attacker",
+        "age": "19",
+        "team": "Watanga FC"
+      }
+    ],
+
+    "players": [
+      {
+        "playerName": "Josiah Cea",
+        "position": "midfielder",
+        "age": "19",
+        "team": "Paynesville FC"
+      },
+      {
+        "playerName": "Mickie Dokie",
+        "position": "midfielder",
+        "age": "19",
+        "team": "Paynesville FC"
+      }
+    ],
+    
+    
+    "players": [
+      {
+        "playerName": "Chancy Freeman",
+        "position": "midfielder",
+        "age": "29",
+        "team": "Freeport FC"
+      },
+      {
+        "playerName": "Emmenuel Sieh",
+        "position": "attacker",
+        "age": "19",
+        "team": "Freeport"
+      }
+    ]
+  }
+  

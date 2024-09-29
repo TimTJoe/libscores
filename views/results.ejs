@@ -3,14 +3,19 @@
     <%- include("./partial/top-nav.ejs") %>
     <div class="container row constraint">
         <%- include("./partial/sidebar") %>
-        <div class="column full max">
-            <%- include("./partial/league-header") %>
-            <%- include("./partial/league-tabs") %>
-            <div id="container" class="league-container column spacing">
-                <center id="loader"><div class="margin loader" ></div></center>
-            </div>
+    <div class="column full max padding" id="main-body">
+        <%- include("./partial/tabs") %>
+           
+        <div id="l1" class="league-container column spacing full-height">
+            <center id="loader"><div class="margin loader"></div></center>
+        <div id="l2" class="league-container column spacing">
+            <center id="loader"><div class="margin loader"></div></center>
         </div>
-    </div>
+        <div id="l3" class="league-container column spacing">
+            <center id="loader"><div class="margin loader"></div></center>
+        </div>
+</div>
+</div>
 </body>
 <script type="module" src="/javascripts/jquery.js"></script>
-<script type="module" src="/javascripts/results.js"></script>
+<script type="module" src="/javascripts/fetch.js"></script>
