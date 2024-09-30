@@ -6,26 +6,6 @@ const upload = require('@middleware/upload');
 const { dbQuery, dbRun, dbGet, createDbConnection } = require('@utils/dbUtils');
 
 
-// Utility function for database queries
-// const dbQuery = (db, query, params = []) => {
-//     return new Promise((resolve, reject) => {
-//         db.all(query, params, (err, rows) => {
-//             if (err) return reject(err);
-//             resolve(rows);
-//         });
-//     });
-// };
-
-// Utility function for running insert queries
-// const dbRun = (db, query, params = []) => {
-//     return new Promise((resolve, reject) => {
-//         db.run(query, params, function(err) {
-//             if (err) return reject(err);
-//             resolve(this);
-//         });
-//     });
-// };
-
 // GET route to display the competitions (leagues) page
 router.get('/', async (req, res) => {
        try {

@@ -3,7 +3,19 @@
             <option value="2023">2023</option>
         </select>
     <span class="row move-right">
+
+        <button menu-ui="#dropdown2" class="icon-button">
+            <i class="fa fa-ellipsis-h"></i>
+        </button>
+        <div id="dropdown2" menu-data="dropdown2">
+        </div>
+
+        <a href="/dashboard/games" class="small-button">New Game</a>
         <%- include("./season.dialog.ejs") %>
         <%- include("./phase.dialog.ejs") %>
+        <%- include("./competition.dialog.ejs") %>
+        
+        
+        
     </span>
 </nav>

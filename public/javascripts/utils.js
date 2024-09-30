@@ -282,7 +282,7 @@ export function populateSeasonsSelectors() {
   const $selectors = $('.season-selector');
 
   if ($selectors.length === 0) {
-    console.error("No select elements with the class 'season-selector' found.");
+    // console.error("No select elements with the class 'season-selector' found.");
     return;
   }
 

@@ -10,6 +10,7 @@ $(document).ready(function() {
     });
   
     function toggleDialog(dialog) {
+      $('[menu-data]').hide();
       if (!dialog.length) return;
   
       var isActive = dialog.hasClass('active');

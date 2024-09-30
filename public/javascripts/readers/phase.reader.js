@@ -57,14 +57,14 @@ export function renderPhases(phaseId = null) {
   
   
         $fragment.append(`
-            <table id="teamTable" class="tiny">
+            <div class="bg-white small-padding margin-top small-round"><table id="teamTable" class="tiny">
             <thead>
                 <tr><th>Club</th><th>Founded</th>
                 <th>Squad</th><th>Stadium</th>
                 <th>Market Value</th>
             </thead>
                 <tbody></tbody>
-            </table>`);
+            </table></div>`);
         $('#teamTable tbody').append(teamFragment);
       })
       .fail(function (jqXHR, textStatus, errorThrown) {

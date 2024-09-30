@@ -142,12 +142,13 @@ app.use('/admin/sd', sdRouter);
 app.use('/admin/wl', wlRouter);
 
 // DASHBOARD ROUTES
-// dashbaord routes
+// dashboard routes
 var dashboardRouter = require('./routes/dashboard');
 var clubsRouter = require('./routes/dashboard/clubs.routes');
 var competitionRouter = require('./routes/dashboard/competition.routes');
 var seasonRouter = require('./routes/dashboard/season.routes');
 var phaseRouter = require('./routes/dashboard/phase.routes');
+var gamesRouter = require('./routes/dashboard/games.routes');
 
 // DASHBOARD ROUTES HANDLERS
 app.use("/dashboard", protected)
@@ -156,11 +157,13 @@ app.use("/dashboard/clubs", clubsRouter)
 app.use("/dashboard/competitions", competitionRouter)
 app.use("/dashboard/seasons", seasonRouter)
 app.use("/dashboard/phases", phaseRouter)
+app.use("/dashboard/games", gamesRouter)
 
 // fetch data api routes
 var countyRouter = require('./routes/api/county.routes');
 var clubApiRouter = require('./routes/api/clubs.api');
 var creatorRouter = require('./routes/api/creator.routes')
+var gamesApiRouter = require('./routes/api/games.api')
 
 // API v1 Endpoints
 app.use("/counties", countyRouter)
@@ -168,6 +171,7 @@ app.use("/login", loginRouter)
 app.use("/v1/api", apiRouter)
 app.use("/v1/api/clubs", clubApiRouter)
 app.use("/v1/api/creates", creatorRouter)
+app.use("/v1/api/games", gamesApiRouter)
 
 // start server
 app.listen(port, function listener() {

@@ -565,7 +565,6 @@ table, th, td {
   background-color: white;
   border: 1px solid var(--fog);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  z-index: 9100;
   border-radius: var(--round-md);
   min-width: 320px;
 }
@@ -588,6 +587,8 @@ table, th, td {
 /* Overlay to dim the background when dialog is active */
 .dialog.active {
   display: block;
+  z-index: 9100;
+
 }
 
 body.dialog-active::before {
@@ -862,4 +863,19 @@ button.blue {
 }
 .suggestion:hover {
   background-color: #f0f0f0; /* Highlight on hover */
+}
+
+ /* Menu styles */
+ [menu-data] {
+  display: none; /* Initially hidden */
+  position: absolute;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 600;
+}
+
+[menu-data].open {
+  display: block;
 }
