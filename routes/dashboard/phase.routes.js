@@ -1,5 +1,5 @@
 const express = require('express');
-const { dbQuery, dbRun, dbGet, createDbConnection } = require('@utils/dbUtils');
+const { dbQuery, dbRun, dbGet,dbAll, createDbConnection } = require('@utils/dbUtils');
 const router = express.Router();
 
 // Helper function to handle errors
@@ -43,8 +43,6 @@ router.get('/', async (req, res) => {
 router.post('/', async (req, res) => {
     const { season, team } = req.body;
 
-    console.log(req.body)
-
     // Validate required fields
     if (season === undefined || team === undefined) {
         return res.status(400).json({ error: 'season and team are required.' });
@@ -75,39 +73,27 @@ router.post('/', async (req, res) => {
 });
 
 // GET a single phase by ID
+// GET a single phase by ID
 router.get('/:id', async (req, res) => {
     const { id } = req.params;
-    console.log(id)
 
     try {
         const db = await createDbConnection();
-        const query = `
-    SELECT 
-        phases.id AS phase_id,
-        phases.status AS phase_status,
-        seasons.start AS season_start,
-        seasons.end AS season_end,
-        clubs.id AS team_id,
-        clubs.club AS team_name
-    FROM 
-        phases
-    LEFT JOIN 
-        seasons ON phases.season_id = seasons.id
-    LEFT JOIN 
-        clubs ON phases.team_id = clubs.id
-    WHERE 
-        phases.season_id = ?
-    ORDER BY 
-        phases.id DESC;
-    `
+        const query = `SELECT phases.id AS phase_id,
+    phases.season_id,
+    phases.status,
+    clubs.*  -- Select all columns from the clubs table
+FROM phases 
+JOIN clubs ON phases.team_id = clubs.id 
+WHERE phases.season_id = ?`;
 
-const phase = await dbGet(db, query, [id]);
+        const phases = await dbAll(db, query, [id]);
+        console.log(phases)
 
-        if (!phase) {
-            return res.status(404).json({ message: 'Phase not found.' });
+        if (!phases || phases.length === 0) {
+            return res.status(404).json({ message: 'No phases found for this season.' });
         }
-
-        res.status(200).json({ phase });
+        res.status(200).json({ teams: phases });
     } catch (err) {
         handleError(res, err, 'Error fetching phase.');
     }

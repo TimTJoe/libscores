@@ -1,72 +1,76 @@
-import { populatePhasesSelect, renderPhases } from "../utils.js";
+import { populatePhasesSelect } from "../utils.js";
 
 $(document).ready( function () {
     // Bind the change event on the #seasons select element
-    $(document).on("change", "#seasons", async function () {
+    $(document).on("change", "#barSeasons", async function () {
         let id = $(this).val();
-        let phase = renderPhases(id)
-        console.log("phase", phase)
+        renderPhases(id)
     });
-
-   
 });
 
-
 /**
- * Fetches all phases by making an AJAX GET request to the /dashboard/phases route.
- * The fetched data is displayed dynamically in the UI by populating a list element with phase details.
+ * Fetches and renders phase information.
+ * It fetches all phases or a specific phase based on the provided data.
+ *
+ * @param {number|null} phaseId - The ID of the phase to fetch. If null, fetches all phases.
  */
-export function fetchPhases() {
-    $.get('/dashboard/phases', function (data) {
-        // Handle success - log the phases data to the console
-
-        // Clear any existing data in the phase list
-        $('#phaseList').empty();
-
-        // Append each phase's details to the list element
-        $.each(data, function (index, phase) {
-            $('#phaseList').append(
-                `<li>${phase.id} - ${phase.club} - ${phase.team_name}</li>`
-            );
-        });
-
-    }).fail(function (jqXHR, textStatus, errorThrown) {
-        // Handle error
-        console.error('Error fetching phases:', textStatus, errorThrown);
-        alert('Failed to fetch phases. Please try again later.');
-    });
-}
-
-
-
-/**
- * Function to fetch a specific phase by ID and display its details, including multiple teams.
- * @param {number} phaseId - The ID of the phase to fetch.
- */
-export function fetchPhaseById(phaseId) {
-    // Construct the URL with the phase ID
-    const url = `/dashboard/phases/${phaseId}`;
-
-    // Make an AJAX GET request to fetch the phase by ID
-    $.get(url, function (data) {
-        // Handle success - log the phase data to the console
-
-        // Clear the existing list of phases
-        $('#phaseList').empty();
-
-        // If there are multiple teams, iterate and display each
-        if (data.teams && data.teams.length > 0) {
-            $.each(data.teams, function (index, team) {
-                $('#phaseList').append(`<li>${data.phase_id} - Team: ${team.team_name} (Club: ${team.club_name})</li>`);
-            });
+export function renderPhases(phaseId = null) {
+    // Construct the URL based on whether a phase ID is provided
+    const url = phaseId ? `/dashboard/phases/${phaseId}` : '/dashboard/phases';
+    const $fragment = $('#fragment'); // Cache the fragment element
+  
+    // Make an AJAX GET request to fetch the phase(s)
+    $.get(url)
+      .done(function (data) {
+        console.log("data", data)
+        data = data.teams
+        // Clear the existing fragment content
+        $fragment.empty();
+  
+        // Create document fragments for both the season and team tables
+        const seasonFragment = $(document.createDocumentFragment());
+        const teamFragment = $(document.createDocumentFragment());
+  
+        if (data.length >= 0) {
+          // Iterate over the data and append to the fragments
+          $.each(data, function (index, phase) {
+  
+            // Append team details to the team fragment
+            teamFragment.append(`
+              <tr>
+                <td class="row">
+                <img class="sm-logo" src="/images/${phase.badge}" alt="${phase.club} Badge">
+                ${phase.club}</td>
+                <td>${phase.founded}</td>
+                <td>${phase.squad || 'N/A'}</td>
+                <td>${phase.stadium}</td>
+                <td>${phase.market_value}</td>
+                <td></td>
+              </tr>
+            `);
+          });
         } else {
-            // Handle case when no teams are returned
-            $('#phaseList').append('<li>No teams found for this phase.</li>');
+          // Handle the case where no data is returned
+          seasonFragment.append('<tr><td colspan="2">No seasons found.</td></tr>');
+          teamFragment.append('<tr><td colspan="6">No teams found.</td></tr>');
         }
-        
-    }).fail(function (jqXHR, textStatus, errorThrown) {
+  
+  
+        $fragment.append(`
+            <table id="teamTable" class="tiny">
+            <thead>
+                <tr><th>Club</th><th>Founded</th>
+                <th>Squad</th><th>Stadium</th>
+                <th>Market Value</th>
+            </thead>
+                <tbody></tbody>
+            </table>`);
+        $('#teamTable tbody').append(teamFragment);
+      })
+      .fail(function (jqXHR, textStatus, errorThrown) {
         // Handle error
-        console.error('Error fetching phase:', textStatus, errorThrown);
-        alert('Failed to fetch the phase. Please try again later.');
-    });
-}
+        console.error('Error fetching phase(s):', textStatus, errorThrown);
+      });
+  }
+  
+

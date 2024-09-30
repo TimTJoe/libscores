@@ -1,56 +1,81 @@
 import { populateSeasonsSelect, fetchTeamSuggestions, populatePhasesSelect, populateSeasonsSelectors } from "../utils.js";
 
 $(document).ready(function () {
-   
-    // populateSeasonsSelect("phaseSeasons");
-    let team
+    let team;
 
-   
+    // Cache DOM elements
+    const $teamInput = $('#team');
+    const $suggestionsContainer = $('#team-suggestions');
+    const $phaseSeasons = $('#phaseSeasons');
+    const $savePhaseButton = $('#savePhase');
+    const $phaseMsg = $('#phaseMsg');
+    const $phaseDialog = $('#phaseDialog');
+    const $closeDialog = $('#closeDialog');
+
+    // Function to show or hide suggestions
+    const toggleSuggestions = (show) => {
+        if (show) {
+            $suggestionsContainer.show();
+        } else {
+            $suggestionsContainer.hide();
+        }
+    };
+
     // Event listener for team input to fetch suggestions
-    $('#team').on('input', function () {
+    $teamInput.on('input', function () {
         const query = $(this).val();
 
-        if (query.length > 0) {
-            fetchTeamSuggestions(query).then(teams => {
-                $('#team-suggestions').empty().show(); // Clear previous suggestions
+        toggleSuggestions(query.length > 0); // Show or hide suggestions
+
+        if (query.length === 0) return;
+
+        // Fetch suggestions if the input has a query
+        fetchTeamSuggestions(query)
+            .then(teams => {
+                $suggestionsContainer.empty(); // Clear previous suggestions
+
                 if (teams.length > 0) {
-                    teams.forEach(team => {
-                        $('#team-suggestions').append(`<div class="suggestion" id="${team.id}">${team.club}</div>`);
-                    });
+                    const suggestions = teams.map(team => 
+                        `<div class="suggestion" id="${team.id}">${team.club}</div>`
+                    ).join(''); // Create suggestions as a single string
+                    
+                    $suggestionsContainer.html(suggestions); // Append all suggestions at once
                 } else {
-                    $('#team-suggestions').hide(); // Hide if no suggestions
+                    toggleSuggestions(false); // Hide if no suggestions
                 }
-            }).catch(err => {
+            })
+            .catch(err => {
                 console.error('Error fetching team suggestions:', err);
+                toggleSuggestions(false); // Hide suggestions on error
             });
-        } else {
-            $('#team-suggestions').hide(); // Hide suggestions if input is empty
-        }
     });
 
     // Event listener for selecting a team from suggestions
     $(document).on('click', '.suggestion', function () {
         const selectedTeam = $(this).text();
         team = Number($(this).attr("id"));
-        $('#team').val(selectedTeam); // Set the team input value
-        $('#team-suggestions').hide(); // Hide suggestions
+        $teamInput.val(selectedTeam); // Set the team input value
+        toggleSuggestions(false); // Hide suggestions
     });
 
+    // Function to display phase messages
+    const displayPhaseMsg = (message, isError = false) => {
+        $phaseMsg.show().removeClass('success error').addClass(isError ? 'error' : 'success').text(message);
+    };
+
     // Event handler for saving a new phase
-    $('#savePhase').on('click', function (event) {
+    $savePhaseButton.on('click', function (event) {
         event.preventDefault(); // Prevent default form submission
 
-        // const team = $('#team').val();
-        const season = $('#seasons').val();
+        const season = $phaseSeasons.val();
 
         // Ensure required fields are filled
         if (!team || !season) {
-            $('#phaseMsg').show().addClass('error').text('Please fill in all fields.');
-            return;
+            return displayPhaseMsg('Please fill in all fields.', true);
         }
 
         // Show loading spinner
-        $('#savePhase').prop('disabled', true);
+        $savePhaseButton.prop('disabled', true);
         
         // AJAX request to save the new phase
         $.ajax({
@@ -58,35 +83,32 @@ $(document).ready(function () {
             type: 'POST',
             data: JSON.stringify({ season, team }), // Send data as JSON
             contentType: 'application/json',
-            success: function (data) {
-                // Show success message
-                $('#phaseMsg').show().addClass('success').text('Phase saved successfully');
-                setTimeout(() => {
-                    $message.fadeOut()
-                    $('#phaseMsg').fadeOut();
-                    $('#savePhase').prop('disabled', false);
-                }, 3000); 
+            success: function () {
+                displayPhaseMsg('Phase saved successfully');
 
                 // Clear the input fields
-                $('#team').val('');
-                $('#season').val('');
+                $teamInput.val('');
+                $phaseSeasons.val('');
+                $savePhaseButton.prop('disabled', false);
+                
+                setTimeout(() => {
+                    $phaseMsg.fadeOut();
+                }, 3000);
 
                 // Repopulate the select dropdown if necessary
-                // populateSeasonsSelect("phaseSeasons");
-
+                populateSeasonsSelectors();
             },
             error: function (jqXHR, textStatus, errorThrown) {
-                // Show error message
-                $('#phaseMsg').show().addClass('error').text('An error occurred while saving the phase.');
+                displayPhaseMsg('An error occurred while saving the phase.', true);
                 console.error('Error saving phase:', textStatus, errorThrown);
             }
         });
     });
 
     // Optional: Close dialog on clicking close button
-    $('#closeDialog').on('click', function () {
-        $('#phaseDialog').hide(); // Close dialog
-        $('#team-suggestions').hide(); // Hide suggestions when dialog closes
-        $('#phaseMsg').hide(); 
+    $closeDialog.on('click', function () {
+        $phaseDialog.hide(); // Close dialog
+        toggleSuggestions(false); // Hide suggestions
+        $phaseMsg.hide(); 
     });
 });
