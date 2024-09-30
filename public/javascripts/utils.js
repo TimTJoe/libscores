@@ -101,7 +101,6 @@ export function populateSeasonsSelect(selectId) {
   });
 }
 
-
 /**
  * Format season dates from start and end date strings to a readable format.
  * @param {string} startDate - The start date in a string format.
@@ -281,8 +280,43 @@ export function populatePhasesSelect(selectId) {
   });
 }
 
+/**
+ * Populate all select elements with the class 'season-selector' with season data.
+ */
+export function populateSeasonsSelectors() {
+  // Select all elements with the class 'season-selector'
+  const $selectors = $('.season-selector');
 
+  if ($selectors.length === 0) {
+    console.error("No select elements with the class 'season-selector' found.");
+    return;
+  }
 
+  // Fetch seasons from the API and populate the dropdowns
+  getSeasons()
+    .then((seasons) => {
+      // Clear and populate each season selector
+      $selectors.each(function () {
+        const $select = $(this);
+        
+        // Clear existing options
+        $select.empty();
+
+        // Add a default 'Select a season' option
+        $select.append('<option value="">Select a season</option>');
+
+        // Populate the select with new options from the API data
+        seasons.forEach((season) => {
+          const formattedDate = formatSeasonDates(season.start, season.end);
+          const option = $('<option></option>').val(season.id).text(formattedDate);
+          $select.append(option);
+        });
+      });
+    })
+    .catch((err) => {
+      console.error('Error populating seasons selectors:', err);
+    });
+}
 
 
 

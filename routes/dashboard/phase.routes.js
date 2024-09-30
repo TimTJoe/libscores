@@ -41,7 +41,9 @@ router.get('/', async (req, res) => {
 
 // POST route to save a new phase
 router.post('/', async (req, res) => {
-    const { season, selectedTeamId:team } = req.body;
+    const { season, team } = req.body;
+
+    console.log(req.body)
 
     // Validate required fields
     if (season === undefined || team === undefined) {
@@ -57,10 +59,11 @@ router.post('/', async (req, res) => {
             return res.status(404).json({ message: 'Season not found.' });
         }
        
-
         // Insert the new phase into the database
         const insertSql = `INSERT INTO phases VALUES (?,?, ?, ?)`;
         const values = [null, season, team, _season.status];
+
+        console.log(season, team, _season.status)
 
         const phaseId = await dbRun(db, insertSql, values);
         const newPhase = await dbGet(db, `SELECT * FROM phases WHERE id = ?`, [phaseId]);
@@ -79,24 +82,24 @@ router.get('/:id', async (req, res) => {
     try {
         const db = await createDbConnection();
         const query = `
-SELECT 
-    phases.id AS phase_id,
-    phases.status AS phase_status,
-    seasons.start AS season_start,
-    seasons.end AS season_end,
-    clubs.id AS team_id,
-    clubs.club AS team_name
-FROM 
-    phases
-LEFT JOIN 
-    seasons ON phases.season_id = seasons.id
-LEFT JOIN 
-    clubs ON phases.team_id = clubs.id
-WHERE 
-    phases.season_id = ?
-ORDER BY 
-    phases.id DESC;
-`
+    SELECT 
+        phases.id AS phase_id,
+        phases.status AS phase_status,
+        seasons.start AS season_start,
+        seasons.end AS season_end,
+        clubs.id AS team_id,
+        clubs.club AS team_name
+    FROM 
+        phases
+    LEFT JOIN 
+        seasons ON phases.season_id = seasons.id
+    LEFT JOIN 
+        clubs ON phases.team_id = clubs.id
+    WHERE 
+        phases.season_id = ?
+    ORDER BY 
+        phases.id DESC;
+    `
 
 const phase = await dbGet(db, query, [id]);
 

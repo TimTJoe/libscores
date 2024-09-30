@@ -1,8 +1,9 @@
-import { populateSeasonsSelect, fetchTeamSuggestions, populatePhasesSelect } from "../utils.js";
+import { populateSeasonsSelect, fetchTeamSuggestions, populatePhasesSelect, populateSeasonsSelectors } from "../utils.js";
 
 $(document).ready(function () {
-    populateSeasonsSelect("phaseSeasons");
-    let selectedTeamId
+   
+    // populateSeasonsSelect("phaseSeasons");
+    let team
 
    
     // Event listener for team input to fetch suggestions
@@ -30,7 +31,7 @@ $(document).ready(function () {
     // Event listener for selecting a team from suggestions
     $(document).on('click', '.suggestion', function () {
         const selectedTeam = $(this).text();
-        selectedTeamId = Number($(this).attr("id"));
+        team = Number($(this).attr("id"));
         $('#team').val(selectedTeam); // Set the team input value
         $('#team-suggestions').hide(); // Hide suggestions
     });
@@ -39,7 +40,7 @@ $(document).ready(function () {
     $('#savePhase').on('click', function (event) {
         event.preventDefault(); // Prevent default form submission
 
-        const team = $('#team').val();
+        // const team = $('#team').val();
         const season = $('#seasons').val();
 
         // Ensure required fields are filled
@@ -49,25 +50,30 @@ $(document).ready(function () {
         }
 
         // Show loading spinner
-        $('#spinner').show();
         $('#savePhase').prop('disabled', true);
-
+        
         // AJAX request to save the new phase
         $.ajax({
             url: '/dashboard/phases',
             type: 'POST',
-            data: JSON.stringify({ season, selectedTeamId }), // Send data as JSON
+            data: JSON.stringify({ season, team }), // Send data as JSON
             contentType: 'application/json',
             success: function (data) {
                 // Show success message
                 $('#phaseMsg').show().addClass('success').text('Phase saved successfully');
+                setTimeout(() => {
+                    $message.fadeOut()
+                    $('#phaseMsg').fadeOut();
+                    $('#savePhase').prop('disabled', false);
+                }, 3000); 
 
                 // Clear the input fields
                 $('#team').val('');
                 $('#season').val('');
 
                 // Repopulate the select dropdown if necessary
-                populatePhasesSelect("seasons");
+                // populateSeasonsSelect("phaseSeasons");
+
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 // Show error message
@@ -81,5 +87,6 @@ $(document).ready(function () {
     $('#closeDialog').on('click', function () {
         $('#phaseDialog').hide(); // Close dialog
         $('#team-suggestions').hide(); // Hide suggestions when dialog closes
+        $('#phaseMsg').hide(); 
     });
 });

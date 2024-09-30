@@ -1,7 +1,6 @@
 import { populateSeasonsSelect, fetchTeamSuggestions, populatePhasesSelect } from "../utils.js";
 
 $(document).ready(function () {
-    populatePhasesSelect("seasons");
 
     // Function to update the status based on start and end dates
     function updateStatus() {
@@ -29,37 +28,9 @@ $(document).ready(function () {
     $('#start').on('change', updateStatus);
     $('#end').on('change', updateStatus);
 
-    // Event listener for team input to fetch suggestions
-    $('#team').on('input', function () {
-        const query = $(this).val();
-
-        if (query.length > 0) {
-            fetchTeamSuggestions(query).then(teams => {
-                $('#team-suggestions').empty().show(); // Clear previous suggestions
-                if (teams.length > 0) {
-                    teams.forEach(team => {
-                        $('#team-suggestions').append(`<div class="suggestion">${team.name}</div>`);
-                    });
-                } else {
-                    $('#team-suggestions').hide(); // Hide if no suggestions
-                }
-            }).catch(err => {
-                console.error('Error fetching team suggestions:', err);
-            });
-        } else {
-            $('#team-suggestions').hide(); // Hide suggestions if input is empty
-        }
-    });
-
-    // Event listener for selecting a team from suggestions
-    $(document).on('click', '.suggestion', function () {
-        const selectedTeam = $(this).text();
-        $('#team').val(selectedTeam); // Set the team input value
-        $('#team-suggestions').hide(); // Hide suggestions
-    });
 
     // Event handler for saving a new phase
-    $('#savePhase').on('click', function (event) {
+    $('#saveSeason').on('click', function (event) {
         event.preventDefault(); // Prevent default form submission
         const url = window.location.pathname; // e.g., '/competition/5'
         const competitionId = url.split('/').pop(); // Get the last part of the URL
@@ -73,23 +44,23 @@ $(document).ready(function () {
 
         // Ensure required fields are filled
         if (!start || !end || !competition_id) {
-            $('#dialogMsg').show().addClass('error').text('Please fill in all fields.');
+            $('#seasonMsg').show().addClass('error').text('Please fill in all fields.');
             return;
         }
 
         // Show loading spinner
-        $('#spinner').show();
-        $('#savePhase').prop('disabled', true);
-
+        $('#saveSeason').prop('disabled', true);
+        
         // AJAX request to save the new phase
         $.ajax({
-            url: '/dashboard/phases',
+            url: '/dashboard/seasons',
             type: 'POST',
             data: JSON.stringify({ competition_id, start, end, games, status, teams }), // Send data as JSON
             contentType: 'application/json',
             success: function (data) {
                 // Show success message
-                $('#dialogMsg').show().addClass('success').text('Phase saved successfully');
+                $('#seasonMsg').show().addClass('success').text('Season saved successfully');
+                $('#saveSeason').prop('disabled', false);
 
                 // Clear the input fields
                 $('#start').val('');
@@ -102,15 +73,15 @@ $(document).ready(function () {
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 // Show error message
-                $('#dialogMsg').show().addClass('error').text('An error occurred while saving the phase.');
-                console.error('Error saving phase:', textStatus, errorThrown);
+                $('#seasonMsg').show().addClass('error').text('An error occurred while saving the season.');
+                console.error('Error saving season:', textStatus, errorThrown);
             }
         });
     });
 
     // Optional: Close dialog on clicking close button
     $('#closeDialog').on('click', function () {
-        $('#phaseDialog').hide(); // Close dialog
+        $('#seasonDialog').hide(); // Close dialog
         $('#team-suggestions').hide(); // Hide suggestions when dialog closes
     });
 });
