@@ -3,54 +3,53 @@ const router = require('express').Router();
 const sqlite3 = require('sqlite3').verbose();
 const getDbInstance = require('@js/getDBInstance');
 const upload = require('@middleware/upload');
-const { dbQuery, dbRun, dbGet, createDbConnection } = require('@utils/dbUtils');
+const { dbQuery, dbRun, dbGet,dbAll, createDbConnection } = require('@utils/dbUtils');
 
 
-// GET route to display the competitions (leagues) page
-router.get('/', async (req, res) => {
-       try {
-           const db = await getDbInstance(sqlite3);
-           const query = 'SELECT * FROM competitions ORDER BY id DESC';
-           const leagues = await dbQuery(db, query);
-   
-           // Check if leagues array is empty
-           if (!leagues.length) {
-               return res.render('dashboard/competition.dash.ejs', {
-                   title: 'Leagues and Competitions',
-                   leagues: [], // Pass empty array for leagues
-                   message: 'No leagues or competitions found.' // Pass the message
-               });
-           }
-   
-           res.render('dashboard/competition.dash.ejs', {
-               title: 'Leagues and Competitions',
-               leagues // Pass the fetched leagues
-           });
-       } catch (err) {
-           console.error('Error fetching leagues:', err);
-           res.status(500).render('dashboard/competition.dash.ejs', {
-               title: 'Leagues and Competitions',
-               leagues: [], // Pass empty array for leagues
-               message: 'An error occurred while fetching competitions. Please try again later.' // Pass the error message
-           });
-       }
-   });
-   
+// PUT, DELETE, and other specific methods related to competitions can go here.
 
-// GET route to fetch competition details by ID
+// GET route to create a new game for a specific competition (most specific route)
+router.get('/:id/games/new', async (req, res) => {
+    const competitionId = req.params.id;
+
+    try {
+        const db = await createDbConnection();
+        const competition = await dbQuery(db, 'SELECT * FROM competitions WHERE id = ?', [competitionId]);
+
+        if (!competition.length) {
+            return res.status(404).render('dashboard/games.form.ejs', {
+                title: 'Create New Game',
+                message: 'Competition not found',
+                competition: null,
+            });
+        }
+
+        res.render('dashboard/games.form.ejs', {
+            title: 'Create New Game',
+            competition: competition[0],
+        });
+    } catch (err) {
+        console.error('Error fetching competition:', err);
+        res.status(500).render('dashboard/games.form.ejs', {
+            title: 'Create New Game',
+            message: 'An error occurred while fetching competition data. Please try again later.',
+            competition: null,
+        });
+    }
+});
+
+// GET route to fetch competition details by ID (less specific route)
 router.get('/:id', async (req, res) => {
     const { id } = req.params;
 
     if (!id) {
-        return res.redirect('/competitions'); // Updated redirect path
+        return res.redirect('/competitions');
     }
 
     try {
         const competition = await getItemById('competitions', id);
-         // Check if the season exists
-         const db = await createDbConnection();
+        const db = await createDbConnection();
         const seasons = await dbQuery(db, 'SELECT * FROM seasons ORDER BY id DESC');
-
 
         if (!competition) {
             return res.render('dashboard/competition.info.ejs', {
@@ -64,7 +63,8 @@ router.get('/:id', async (req, res) => {
 
         res.render('dashboard/competition.info.ejs', {
             title: competition.competition,
-            competition
+            competition,
+            seasons
         });
     } catch (err) {
         console.error('Error fetching competition:', err);
@@ -74,6 +74,37 @@ router.get('/:id', async (req, res) => {
             msg: "An error occurred while fetching the competition. Please try again later.",
             competition: null,
             seasons
+        });
+    }
+});
+
+// GET route to display all competitions (generic route)
+router.get('/', async (req, res) => {
+    try {
+        const db = await getDbInstance(sqlite3);
+        const query = 'SELECT * FROM competitions ORDER BY id DESC';
+        const leagues = await dbQuery(db, query);
+
+        if (!leagues.length) {
+            return res.render('dashboard/competition.dash.ejs', {
+                title: 'Leagues and Competitions',
+                leagues: [],
+                message: 'No leagues or competitions found.',
+                competition: null
+            });
+        }
+
+        res.render('dashboard/competition.dash.ejs', {
+            title: 'Leagues and Competitions',
+            leagues,
+            competition: null
+        });
+    } catch (err) {
+        console.error('Error fetching leagues:', err);
+        res.status(500).render('dashboard/competition.dash.ejs', {
+            title: 'Leagues and Competitions',
+            leagues: [],
+            message: 'An error occurred while fetching competitions. Please try again later.'
         });
     }
 });
@@ -152,6 +183,40 @@ router.put('/', async (req, res) => {
            res.status(500).json({ message: 'An error occurred while updating the competition.' });
        }
    });
+
+  
+   // GET all clubs in a specific season and competition
+   router.get('/v1/api/competitions/:competitionId/seasons/:seasonId/clubs', async (req, res) => {
+       const { competitionId, seasonId } = req.params;
+   
+       try {
+           // SQL Query to get all clubs for the given competition and season
+           const query = `
+               SELECT c.id, c.name
+               FROM clubs c
+               JOIN phases p ON p.team_id = c.id
+               WHERE p.season_id = ? AND p.competition_id = ?;
+           `;
+   
+           // Use dbAll to fetch data
+           const clubs = await dbAll(query, [seasonId, competitionId]);
+   
+           // Check if no clubs were found
+           if (clubs.length === 0) {
+               return res.status(404).json({ message: 'No clubs found for this season and competition' });
+           }
+   
+           // Return the list of clubs as JSON
+           res.json(clubs);
+       } catch (error) {
+           // Handle any errors that occur during the query
+           console.error('Error fetching clubs:', error);
+           res.status(500).json({ message: 'Internal server error' });
+       }
+   });
+   
+   
+
    
 
 module.exports = router;

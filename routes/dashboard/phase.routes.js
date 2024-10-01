@@ -88,7 +88,6 @@ JOIN clubs ON phases.team_id = clubs.id
 WHERE phases.season_id = ?`;
 
         const phases = await dbAll(db, query, [id]);
-        console.log(phases)
 
         if (!phases || phases.length === 0) {
             return res.status(404).json({ message: 'No phases found for this season.' });

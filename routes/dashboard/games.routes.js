@@ -13,6 +13,10 @@ router.get("/", async (req, res) => {
     res.render("dashboard/games.dash.ejs", {title: "Games"})
 })
 
+router.get("/new", async (req,res) => {
+    res.render("dashboard/games.form.ejs", {title: "New Game"})
+})
+
 // GET all games with modified season structure
 router.get('/all', async (req, res) => {
     try {

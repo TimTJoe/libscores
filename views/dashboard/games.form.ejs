@@ -1,32 +1,82 @@
-<div class="column">
-     <section class="row flex margin bg-white small-round">
-         <span>
-             <label for="home" class="label">Competition/League</label>
-             <select name="home" id="homeTeams" class="block input">
-             </select>
-         </span>
-         <span>
-             <label for="away" class="label">Home Team</label>
-             <select name="away" id="awayTeams" class="block input">
-             </select>
-         </span>
-         <span>
-             <label for="away" class="label">Away Team</label>
-             <select name="away" id="awayTeams" class="block input">
-             </select>
-         </span>
-         <span>
-             <label for="start" class="label">Start</label>
-             <input type="datetime" name="start" id="start" class="block input">
-             </input>
-         </span>
-     </section>
-     <div id="squads">
-        <span class="row">
-            <label for="player">
-                <input type="radio" id="player">
-                <span>player name</span>
-            </label>
-        </span>
-     </div>
-</div>
+<%- include("./dash.nav.ejs") %>
+<body class="bg-rose">
+    <main class="wall top-align padding">
+        <div class="frame ">
+            <!-- team tag -->
+           <section class="bg-white small-padding">
+            <section class="margin-bottom center">
+                <select name="competition" id="competition-selector" title="Select competition" class="small-select competitions season-selector" >
+                </select>
+            </section>
+            <section class="row top-align around center-align mid-width">
+                <span>
+                    <label for="home" class="label no-top">Home Team</label>
+                    <select name="home" id="home" class="small-select season-teams" title="Select home team">
+                    </select>
+                </span>
+                <section class="tiny-box margin-top">
+                    <span class="row">
+                        <input type="text" name="home_goals" class="small-input input" placeholder="0" title="Home team goal">
+                        <h5>VS</h5>
+                        <input type="text" name="away_goals" class="small-input input" placeholder="0" title="Away team goal">
+                    </span>
+                    <p class="tiny bold  small-padding text-center" id="timer">Oct 1, 12:58 PM</p>
+                    <input type="datetime-local" name="start" class="mid-input input">
+                </section>
+                <span>
+                    <label for="away" class="label no-top">Away Team</label>
+                    <select name="away" id="away" class="small-select season-teams" title="Select away team">
+                        <option value="name">BEA Mountain FC</option>
+                    </select>
+                </span>
+            </section>
+           </section>
+
+           <!-- line up tag -->
+           <h3 class="small text-center bold padding  bg-white border-bottom">Lineup</h3>
+           <div class="row flex bg-white small-padding no-gap">
+            <!-- lineup selection section -->
+            <section id="homePlayers" class=" border-right padding-right">
+                <span class="row small-bottom">
+                    <small class="tiny bold" style="width: 188px;">Player</small>
+                    <small class="tiny bold" style="width: 35px;">No</small>
+                    <small class="tiny bold">Position</small>
+                </span>
+                <span class="row">
+                    <label for="player" class="small max row margin-right" title="Select player">
+                        <input type="checkbox" name="player" id="player">
+                        <span>Alphonso Davis</span>
+                    </label>
+
+                    <input type="text" class="tiny-input" placeholder="10" title="Player jersey number">
+                    
+                    <select id="position" name="position" class="small-select positions" title="Player position">
+                    </select>
+                </span>
+            </section>
+            <!-- away team -->
+            <section id="awayPlayers" class="padding-left">
+                <span class="row small-bottom">
+                    <small class="tiny bold" style="width: 188px;">Player</small>
+                    <small class="tiny bold" style="width: 35px;">No</small>
+                    <small class="tiny bold">Position</small>
+                </span>
+                <span class="row">
+                    <label for="player" class="small max row margin-right" title="Select player">
+                        <input type="checkbox" name="player" id="player">
+                        <span>Alphonso Davis</span>
+                    </label>
+
+                    <input type="text" class="tiny-input" placeholder="10" title="Player jersey number">
+                    
+                    <select id="position" name="position" class="small-select positions" title="Player position">
+                    </select>
+                </span>
+            </section>
+           </div>
+        </div>
+    </main>
+    <%- include("./dash.foot.ejs") %>
+    <script type="module" src="/javascripts/games.form.js"></script>
+</body>
+

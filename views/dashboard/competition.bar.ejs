@@ -10,12 +10,10 @@
         <div id="dropdown2" menu-data="dropdown2">
         </div>
 
-        <a href="/dashboard/games" class="small-button">New Game</a>
-        <%- include("./season.dialog.ejs") %>
+
+        <!-- <a href="/dashboard/competitions/<%= competition ? competition.id : '1' %>/games/new" class="small-button">New Game</a> -->
+        <a href="/dashboard/competitions/<%= competition.id %>/games/new" class="small-button">New Game</a>
         <%- include("./phase.dialog.ejs") %>
-        <%- include("./competition.dialog.ejs") %>
-        
-        
-        
+        <%- include("./season.dialog.ejs") %>
     </span>
 </nav>

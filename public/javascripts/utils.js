@@ -370,6 +370,81 @@ export function fetchPhaseById(phaseId) {
   });
 }
 
+/**
+ * Populates all select elements with the class 'positions' with soccer field positions.
+ * 
+ * The options include various soccer positions such as "GK - Goalkeeper", "CM - Central Midfielder", etc.
+ */
+export function populatePositions() {
+    const positions = [
+        { value: "GK", label: "GK - Goalkeeper" },
+        { value: "RB", label: "RB - Right Back" },
+        { value: "CB", label: "CB - Center Back" },
+        { value: "LB", label: "LB - Left Back" },
+        { value: "RWB", label: "RWB - Right Wing Back" },
+        { value: "LWB", label: "LWB - Left Wing Back" },
+        { value: "CM", label: "CM - Central Midfielder" },
+        { value: "RM", label: "RM - Right Midfielder" },
+        { value: "LM", label: "LM - Left Midfielder" },
+        { value: "RW", label: "RW - Right Winger" },
+        { value: "LW", label: "LW - Left Winger" },
+        { value: "CF", label: "CF - Center Forward" },
+        { value: "ST", label: "ST - Striker" }
+    ];
+
+    // Select all <select> elements with the class "positions"
+    $('select.positions').each(function () {
+        const $select = $(this);
+
+        // Clear existing options
+        $select.empty();
+
+        // Append new options
+        positions.forEach(function (position) {
+            $select.append($('<option>', {
+                value: position.value,
+                text: position.label
+            }));
+        });
+    });
+}
+
+/**
+ * Fetches and populates the teams for the selected season and competition into the .season-teams <select> element.
+ * 
+ * @param {string} seasonId - The ID of the selected season.
+ * @param {string} competitionId - The ID of the competition from the URL.
+ * 
+ * @returns {void} - This function doesn't return any value. It dynamically updates the .season-teams element with options.
+ * 
+ * @example
+ * populateSeasonTeams('1', '2'); // Populates teams for season 1 and competition 2
+ */
+export function populateSeasonTeams(seasonId, competitionId) {
+    $.ajax({
+        url: `/v1/api/competitions/${competitionId}/seasons/${seasonId}/clubs`,
+        type: 'GET',
+        success: function (data) {
+            // Access the teams array within the season object
+            const teams = data.season.teams || []; // Fallback to an empty array if no teams
+
+            let options = '<option value="">Select a Team</option>';
+            teams.forEach(team => {
+                options += `<option value="${team.id}">${team.name}</option>`;
+            });
+            $('.season-teams').html(options); // Render the clubs into the select element
+        },
+        error: function (err) {
+            console.error("Error fetching clubs: ", err);
+        }
+    });
+}
+
+
+
+
+
+
 
 
 

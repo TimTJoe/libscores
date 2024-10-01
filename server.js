@@ -164,6 +164,7 @@ var countyRouter = require('./routes/api/county.routes');
 var clubApiRouter = require('./routes/api/clubs.api');
 var creatorRouter = require('./routes/api/creator.routes')
 var gamesApiRouter = require('./routes/api/games.api')
+var competitionsApiRouter = require('./routes/api/competitions.api')
 
 // API v1 Endpoints
 app.use("/counties", countyRouter)
@@ -172,6 +173,7 @@ app.use("/v1/api", apiRouter)
 app.use("/v1/api/clubs", clubApiRouter)
 app.use("/v1/api/creates", creatorRouter)
 app.use("/v1/api/games", gamesApiRouter)
+app.use("/v1/api/competitions", competitionsApiRouter)
 
 // start server
 app.listen(port, function listener() {

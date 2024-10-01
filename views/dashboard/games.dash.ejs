@@ -1,7 +1,11 @@
 <%- include("./dash.nav.ejs") %>
 <body class="bg-rose">
-    <main class="wall top-align">
-        <%- include("./games.form.ejs") %>
+    <main class="wall top-align padding">
+        <div class="frame ">
+            <header class="bg-white small-round small-padding margin">
+                <a href="/dashboard/games/new" class="small-button blue">New Game</a>
+            </header>
+        </div>
     
         <%- include("./dash.foot.ejs") %>
     </main>
