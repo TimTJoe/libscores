@@ -20,8 +20,8 @@
                         <h5>VS</h5>
                         <input type="text" name="away_goals" class="small-input input" placeholder="0" title="Away team goal">
                     </span>
-                    <p class="tiny bold  small-padding text-center" id="timer">Oct 1, 12:58 PM</p>
-                    <input type="datetime-local" name="start" class="mid-input input">
+                    <about id="countdownDisplay" class="tiny bold  small-padding text-center gameCountdown"></about>
+                    <input type="datetime-local" id="gameTimeInput" class="mid-input input" title="Select game time">                        
                 </section>
                 <span>
                     <label for="away" class="label no-top">Away Team</label>
@@ -33,50 +33,36 @@
            </section>
 
            <!-- line up tag -->
-           <h3 class="small text-center bold padding  bg-white border-bottom">Lineup</h3>
-           <div class="row flex bg-white small-padding no-gap">
-            <!-- lineup selection section -->
-            <section id="homePlayers" class=" border-right padding-right">
-                <span class="row small-bottom">
-                    <small class="tiny bold" style="width: 188px;">Player</small>
-                    <small class="tiny bold" style="width: 35px;">No</small>
-                    <small class="tiny bold">Position</small>
-                </span>
-                <span class="row">
-                    <label for="player" class="small max row margin-right" title="Select player">
-                        <input type="checkbox" name="player" id="player">
-                        <span>Alphonso Davis</span>
-                    </label>
-
-                    <input type="text" class="tiny-input" placeholder="10" title="Player jersey number">
-                    
-                    <select id="position" name="position" class="small-select positions" title="Player position">
-                    </select>
-                </span>
-            </section>
-            <!-- away team -->
-            <section id="awayPlayers" class="padding-left">
-                <span class="row small-bottom">
-                    <small class="tiny bold" style="width: 188px;">Player</small>
-                    <small class="tiny bold" style="width: 35px;">No</small>
-                    <small class="tiny bold">Position</small>
-                </span>
-                <span class="row">
-                    <label for="player" class="small max row margin-right" title="Select player">
-                        <input type="checkbox" name="player" id="player">
-                        <span>Alphonso Davis</span>
-                    </label>
-
-                    <input type="text" class="tiny-input" placeholder="10" title="Player jersey number">
-                    
-                    <select id="position" name="position" class="small-select positions" title="Player position">
-                    </select>
-                </span>
-            </section>
+           <section class="padding  bg-white border-bottom text-center">
+               <h3 class="small text-center bold ">Lineup</h3>
+                <%- include("./players.dialog.ejs") %>
+           </section>
+           <div class="row flex bg-white small-padding no-gap" id="lineup">
+                <!-- lineup selection section -->
+                <section class="border-right padding-right">
+                        <span class="row small-bottom">
+                            <small class="tiny bold" style="width: 188px;">Player</small>
+                            <small class="tiny bold" style="width: 35px;">No</small>
+                            <small class="tiny bold">Position</small>
+                        </span>
+                        <section id="" class="home"></section>
+                </section>
+                <!-- away team -->
+                <section class="padding-left">
+                        <span class="row small-bottom">
+                            <small class="tiny bold" style="width: 188px;">Player</small>
+                            <small class="tiny bold" style="width: 35px;">No</small>
+                            <small class="tiny bold">Position</small>
+                        </span>
+                        <section id="" class="away"></section>
+                </section>
            </div>
         </div>
     </main>
     <%- include("./dash.foot.ejs") %>
     <script type="module" src="/javascripts/games.form.js"></script>
+    <script type="module" src="/javascripts/creators/players.create.js"></script>
+    <script type="module" src="/javascripts/readers/players.read.js"></script>
+
 </body>
 

@@ -149,6 +149,7 @@ var competitionRouter = require('./routes/dashboard/competition.routes');
 var seasonRouter = require('./routes/dashboard/season.routes');
 var phaseRouter = require('./routes/dashboard/phase.routes');
 var gamesRouter = require('./routes/dashboard/games.routes');
+var playersRouter = require('./routes/dashboard/players.routes');
 
 // DASHBOARD ROUTES HANDLERS
 app.use("/dashboard", protected)
@@ -158,6 +159,7 @@ app.use("/dashboard/competitions", competitionRouter)
 app.use("/dashboard/seasons", seasonRouter)
 app.use("/dashboard/phases", phaseRouter)
 app.use("/dashboard/games", gamesRouter)
+app.use("/dashboard/players", playersRouter)
 
 // fetch data api routes
 var countyRouter = require('./routes/api/county.routes');

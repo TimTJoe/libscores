@@ -1,0 +1,78 @@
+<!-- Button to open dialog -->
+<button class="small-button" data-ui="#playerDialog">
+    <i class="fa fa-plus"></i>
+   Add Player
+</button>
+
+<!-- Dialog to add phase -->
+<dialog class="dialog small" data-ui="playerDialog">
+    <header class="dialog-header">
+        <h4 class="large align-center">New Player</h4>
+        <button class="icon-button" id="closeDialog">
+            <i class="fa fa-close" data-ui="#playerDialog"></i>
+        </button>
+    </header>
+
+    <section class="dialog-content">
+        <div id="playerMsg" class="message align-center"></div> 
+        <!-- Success/Error Message -->
+
+        <!-- Form Fields -->
+        <section class="row flex">
+            <span>
+                <label for="fullname" class="label">Player Full Name</label>
+                <input autocomplete="off" type="text" name="fullname" id="fullname" class="block input" placeholder="Enter full name" required>
+            </span>
+            <span>
+                <label for="team" class="label">Select Team</label>
+                <input autocomplete="off" type="text" name="team" id="team" class="block input" placeholder="Enter team name" required>
+                <div id="team-suggestions" class="suggestions" style="display:none;"></div>
+            </span>
+        </section>
+
+        <section class="row flex">
+            <span>
+                <label for="position" class="label">Position</label>
+                <select name="position" id="position" class="block input positions" required>
+                </select>
+            </span>
+            <span>
+                <label for="DOB" class="label">Date of Birth</label>
+                <input  type="date" name="DOB" id="DOB" class="block input" required>
+            </span>
+        </section>
+        <section class="row flex">
+            <span>
+                <label for="country" class="label">Nationality</label>
+                <select name="country" id="countries" class="block input" required>
+                </select>
+            </span>
+            
+            <span>
+                <label for="status" class="label">Status</label>
+                <select name="status" id="status" class="block input " required>
+                    <option value="active" selected> Active</option>
+                    <option value="retired" selected> Retired</option>
+                </select>
+            </span>
+        </section>
+       
+        <section class="row flex">
+            <span>
+                <label for="market_value" class="label">Market Value</label>
+                <input  type="text" name="market_value" id="market_value" class="block input">
+            </span>
+            
+            <span>
+                <label for="photo" class="label">Photo</label>
+                <input  type="file" name="photo" id="photo" class="block input">
+            </span>
+        </section>
+    </section>
+
+    <footer class="dialog-footer">
+        <button type="button" class="button center row" id="savePlayer">
+            <span>Save Player</span>
+        </button> 
+    </footer>
+</dialog>

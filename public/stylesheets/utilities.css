@@ -207,6 +207,8 @@ hr.divider { border: 0; border-top: 1px solid var(--light-gray); margin: var(--s
 /* Apply small padding */
 .small-padding { padding: var(--spacing-sm); }
 .tiny-padding { padding: var(--spacing-xs); }
+.tiny-padding { padding: var(--spacing-xs); }
+
 
 /* Remove all padding */
 .no-padding { padding: 0 !important; }
@@ -426,3 +428,5 @@ hr.divider { border: 0; border-top: 1px solid var(--light-gray); margin: var(--s
 .no-overflow {
   overflow: hidden;
 }
+
+.tiny-bottom { margin-bottom: var(--spacing-xs); }

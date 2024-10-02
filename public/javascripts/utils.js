@@ -270,7 +270,7 @@ export function renderPhases(phaseId = null) {
       .fail(function (jqXHR, textStatus, errorThrown) {
           // Handle error
           console.error('Error fetching phase(s):', textStatus, errorThrown);
-          alert('Failed to fetch the phase(s). Please try again later.');
+        //   alert('Failed to fetch the phase(s). Please try again later.');
       });
 }
 
@@ -352,7 +352,6 @@ export function fetchPhaseById(phaseId) {
       const $phaseList = $('#phaseList');
       $phaseList.empty(); // Clear the existing list of phases
 
-      console.log("1 phase", data)
 
       // If there are multiple teams, iterate and display each
       if (data.teams && data.teams.length > 0) {
@@ -366,7 +365,7 @@ export function fetchPhaseById(phaseId) {
   }).fail(function (jqXHR, textStatus, errorThrown) {
       // Handle error
       console.error('Error fetching phase:', textStatus, errorThrown);
-      alert('Failed to fetch the phase. Please try again later.');
+    //   alert('Failed to fetch the phase. Please try again later.');
   });
 }
 
@@ -377,23 +376,34 @@ export function fetchPhaseById(phaseId) {
  */
 export function populatePositions() {
     const positions = [
-        { value: "GK", label: "GK - Goalkeeper" },
-        { value: "RB", label: "RB - Right Back" },
-        { value: "CB", label: "CB - Center Back" },
-        { value: "LB", label: "LB - Left Back" },
-        { value: "RWB", label: "RWB - Right Wing Back" },
-        { value: "LWB", label: "LWB - Left Wing Back" },
-        { value: "CM", label: "CM - Central Midfielder" },
-        { value: "RM", label: "RM - Right Midfielder" },
-        { value: "LM", label: "LM - Left Midfielder" },
-        { value: "RW", label: "RW - Right Winger" },
-        { value: "LW", label: "LW - Left Winger" },
-        { value: "CF", label: "CF - Center Forward" },
-        { value: "ST", label: "ST - Striker" }
-    ];
+        { value: "GK", label: "Goalkeeper" },
+        { value: "DF", label: "Defender" },
+        { value: "MF", label: "Midfielder" },
+        { value: "FW", label: "Forward" },
+
+    ]
+    // const positions = [
+    //     { value: "GK", label: "GK - Goalkeeper" },
+    //     { value: "RB", label: "RB - Right Back" },
+    //     { value: "CB", label: "CB - Center Back" },
+    //     { value: "LB", label: "LB - Left Back" },
+    //     { value: "RWB", label: "RWB - Right Wing Back" },
+    //     { value: "LWB", label: "LWB - Left Wing Back" },
+    //     { value: "CM", label: "CM - Central Midfielder" },
+    //     { value: "RM", label: "RM - Right Midfielder" },
+    //     { value: "LM", label: "LM - Left Midfielder" },
+    //     { value: "RW", label: "RW - Right Winger" },
+    //     { value: "LW", label: "LW - Left Winger" },
+    //     { value: "CF", label: "CF - Center Forward" },
+    //     { value: "ST", label: "ST - Striker" }
+    // ];
+
+    let $position = $('select.positions')
+
+    $position.append('<option value="">Select a position</option>');
 
     // Select all <select> elements with the class "positions"
-    $('select.positions').each(function () {
+    $position.each(function () {
         const $select = $(this);
 
         // Clear existing options
@@ -440,7 +450,214 @@ export function populateSeasonTeams(seasonId, competitionId) {
     });
 }
 
+/**
+ * Updates the countdown based on the selected date and time.
+ *
+ * @param {string} dateTimeInput - The ID of the datetime-local input element.
+ * @param {string} timerTag - The ID of the tag where the countdown will be displayed.
+ */
+export function updateCountdown(dateTimeInput, timerTag) {
+    const $dateTimeInput = $(dateTimeInput);
+    const $timerTag = $(timerTag);
 
+    // Get the selected datetime value from the input
+    const selectedDateTime = new Date($dateTimeInput.val());
+
+    if (isNaN(selectedDateTime)) {
+        $timerTag.text("Invalid date");
+        return;
+    }
+
+    const now = new Date();
+    const timeDifference = Math.abs(selectedDateTime - now)
+    // Calculate countdown components
+    const seconds = Math.floor(timeDifference / 1000);
+    const minutes = Math.floor(seconds / 60);
+    const hours = Math.floor(minutes / 60);
+    const days = Math.floor(hours / 24);
+    
+    // If the time is more than 90 minutes away
+    const formattedDate = selectedDateTime.toLocaleString('en-US', {
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        hour12: true,
+    });
+    
+    // If the time is in the past
+    if (timeDifference < 0) {
+        $timerTag.text("FT");
+        return;
+    }
+
+
+    // If the time is less than 90 minutes from now
+    // let ms = convertMillisecond(timeDifference)
+    // alert(ms)
+   
+    if (timeDifference < 90 * 60 * 1000) {
+        const countdownText = `${minutes} : ${seconds % 60}`;
+        $timerTag.text(countdownText);
+
+        // Update every second
+        const interval = setInterval(() => {
+            const now = new Date();
+            const newTimeDifference = selectedDateTime - now;
+
+            if (newTimeDifference < 0) {
+                clearInterval(interval);
+                $timerTag.text(`${formattedDate}`).addClass("red");
+                return;
+            }
+
+            const newSeconds = Math.floor(newTimeDifference / 1000);
+            const newMinutes = Math.floor(newSeconds / 60);
+            $timerTag.text(`${formattedDate} - ${newMinutes} : ${newSeconds % 60}`);
+        }, 1000);
+    } else {
+        $timerTag.text(`${formattedDate}`);
+    }
+}
+
+// Function to check all countdowns every 10 seconds
+export function checkGameCountdowns() {
+    $('.gameCountdown').each(function() {
+        const $this = $(this);
+        const timeText = $this.text();
+
+        // Check if it still displays the formatted time
+        if (!timeText.includes('FT') && !timeText.includes('The event has already occurred.')) {
+            const selectedDateTime = new Date($this.data('datetime')); // Assuming the datetime is stored in a data attribute
+
+            const now = new Date();
+            const timeDifference = selectedDateTime - now;
+
+            // If the time has passed and is less than 90 minutes ago, update to "FT"
+            if (timeDifference < 0) {
+                const minutesPassed = Math.floor(-timeDifference / 1000 / 60);
+                if (minutesPassed < 90) {
+                    $this.text("FT");
+                }
+            }
+        }
+    });
+}
+
+function convertMillisecond(milliseconds) {
+    let minutes = Math.round(Math.abs(milliseconds) / (1000 * 60))
+    let hours = Math.round(Math.abs(milliseconds) / (1000 * 60 * 60))
+    let days = Math.round(Math.abs(milliseconds) / (1000 * 60 * 60 * 24))
+
+    if(minutes < 60) return minutes + " Mins"  + milliseconds
+    else if(minutes < 24) return hours + " Hrs" + milliseconds
+    else return days + " Days" + milliseconds
+}
+
+Date.prototype.addHours = function (h) {
+    this.setHours(this.getHours()+h)
+    return this
+}
+Date.prototype.addMinutes = function (m) {
+    this.setHours(this.getMinutes()+m)
+    return this
+}
+
+export function fetchTeamById(teamId) {
+  const url = `/v1/api/clubs/${teamId}`;
+
+    
+  // Make an AJAX GET request to fetch the phase by ID
+  $.get(url, function (data) {
+    console.log(data)
+}).fail(function (jqXHR, textStatus, errorThrown) {
+    // Handle error
+    console.error('Error fetching phase:', textStatus, errorThrown);
+    alert('Failed to fetch the phase. Please try again later.');
+});
+  }
+
+  /**
+ * Populate a country select dropdown
+ * @param {string} selectId - The ID of the select element to populate
+ */
+export function populateCountriesSelect(selectId) {
+    if (!selectId) {
+        console.error("Select ID is required.");
+        return;
+    }
+
+    const $select = $(`#${selectId}`);
+
+    // Fetch countries from API and populate the dropdown
+    getCountries().then(countries => {
+        // Clear existing options
+        $select.empty();
+
+        // Populate the select with new options
+        countries.forEach(country => {
+            const option = $('<option></option>').val(country.country).text(country.country);
+            $select.append(option);
+        });
+    }).catch(err => {
+        console.error(err);
+    });
+}
+
+/**
+ * Fetches the players of a specific club by clubId using jQuery and renders them into an element with the matching ID.
+ *
+ * @param {string} clubId - The ID of the club whose players are to be fetched and rendered.
+ */
+export function fetchAndRenderClubPlayers(clubId) {
+    // Send a request to the API endpoint to get the players of the specified club
+    $.get(`/api/clubs/${clubId}/players`, function(data) {
+        // Find the target element by clubId
+        const targetElement = $(`#${clubId}`);
+        
+        if (!targetElement.length) {
+            console.error(`No element found with ID: ${clubId}`);
+            return;
+        }
+
+        // Clear the existing content in the target element
+        targetElement.empty();
+
+        // Iterate through the players and build the HTML structure
+        data.players.forEach(player => {
+            const playerHTML = `
+                <section id="homePlayers" class="border-right padding-right">
+                    <span class="row small-bottom">
+                        <small class="tiny bold" style="width: 188px;">Player</small>
+                        <small class="tiny bold" style="width: 35px;">No</small>
+                        <small class="tiny bold">Position</small>
+                    </span>
+                    <span class="row">
+                        <label for="player-${player.id}" class="small max row margin-right" title="Select player">
+                            <input type="checkbox" name="player" id="player-${player.id}">
+                            <span>${player.fullname}</span>
+                        </label>
+                        
+                        <input type="text" class="tiny-input" placeholder="${player.jersey_number || ''}" title="Player jersey number">
+                        
+                        <select id="position-${player.id}" name="position" class="small-select positions" title="Player position">
+                            <option value="GK" ${player.position === 'GK' ? 'selected' : ''}>Goalkeeper</option>
+                            <option value="DF" ${player.position === 'DF' ? 'selected' : ''}>Defender</option>
+                            <option value="MF" ${player.position === 'MF' ? 'selected' : ''}>Midfielder</option>
+                            <option value="FW" ${player.position === 'FW' ? 'selected' : ''}>Forward</option>
+                        </select>
+                    </span>
+                </section>
+            `;
+
+            // Append the player card to the target element
+            targetElement.append(playerHTML);
+        });
+    }).fail(function() {
+        console.error('Error fetching or rendering players.');
+    });
+}
 
 
 
