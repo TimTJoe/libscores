@@ -756,16 +756,121 @@ export function getGameIdFromUrl() {
     return null; // Return null if the game ID is not found
 }
 
+/**
+ * Utility function to display the last 3 days and the next day in a tabbed format.
+ * Appends buttons to an element with the class 'dates'.
+ */
+export function displayDateTabs() {
+    const $datesContainer = $('.dates'); // Use jQuery to get the dates container
+    const today = new Date(); // Get today's date
+    const dateArray = []; // Create an array to hold the date objects
 
+    // Generate the last 3 days and the next day
+    for (let i = 3; i > 0; i--) {
+        const pastDate = new Date(today);
+        pastDate.setDate(today.getDate() - i); // Subtract i days from today
+        dateArray.push(pastDate);
+    }
+    dateArray.push(today); // Add today
+    const nextDate = new Date(today);
+    nextDate.setDate(today.getDate() + 1); // Add 1 day
+    dateArray.push(nextDate);
 
+    // Clear existing buttons (if any)
+    $datesContainer.empty();
 
+    // Create buttons for each date
+    $.each(dateArray, function(index, date) {
+        const formattedDate = date.toISOString().split('T')[0]; // Get date in YYYY-MM-DD format
+        const displayDate = date.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: '2-digit' }); // e.g., "Wed, Oct 03"
 
+        // Create button element using jQuery
+        const $button = $(`<button class="tab-btn link-btn" data-dateid="${formattedDate}">${displayDate}</button>`);
 
+        // Add active class to today's date button
+        if (date.toDateString() === today.toDateString()) {
+            $button.addClass('active'); // Set active class for today's date
+        }
 
+        $button.on('click', function() {
+            // Remove active class from all buttons
+            $('.tab-btn').removeClass('active');
 
+            // Add active class to the clicked button
+            $(this).addClass('active');
 
+            // Fetch and render games for the selected date
+            fetchAndRenderGames(formattedDate);
+        });
 
+        // Append button to the dates container
+        $datesContainer.append($button);
+    });
+}
 
+/**
+ * Fetch and render games for a specific date.
+ * Sends a request to the server and updates the UI with the game information.
+ * 
+ * @param {string} dateId - The date for which to fetch the games in YYYY-MM-DD format.
+ */
+export function fetchAndRenderGames(dateId) {
+    const $gamesContainer = $('.games-container'); // Use jQuery to get the games container
+    $gamesContainer.attr('id', `games-${dateId}`); // Update ID to match the clicked tab dateId
 
+    // Clear existing content
+    $gamesContainer.empty(); // Clear existing games if any
 
+    $.get(`/v1/api/games/date/${dateId}`)
+        .done(function(data) {
+            // Check if there are games available
+            if (!data || !data.games || data.games.length === 0) {
+                $gamesContainer.html('<p>No games available for this date.</p>');
+                return;
+            }
 
+            // Create a fragment for better performance
+            const $fragment = $(document.createDocumentFragment());
+
+            // Render the games
+            $.each(data.games, function(index, game) {
+                const gameTime = new Date(game.start).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+                const gameInfo = `
+                    <div class="row bg-white small-round small-padding game-card" data-game-id="${game.id}">
+                        <small class="time">${gameTime}</small>
+                        <section class="column">
+                            <span class="row between">
+                                <span class="row">
+                                    <img src="/images/${game.homeTeamBadge}" alt="${game.homeTeamName}" class="tiny-logo">
+                                    <h5 class="mid bold">${game.homeTeamName}</h5>
+                                </span>
+                                <h5 class="mid bold">${game.home_goal ?? 0}</h5>
+                            </span>
+                            <span class="row between">
+                                <span class="row">
+                                    <img src="/images/${game.awayTeamBadge}" alt="${game.awayTeamName}" class="tiny-logo">
+                                    <h5 class="mid bold">${game.awayTeamName}</h5>
+                                </span>
+                                <h5 class="mid bold away-score">${game.away_goal ?? 0}</h5>
+                            </span>
+                        </section>
+                    </div>
+                `;
+
+                $fragment.append(gameInfo); // Append game info to the fragment
+            });
+
+            // Append the fragment to the container
+            $gamesContainer.append($fragment);
+
+            // Add click event listener to each game card
+            $('.game-card').on('click', function() {
+                const gameId = $(this).data('game-id'); // Get the game ID from the clicked card
+                window.location.href = `/dashboard/games/${gameId}/game`; // Redirect to the game details page
+            });
+        })
+        .fail(function() {
+            $gamesContainer.html('<p>Error fetching games. Please try again later.</p>');
+        });
+}

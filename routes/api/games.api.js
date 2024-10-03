@@ -245,6 +245,37 @@ router.get('/:id/lineups', async (req, res) => {
     }
 });
 
+router.get('/date/:dateId', async (req, res) => {
+    const { dateId } = req.params; // Extract the date from the URL
+    const db = await createDbConnection(); // Create database connection
+
+    try {
+        const query = `
+            SELECT g.*, g.id, g.start, ht.*, 
+                   ht.club AS homeTeamName, ht.badge AS homeTeamBadge,at.*,
+                   at.club AS awayTeamName, at.badge AS awayTeamBadge
+            FROM games g
+            INNER JOIN clubs ht ON g.home = ht.id
+            INNER JOIN clubs at ON g.away = at.id
+            WHERE DATE(g.start) = ?
+            ORDER BY g.start ASC
+        `;
+
+        const games = await dbQuery(db, query, [dateId]); // Query the database with the dateId
+        console.log(games)
+
+        // If no games are found, send a message without returning a 404 status
+        if (games.length === 0) {
+            return res.json({ message: 'No games found for this date.' });
+        }
+
+        // Send the retrieved games as a JSON response
+        res.json({ games });
+    } catch (error) {
+        console.error('Error fetching games:', error);
+        res.status(500).json({ message: 'Internal server error.' });
+    }
+});
 
 
 module.exports = router;

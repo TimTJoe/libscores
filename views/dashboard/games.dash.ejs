@@ -1,45 +1,18 @@
 <%- include("./dash.nav.ejs") %>
-<body class="bg-rose">
-    <main class="wall top-align padding">
-        <h1>Games List</h1>
-
-    <% if (games.length === 0) { %>
-        <p>No games available.</p>
-    <% } else { %>
-        <table class="table tiny">
-            <thead>
-                <tr>
-                    <th>Game ID</th>
-                    <th>Game Time</th>
-                    <th>Status</th>
-                    <th>Period</th>
-                    <th>Home Team</th>
-                    <th>Away Team</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Sort the games by gameTime (oldest to newest) -->
-                <% games.sort((a, b) => new Date(a.gameTime) - new Date(b.gameTime)).forEach(game => { %>
-                    <tr>
-                        <td><%= game.gameId %></td>
-                        <td><%= new Date(game.gameTime).toLocaleString() %></td>
-                        <td><%= game.status %></td>
-                        <td><%= game.period %></td>
-                        <td>
-                            <img src="<%= game.homeTeamBadge %>" alt="<%= game.homeTeamName %>" width="50" height="50">
-                            <p><%= game.homeTeamName %></p>
-                            <p>Market Value: <%= game.homeTeamMarketValue %></p>
-                        </td>
-                        <td>
-                            <img src="<%= game.awayTeamBadge %>" alt="<%= game.awayTeamName %>" width="50" height="50">
-                            <p><%= game.awayTeamName %></p>
-                            <p>Market Value: <%= game.awayTeamMarketValue %></p>
-                        </td>
-                    </tr>
-                <% }) %>
-            </tbody>
-        </table>
-    <% } %>
-        <%- include("./dash.foot.ejs") %>
+<body class="">
+    <%- include("./dash.bar.ejs") %>
+    <main class="mid-main row top-align">
+        <aside class="small-pane">
+            aside
+        </aside>
+        <div class="column no-gap small-main">
+            <nav class="dates row bg-white tab-nav ">
+            </nav>
+            <section class="games-container column small-top">
+            </section>
+        </div>
     </main>
+    <%- include("./dash.foot.ejs") %>
+    <script type="module" src="/javascripts/games.dash.js"></script>
+
 </body>

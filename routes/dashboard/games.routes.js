@@ -51,7 +51,6 @@ router.get('/', async (req, res) => {
 });
 
 
-
 router.get("/new", async (req,res) => {
     res.render("dashboard/games.form.ejs", {title: "New Game"})
 })
@@ -92,32 +91,6 @@ router.get('/all', async (req, res) => {
 // GET a single game by ID with season structure
 router.get('/:id', async (req, res) => {
     const { id } = req.params;
-
-    try {
-        const db = await createDbConnection();
-        const query = `
-            SELECT 
-                games.*, 
-                seasons.competition_id, 
-                seasons.start AS season_start, 
-                seasons.end AS season_end,
-                seasons.teams AS season_teams,
-                seasons.status AS season_status
-            FROM games
-            LEFT JOIN seasons ON games.season_id = seasons.id
-            WHERE games.id = ?;
-        `;
-
-        const game = await dbGet(db, query, [id]);
-
-        if (!game) {
-            return res.status(404).json({ message: 'Game not found.' });
-        }
-
-        res.status(200).json(game);
-    } catch (err) {
-        handleError(res, err, 'Error fetching game.');
-    }
 });
 
 // PUT to update game period (first half, second half, half-time)
@@ -183,6 +156,7 @@ router.get('/:id/game-time', async (req, res) => {
         handleError(res, err, 'Error calculating game time.');
     }
 });
+
 
 
 // Route to handle saving game and inserting lineups
@@ -284,6 +258,35 @@ const calculateGameStatusAndPeriod = (gameTime) => {
 router.get("/:id/game", async (req, res) => {
     res.render("dashboard/game.info.ejs", {title: "Games info", gameId: req.params.id})
 })
+
+router.get('/date/:dateId', async (req, res) => {
+    const { dateId } = req.params; // Extract date from the URL
+
+    // Query to fetch games matching the specified date
+    try {
+        const games = await db.query(`
+            SELECT g.id, g.start, 
+                   ht.club AS homeTeamName, ht.badge AS homeTeamBadge,
+                   at.club AS awayTeamName, at.badge AS awayTeamBadge
+            FROM games g
+            INNER JOIN clubs ht ON g.home = ht.id
+            INNER JOIN clubs at ON g.away = at.id
+            WHERE DATE(g.game_time) = ?
+            ORDER BY g.game_time ASC
+        `, [dateId]);
+
+        // Check if any games are found
+        if (games.length === 0) {
+            return res.status(404).json({ message: 'No games found for this date.' });
+        }
+
+        // Send the retrieved games as JSON response
+        res.json({ games });
+    } catch (error) {
+        console.error('Error fetching games:', error);
+        res.status(500).json({ message: 'Internal server error.' });
+    }
+});
 
 
 
