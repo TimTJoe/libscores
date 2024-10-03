@@ -139,8 +139,8 @@
 }
 
 .icon-button.small {
-  width: 28px;
-  height: 28px;
+  width: 34px;
+  height: 34px;
   font-size: var(--small);
   padding: var(--space-sm);
 }
@@ -674,7 +674,7 @@ body.dialog-active::before {
 }
 
 .wall {
-  border-radius: 40px;
+  /* border-radius: 40px; */
   border-end-end-radius: unset;
   border-bottom-left-radius: unset;
   width: 900px;
@@ -838,6 +838,11 @@ body.dialog-active::before {
 button.blue {
   color: var(--white);
   background-color: var(--blue);
+}
+
+button.gray {
+  color: var(--black);
+  background-color: var(--light-gray);
 }
 
 .small-button:active {

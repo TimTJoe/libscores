@@ -1,8 +1,25 @@
 <%- include("./dash.nav.ejs") %>
-<body class="padding ">
-    <h1>welcome to dashboard</h1>
-    <a href="/dashboard/clubs"  >Clubs</a>
-    <a href="/dashboard/competitions" >competition</a>
-    <a href="/dashboard/games" >games</a>
+<body class="">
+<%- include("./dash.bar.ejs") %>
+    <div class="min-wide column padding">
+        <h1 class='center-align'>welcome to dashboard</h1>
+        <section class="row flex">
+            <section class="border">
+                <nav class="row small-round bg-white small-padding">
+                    <a href="/dashboard/clubs">Clubs</a>
+                </nav>
+            </section>
+            <section class="border">
+                <nav class="row small-round bg-white small-padding">
+                    <a href="/dashboard/competitions">competition</a>
+                </nav>
+            </section>
+            <section class="border">
+                <nav class="row small-round bg-white small-padding">
+                    <a href="/dashboard/games">games</a>
+                </nav>
+            </section>
+        </section>
+    </div>
     <%- include("./dash.foot.ejs") %>
 </body>

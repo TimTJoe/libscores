@@ -2,4 +2,7 @@ import { populateSeasonsSelect, fetchTeamSuggestions, populatePhasesSelect, popu
 
 $(document).ready(function () {
     populateSeasonsSelectors()
+    $("#back").on('click', async () => {
+        window.history.back()
+     })
 });

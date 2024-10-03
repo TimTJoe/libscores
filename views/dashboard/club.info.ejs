@@ -1,8 +1,12 @@
 <%- include("./dash.nav.ejs") %>
 <body class="bg-rose">
-    <main class="wall row top-align">
+    <%- include("./dash.bar.ejs") %>
+    <main class="wall row top-align no-gap">
         <% if (club) { %>
-            <div class="bg-white padding column no-gap" aria-live="polite">
+            <div class="bg-white small-padding column no-gap border-right  min-high" aria-live="polite">
+                    <span class="margin-bottom">
+                        <%- include("./back.btn.ejs") %>
+                    </span>
                 <img src="/images/<%= club.badge %>" alt="<%= club.club %> Badge" class="xl-logo">
                 <h3 class="large teaminfo" id="club"><%= club.club %></h3>
                 <section class="column">
@@ -45,10 +49,9 @@
                         Update Info
                     </button>
             </div>
-            <div class="max">
-                <section class="bg-white  padding long ">
+                <section class="bg-white max min-high">
                     <table class="table tiny">
-                        <thead class="thead">
+                        <thead class="thead tiny">
                             <tr class="tr tiny">
                                 <th>-</th>
                                 <th>Player</th>
@@ -64,7 +67,6 @@
                         </tbody>
                     </table>
                 </section>
-            </div>
          <% }  else {%>
             <% msg %>
         <% }%>

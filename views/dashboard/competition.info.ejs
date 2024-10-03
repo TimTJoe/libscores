@@ -1,6 +1,7 @@
 <%- include("./dash.nav.ejs") %>
 <body class="bg-rose">
-    <main class="wall row top-align">
+<%- include("./dash.bar.ejs") %>
+    <main class="min-wide row top-align">
         <% if (competition) { %>
             <div class="bg-white padding column no-gap small-pane" aria-live="polite">
                 <img src="/images/<%= competition.logo %>" alt="<%= competition.competition %> Logo" class="xl-logo">
@@ -38,7 +39,7 @@
                     Update Info
                 </button>
             </div>
-            <div class="max padding">
+            <div class="max min-high bg-white">
             <%- include("./competition.bar.ejs") %>
             <div id="fragment"></div>
             </div>

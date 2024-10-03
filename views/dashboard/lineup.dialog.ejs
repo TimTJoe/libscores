@@ -1,0 +1,38 @@
+<!-- Button to open dialog -->
+<button class="small-button" data-ui="#lineupdialog">
+    <i class="fa fa-plus"></i>
+    create lineup
+</button>
+
+<!-- Dialog to add phase -->
+<dialog class="dialog small" data-ui="lineupdialog">
+    <header class="dialog-header">
+        <h4 class="large align-center">game lineup</h4>
+        <button class="icon-button" id="closeDialog">
+            <i class="fa fa-close" data-ui="#lineupdialog"></i>
+        </button>
+    </header>
+
+    <section class="dialog-content">
+        <div id="lineupmsg" class="message align-center"></div> 
+        <!-- Form Fields -->
+        <section class="row flex">
+            <span>
+                <label for="season" class="label">Season</label>
+                <select name="season" id="phaseSeasons" class="block input  season-selector">
+                </select>
+            </span>
+            <span>
+                <label for="team" class="label">Select Team</label>
+                <input autocomplete="off" type="text" name="team" id="team" class="block input" placeholder="Enter team name">
+                <div id="team-suggestions" class="suggestions" style="display:none;"></div> <!-- Suggestions Container -->
+            </span>
+        </section>
+    </section>
+
+    <footer class="dialog-footer">
+        <button type="button" class="button center row" id="savePhase">
+            <span>Save Phase</span>
+        </button> 
+    </footer>
+</dialog>
