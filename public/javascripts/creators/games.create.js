@@ -2,6 +2,11 @@ $(document).ready(function () {
     $("#back").on('click', async () => {
        window.history.back()
     })
+    const $message = $('#formmsg')
+    const displayMsg = (message, isError = false) => {
+        $message.show().removeClass('success error').addClass(isError ? 'error' : 'success').text(message);
+    };
+    
 
 
         $('#saveGame').click(function() {
@@ -57,12 +62,12 @@ $(document).ready(function () {
                     players
                 }),
                 success: function(response) {
-                    alert('Game and lineups saved successfully!');
-                    console.log(response);
+                    displayMsg('game created successfully')
+                    window.location.href = `/dashboard/games/${response.gameId}/game`
                 },
                 error: function(error) {
                     console.error('Error saving game or lineups:', error);
-                    alert('An error occurred while saving. Please try again.');
+                    displayMsg('Error saving game or lineups:', true)
                 }
             });
         });

@@ -659,8 +659,15 @@ export function fetchAndRenderClubPlayers(clubId) {
     });
 }
 
+/**
+ * Fetches and renders the lineups for a given game, displaying home and away teams' lineups.
+ * Players are sorted by position (GK first, followed by DF, MF, and FW).
+ * The player details are rendered in rows with their number, name, and position.
+ *
+ * @param {number} gameId - The ID of the game to fetch lineups for.
+ */
 export function fetchAndRenderLineups(gameId) {
-    $.get(`/games/${gameId}/lineups`, function(data) {
+    $.get(`/v1/api/games/${gameId}/lineups`, function(data) {
         // Check if the response contains the game lineup data
         if (!data || !data.lineup) {
             $('#lineups').html('<p>No lineups available for this game.</p>');
@@ -670,51 +677,83 @@ export function fetchAndRenderLineups(gameId) {
         // Clear previous content in the lineups container
         $('#lineups').empty();
 
-        // Render Team One's lineup
-        const teamOne = data.lineup.teamOne;
-        if (teamOne.length > 0) {
-            const teamOneContainer = $('<div class="team-lineup"></div>').append('<h3>Team One Lineup</h3>');
-            teamOne.forEach(player => {
-                const playerInfo = `
-                    <div class="player">
-                        <p>Number: ${player.number}</p>
-                        <p>Position: ${player.position}</p>
-                        <p>Player ID: ${player.playerId}</p>
-                        <p>Start: ${player.start}</p>
-                        <p>Team Name: ${player.teamName}</p>
-                    </div>
-                `;
-                teamOneContainer.append(playerInfo);
-            });
-            $('#lineups').append(teamOneContainer);
-        } else {
-            $('#lineups').append('<p>Team One has no players listed.</p>');
+        // Create a container for both teams (using a flexbox for layout)
+        const lineupsContainer = $('<div class="lineups-container" style="display: flex; justify-content: space-between;"></div>');
+
+        /**
+         * Sort players by position in the order GK, DF, MF, FW.
+         * @param {Array} players - List of players to sort.
+         * @returns {Array} - Sorted players by position.
+         */
+        function sortPlayersByPosition(players) {
+            const positionOrder = { GK: 1, DF: 2, MF: 3, FW: 4 };
+            return players.sort((a, b) => positionOrder[a.position] - positionOrder[b.position]);
         }
 
-        // Render Team Two's lineup
-        const teamTwo = data.lineup.teamTwo;
-        if (teamTwo.length > 0) {
-            const teamTwoContainer = $('<div class="team-lineup"></div>').append('<h3>Team Two Lineup</h3>');
-            teamTwo.forEach(player => {
+        /**
+         * Renders a team lineup with sorted players and team details.
+         * @param {Object} team - The team data (badge, teamName, players).
+         * @returns {Object} - The DOM element containing the team lineup.
+         */
+        function renderTeamLineup(team) {
+            const teamContainer = $('<div class="team-lineup"></div>');
+            teamContainer.append(`<img src="/images/${team.badge}" alt="${team.teamName} Badge" style="width: 100px; height: 100px;">`);
+            teamContainer.append(`<h3>${team.teamName}</h3>`);
+
+            const sortedPlayers = sortPlayersByPosition(team.players);
+            sortedPlayers.forEach(player => {
                 const playerInfo = `
-                    <div class="player">
-                        <p>Number: ${player.number}</p>
-                        <p>Position: ${player.position}</p>
-                        <p>Player ID: ${player.playerId}</p>
-                        <p>Start: ${player.start}</p>
-                        <p>Team Name: ${player.teamName}</p>
+                    <div class="player-row">
+                        <p>${player.number} ${player.playerName} - ${player.position}</p>
                     </div>
                 `;
-                teamTwoContainer.append(playerInfo);
+                teamContainer.append(playerInfo);
             });
-            $('#lineups').append(teamTwoContainer);
-        } else {
-            $('#lineups').append('<p>Team Two has no players listed.</p>');
+
+            return teamContainer;
         }
+
+        // Render Home Team's lineup (teamOne)
+        const homeTeam = data.lineup.teamOne;
+        const homeTeamContainer = homeTeam ? renderTeamLineup(homeTeam) : $('<p>No players available for the home team.</p>');
+
+        // Render Away Team's lineup (teamTwo)
+        const awayTeam = data.lineup.teamTwo;
+        const awayTeamContainer = awayTeam ? renderTeamLineup(awayTeam) : $('<p>No players available for the away team.</p>');
+
+        // Append both teams to the main container
+        lineupsContainer.append(homeTeamContainer);
+        lineupsContainer.append(awayTeamContainer);
+
+        // Add the container to the page
+        $('#lineups').append(lineupsContainer);
 
     }).fail(function() {
         $('#lineups').html('<p>Error fetching the lineups. Please try again later.</p>');
     });
+}
+
+// Function to display phase messages
+export const displayMsg = (tag, message, isError = false) => {
+    $tag.show().removeClass('success error').addClass(isError ? 'error' : 'success').text(message);
+};
+
+/**
+ * Extracts the game ID from a given URL.
+ * Assumes the URL has the format: /dashboard/games/{gameId}/game.
+ *
+ * @returns {string | null} The game ID from the URL, or null if not found.
+ */
+export function getGameIdFromUrl() {
+    const urlPath = window.location.pathname; // Get the current path, e.g., '/dashboard/games/3/game'
+    const parts = urlPath.split('/'); // Split the URL path into parts
+
+    // Find the position of "games" in the URL and return the following value (game ID)
+    const gameIndex = parts.indexOf('games');
+    if (gameIndex !== -1 && parts[gameIndex + 1]) {
+        return parts[gameIndex + 1]; // Return the game ID
+    }
+    return null; // Return null if the game ID is not found
 }
 
 

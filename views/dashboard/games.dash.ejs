@@ -1,12 +1,45 @@
 <%- include("./dash.nav.ejs") %>
 <body class="bg-rose">
     <main class="wall top-align padding">
-        <div class="frame ">
-            <header class="bg-white small-round small-padding margin">
-                <a href="/dashboard/games/new" class="small-button blue">New Game</a>
-            </header>
-        </div>
-    
+        <h1>Games List</h1>
+
+    <% if (games.length === 0) { %>
+        <p>No games available.</p>
+    <% } else { %>
+        <table class="table tiny">
+            <thead>
+                <tr>
+                    <th>Game ID</th>
+                    <th>Game Time</th>
+                    <th>Status</th>
+                    <th>Period</th>
+                    <th>Home Team</th>
+                    <th>Away Team</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Sort the games by gameTime (oldest to newest) -->
+                <% games.sort((a, b) => new Date(a.gameTime) - new Date(b.gameTime)).forEach(game => { %>
+                    <tr>
+                        <td><%= game.gameId %></td>
+                        <td><%= new Date(game.gameTime).toLocaleString() %></td>
+                        <td><%= game.status %></td>
+                        <td><%= game.period %></td>
+                        <td>
+                            <img src="<%= game.homeTeamBadge %>" alt="<%= game.homeTeamName %>" width="50" height="50">
+                            <p><%= game.homeTeamName %></p>
+                            <p>Market Value: <%= game.homeTeamMarketValue %></p>
+                        </td>
+                        <td>
+                            <img src="<%= game.awayTeamBadge %>" alt="<%= game.awayTeamName %>" width="50" height="50">
+                            <p><%= game.awayTeamName %></p>
+                            <p>Market Value: <%= game.awayTeamMarketValue %></p>
+                        </td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    <% } %>
         <%- include("./dash.foot.ejs") %>
     </main>
 </body>

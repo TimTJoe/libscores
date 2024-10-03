@@ -9,9 +9,48 @@ const handleError = (res, err, customMessage = 'An error occurred') => {
     res.status(500).json({ message: customMessage });
 };
 
-router.get("/", async (req, res) => {
-    res.render("dashboard/games.dash.ejs", {title: "Games"})
-})
+
+// Route handler to fetch all games and their home and away team info
+router.get('/', async (req, res) => {
+    try {
+        const db = await createDbConnection();
+
+        // SQL query to fetch all games with their respective home and away team details
+        const query = `
+            SELECT 
+                games.id AS gameId,
+                games.start AS gameTime,
+                games.status,
+                games.period,
+                home_club.club AS homeTeamName,
+                home_club.badge AS homeTeamBadge,
+                home_club.market_value AS homeTeamMarketValue,
+                away_club.club AS awayTeamName,
+                away_club.badge AS awayTeamBadge,
+                away_club.market_value AS awayTeamMarketValue
+            FROM games
+            JOIN clubs AS home_club ON games.home = home_club.id
+            JOIN clubs AS away_club ON games.away = away_club.id;
+        `;
+
+        // Execute the query to get the list of games
+        const games = await dbAll(db, query);
+
+        // Check if any games are returned
+        if (games.length === 0) {
+            return res.render('dashboard/games.dash.ejs', {title: 'games', games: [] });  // Render with an empty games array
+        }
+
+        // Pass the games data to the EJS template for rendering
+        res.render('dashboard/games.dash.ejs', {title: 'games', games });
+
+    } catch (err) {
+        console.error('Error fetching games:', err);
+        res.status(500).send('Internal server error.');
+    }
+});
+
+
 
 router.get("/new", async (req,res) => {
     res.render("dashboard/games.form.ejs", {title: "New Game"})
@@ -157,7 +196,6 @@ router.post('/', async (req, res) => {
         // Calculate game status and period based on the gameTime
         const { status, period } = calculateGameStatusAndPeriod(gameTime);
     
-        console.log(status,period);
         
         // Begin a transaction
         await dbRun(db, 'BEGIN TRANSACTION');
@@ -242,6 +280,10 @@ const calculateGameStatusAndPeriod = (gameTime) => {
 
     return { status, period };
 };
+
+router.get("/:id/game", async (req, res) => {
+    res.render("dashboard/game.info.ejs", {title: "Games info", gameId: req.params.id})
+})
 
 
 
