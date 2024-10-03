@@ -137,4 +137,115 @@ router.get('/:id/game-time', async (req, res) => {
     }
 });
 
+
+router.get('/:id/lineups', async (req, res) => {
+    const { id } = req.params;
+
+    const db = await createDbConnection();
+
+    try {
+        // Query to fetch game, lineup, clubs, and players details
+        const query = `
+            SELECT 
+                games.*,
+                games.id AS game_id, 
+                games.status, 
+                games.period, 
+                games.season_id, 
+                lineups.team_id, 
+                lineups.player_id, 
+                lineups.number, 
+                lineups.position, 
+                lineups.start, 
+                clubs.*,
+                clubs.id AS club_id,
+                clubs.club AS club_name, 
+                clubs.badge, 
+                clubs.market_value,
+                players.*,
+                players.id AS player_id,
+                players.fullname AS player_name,
+                players.DOB, 
+                players.country_id,
+                players.position AS player_position -- Avoid conflict with lineup.position
+            FROM games
+            LEFT JOIN lineups ON games.id = lineups.game_id
+            LEFT JOIN clubs ON lineups.team_id = clubs.id
+            LEFT JOIN players ON lineups.player_id = players.id
+            WHERE games.id = ?;
+        `;
+
+        const result = await dbAll(db, query, [id]);
+        console.log(result)
+
+        if (result.length === 0) {
+            return res.status(404).json({ message: 'Game or lineups not found.' });
+        }
+
+        // Initialize the response structure
+        const game = {
+            id: result[0].game_id,
+            status: result[0].status,
+            period: result[0].period,
+            home: result[0].home,
+            away: result[0].away,
+            start: result[0].start,
+            home_goal: result[0].home_goal,
+            away_goal: result[0].away_goal,
+            lineup: {}
+        };
+
+        // Helper object to track teams (to avoid duplicates)
+        const teams = {};
+
+        // Grouping teams and their players
+        result.forEach(row => {
+            const teamId = row.team_id;
+
+            // If team hasn't been added yet, initialize the team object
+            if (!teams[teamId]) {
+                teams[teamId] = {
+                    teamId: row.club_id,
+                    teamName: row.club_name,
+                    badge: row.badge,
+                    stadium: row.stadium,
+                    players: [] // This will hold the players for this team
+                };
+            }
+
+            // Create the player object and add to the respective team's players array
+            const player = {
+                playerId: row.player_id,
+                playerName: row.player_name,
+                age: row.DOB,
+                nationality: row.country_id,
+                position: row.position,
+                number: row.number,
+                start: row.start
+            };
+            teams[teamId].players.push(player);
+        });
+
+        // Add the teams (teamOne and teamTwo) to the lineup object in the game structure
+        const teamIds = Object.keys(teams);
+        if (teamIds.length > 0) {
+            game.lineup.teamOne = teams[teamIds[0]];  // First team
+        }
+        if (teamIds.length > 1) {
+            game.lineup.teamTwo = teams[teamIds[1]];  // Second team
+        }
+
+        // Return the structured game data with team and player details
+        res.status(200).json(game);
+    } catch (err) {
+        handleError(res, err, 'Error fetching game lineups.');
+    } finally {
+        if (db) {
+            db.close();  // Ensure the database connection is closed
+        }
+    }
+});
+
+
+
 module.exports = router;

@@ -57,7 +57,7 @@ export function fetchAndRenderClubPlayers(clubId) {
                         <span>${player.fullname}</span>
                     </label>
                     
-                    <input type="text" class="tiny-input" placeholder="${player.jersey_number || ''}" title="Player jersey number">
+                    <input id="jersey-${player.id}" type="text" class="tiny-input" placeholder="${player.jersey_number || ''}" title="Player jersey number">
                     
                     <select id="position-${player.id}" name="position" class="small-select positions" title="Player position">
                         <option value="GK" ${player.position === 'GK' ? 'selected' : ''}>Goalkeeper</option>

@@ -659,6 +659,65 @@ export function fetchAndRenderClubPlayers(clubId) {
     });
 }
 
+export function fetchAndRenderLineups(gameId) {
+    $.get(`/games/${gameId}/lineups`, function(data) {
+        // Check if the response contains the game lineup data
+        if (!data || !data.lineup) {
+            $('#lineups').html('<p>No lineups available for this game.</p>');
+            return;
+        }
+
+        // Clear previous content in the lineups container
+        $('#lineups').empty();
+
+        // Render Team One's lineup
+        const teamOne = data.lineup.teamOne;
+        if (teamOne.length > 0) {
+            const teamOneContainer = $('<div class="team-lineup"></div>').append('<h3>Team One Lineup</h3>');
+            teamOne.forEach(player => {
+                const playerInfo = `
+                    <div class="player">
+                        <p>Number: ${player.number}</p>
+                        <p>Position: ${player.position}</p>
+                        <p>Player ID: ${player.playerId}</p>
+                        <p>Start: ${player.start}</p>
+                        <p>Team Name: ${player.teamName}</p>
+                    </div>
+                `;
+                teamOneContainer.append(playerInfo);
+            });
+            $('#lineups').append(teamOneContainer);
+        } else {
+            $('#lineups').append('<p>Team One has no players listed.</p>');
+        }
+
+        // Render Team Two's lineup
+        const teamTwo = data.lineup.teamTwo;
+        if (teamTwo.length > 0) {
+            const teamTwoContainer = $('<div class="team-lineup"></div>').append('<h3>Team Two Lineup</h3>');
+            teamTwo.forEach(player => {
+                const playerInfo = `
+                    <div class="player">
+                        <p>Number: ${player.number}</p>
+                        <p>Position: ${player.position}</p>
+                        <p>Player ID: ${player.playerId}</p>
+                        <p>Start: ${player.start}</p>
+                        <p>Team Name: ${player.teamName}</p>
+                    </div>
+                `;
+                teamTwoContainer.append(playerInfo);
+            });
+            $('#lineups').append(teamTwoContainer);
+        } else {
+            $('#lineups').append('<p>Team Two has no players listed.</p>');
+        }
+
+    }).fail(function() {
+        $('#lineups').html('<p>Error fetching the lineups. Please try again later.</p>');
+    });
+}
+
+
 
 
 
