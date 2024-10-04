@@ -1,8 +1,11 @@
-import { fetchAndRenderLineups } from "../utils.js";
+import { fetchAndRenderLineups, updateGamePeriodTimer} from "../utils.js";
 
 $(document).ready(function () {
     let gameId = getGameIdFromUrl()
     fetchAndRenderLineups(gameId)
+     // Start the timer for the game based on the data-start attribute
+     setInterval(updateGamePeriodTimer, 1000);
+    
 });
 
 /**

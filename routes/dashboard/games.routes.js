@@ -2,6 +2,8 @@ const express = require('express');
 const { dbQuery, dbRun, dbGet, dbAll, createDbConnection } = require('@utils/dbUtils');
 const router = express.Router();
 const moment = require('moment');
+const games = require('@/data/games.json'); // Mock "database"
+
 
 // Helper function to handle errors
 const handleError = (res, err, customMessage = 'An error occurred') => {
@@ -55,6 +57,10 @@ router.get("/new", async (req,res) => {
     res.render("dashboard/games.form.ejs", {title: "New Game"})
 })
 
+router.get("/timer", async (req,res) => {
+    res.render("dashboard/timer.ejs", {title: "live games", games})
+})
+
 // GET all games with modified season structure
 router.get('/all', async (req, res) => {
     try {
@@ -87,6 +93,8 @@ router.get('/all', async (req, res) => {
         handleError(res, err, 'Error fetching games.');
     }
 });
+
+
 
 // GET a single game by ID with season structure
 router.get('/:id', async (req, res) => {

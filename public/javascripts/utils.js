@@ -1,3 +1,4 @@
+
 export function formatDate(date) {
     let _date = new Date(date);
     let formatedDate = new Intl.DateTimeFormat("us-EN", {
@@ -659,97 +660,6 @@ export function fetchAndRenderClubPlayers(clubId) {
     });
 }
 
-/**
- * Fetches and renders the lineups for a given game, displaying home and away teams' lineups.
- * Players are sorted by position (GK first, followed by DF, MF, and FW).
- * The player details are rendered in rows with their number, name, and position.
- *
- * @param {number} gameId - The ID of the game to fetch lineups for.
- */
-export function fetchAndRenderLineups(gameId) {
-    $.get(`/v1/api/games/${gameId}/lineups`, function(data) {
-
-        // Check if the response contains the game lineup data
-        if (!data || !data.lineup) {
-            $('#msg').html('<p>No lineups available for this game.</p>');
-            return;
-        }
-
-        // Clear previous content in the lineups container
-        $('#msg').empty();
-        console.log(data);
-
-            $(`#gamescores`).append(`
-                    <h4 class="bold">${data.home_goal}</h4>
-                    <small class="${data.period == 'Full-Time'? 'black': 'red'} bold">
-                    &middot;${data.period == 'Full-Time'? 'FT':  new Date(data.start).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}&middot;
-                    </small>
-                    <h4  class="bold">${data.away_goal}</h4>
-                    `);
-
-
-        // Create a container for both teams (using a flexbox for layout)
-        const lineupsContainer = $('<div class="lineups-container row bg-white"></div>');
-
-        /**
-         * Sort players by position in the order GK, DF, MF, FW.
-         * @param {Array} players - List of players to sort.
-         * @returns {Array} - Sorted players by position.
-         */
-        function sortPlayersByPosition(players) {
-            const positionOrder = { GK: 1, DF: 2, MF: 3, FW: 4 };
-            return players.sort((a, b) => positionOrder[a.position] - positionOrder[b.position]);
-        }
-
-        /**
-         * Renders a team lineup with sorted players and team details.
-         * @param {Object} team - The team data (badge, teamName, players).
-         * @returns {Object} - The DOM element containing the team lineup.
-         */
-        function renderTeamLineup(team, teamcontainer, lineupcontainer) {
-            const teamContainer = $(`#${teamcontainer}`);
-            const lineupsContainer = $(`#${lineupcontainer}`);
-            
-            teamContainer.append(`
-                <img src="/images/${team.badge}" alt="" class="sm-logo small-round">
-                <h4 class="bold cap">${team.teamName}</h4>
-                `);
-                        
-
-            const sortedPlayers = sortPlayersByPosition(team.players);
-            sortedPlayers.forEach(player => {
-                const playerInfo = `
-                    <span class="row">
-                        <small class="num">${player.number}</small>
-                        <small class="cap">${player.playerName}</small>
-                        <small class="uppercase move-right">${player.position}</small>
-                    </span>
-                `;
-                lineupsContainer.append(playerInfo);
-            });
-
-            return null;
-        }
-
-        // Render Home Team's lineup (teamOne)
-        const homeTeam = data.lineup.teamOne;
-        let msg = homeTeam ? renderTeamLineup(homeTeam, 'hometeam', 'homelineups') : $('<p>No players available for the home team.</p>');
-
-        // Render Away Team's lineup (teamTwo)
-        const awayTeam = data.lineup.teamTwo;
-         msg = awayTeam ? renderTeamLineup(awayTeam, 'awayteam', 'awaylineups') : $('<p>No players available for the away team.</p>');
-
-        // Append both teams to the main container
-        $('#msg').append(msg);
-        // msg.append(msg);
-
-        // Add the container to the page
-        // $('#lineups').append(lineupsContainer);
-
-    }).fail(function() {
-        $('#msg').html('<p>Error fetching the lineups. Please try again later.</p>');
-    });
-}
 
 // Function to display phase messages
 export const displayMsg = (tag, message, isError = false) => {
@@ -826,6 +736,8 @@ export function displayDateTabs() {
     });
 }
 
+// ==============================================================
+
 /**
  * Fetch and render games for a specific date.
  * Sends a request to the server and updates the UI with the game information.
@@ -852,11 +764,27 @@ export function fetchAndRenderGames(dateId) {
 
             // Render the games
             $.each(data.games, function(index, game) {
-                const gameTime = new Date(game.start).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                const startTime = new Date(game.start).getTime();
 
+                // Determine what to display in the <small class="time"> tag
+                let gameTimeDisplay = '';
+
+                // Create an initial display based on game status
+                if (startTime > new Date().getTime()) {
+                    // Game is pending, display the start time in "HH:MM" format
+                    gameTimeDisplay = new Date(game.start).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                } else if (new Date().getTime() >= startTime + 90 * 60 * 1000) {
+                    // Game has ended, display "FT" (Full-Time)
+                    gameTimeDisplay = 'FT';
+                } else {
+                    // Game is live, initially display 0:00, will be updated in tick function
+                    gameTimeDisplay = '0:00';
+                }
+
+                // Generate the game HTML and use <small class="time"> for the time display
                 const gameInfo = `
                     <div class="row bg-white small-round small-padding game-card" data-game-id="${game.id}">
-                        <small class="time">${gameTime}</small>
+                        <small class="time" id="timer-${game.id}" data-start-time="${game.start}">${gameTimeDisplay}</small>
                         <section class="column">
                             <span class="row between">
                                 <span class="row">
@@ -876,7 +804,8 @@ export function fetchAndRenderGames(dateId) {
                     </div>
                 `;
 
-                $fragment.append(gameInfo); // Append game info to the fragment
+                // Append game info to the fragment
+                $fragment.append(gameInfo);
             });
 
             // Append the fragment to the container
@@ -887,8 +816,154 @@ export function fetchAndRenderGames(dateId) {
                 const gameId = $(this).data('game-id'); // Get the game ID from the clicked card
                 window.location.href = `/dashboard/games/${gameId}/game`; // Redirect to the game details page
             });
+
+            // Start the timer updates after games are rendered
+            startTimers();
         })
         .fail(function() {
             $gamesContainer.html('<p>Error fetching games. Please try again later.</p>');
         });
 }
+
+/**
+ * Function to update the timer of live games.
+ * This function will be called at regular intervals to update the timer for all games.
+ */
+function updateTimers() {
+    $('.time').each(function() {
+        const $timeElement = $(this);
+        const startTime = new Date($timeElement.data('start-time')).getTime();
+        const currentTime = new Date().getTime();
+        const elapsed = currentTime - startTime;
+
+        if (elapsed > 0 && elapsed < 90 * 60 * 1000) {
+            // Game is live, calculate elapsed time
+            const minutes = Math.floor((elapsed / 1000) / 60);
+            const seconds = Math.floor((elapsed / 1000) % 60);
+            $timeElement.text(`${minutes}:${seconds < 10 ? '0' : ''}${seconds}`);
+        } else if (elapsed >= 90 * 60 * 1000) {
+            // Game has ended, show "FT"
+            $timeElement.text('FT');
+        } else {
+            // Game has not started yet, keep the scheduled start time (already displayed)
+        }
+    });
+}
+
+/**
+ * Starts the timers for all games and updates every second.
+ */
+function startTimers() {
+    // Update timers every second
+    setInterval(updateTimers, 1000);
+}
+
+// ==============================================================
+
+/**
+ * Fetches and renders the lineups for a given game, displaying home and away teams' lineups.
+ * Players are sorted by position (GK first, followed by DF, MF, and FW).
+ * The player details are rendered in rows with their number, name, and position.
+ *
+ * @param {number} gameId - The ID of the game to fetch lineups for.
+ */
+export function fetchAndRenderLineups(gameId) {
+    $.get(`/v1/api/games/${gameId}/lineups`, function(data) {
+        // Check if the response contains the game lineup data
+        if (!data || !data.lineup) {
+            $('#msg').html('<p>No lineups available for this game.</p>');
+            return;
+        }
+
+        // Clear previous content in the lineups container
+        $('#msg').empty();
+
+        // Update scores and display timer
+        const $scoresContainer = $('#gamescores');
+        
+        $scoresContainer.append(`
+                <h4 class="bold">${data.home_goal}</h4>
+                &middot;
+                <small class="time red bold" data-start-time="${data.start}">00:00</small>
+                &middot;
+                <h4 class="bold">${data.away_goal}</h4>
+                `);
+
+       
+
+        // Render lineups for both teams
+        renderTeamLineup(data.lineup.teamOne, 'hometeam', 'homelineups');
+        renderTeamLineup(data.lineup.teamTwo, 'awayteam', 'awaylineups');
+    }).fail(function() {
+        $('#msg').html('<p>Error fetching the lineups. Please try again later.</p>');
+    });
+}
+
+/**
+ * Renders a team lineup with sorted players and team details.
+ * @param {Object} team - The team data (badge, teamName, players).
+ * @param {string} teamContainerId - The ID of the container to render the team details.
+ * @param {string} lineupContainerId - The ID of the container to render the player lineups.
+ */
+function renderTeamLineup(team, teamContainerId, lineupContainerId) {
+    const teamContainer = $(`#${teamContainerId}`);
+    const lineupContainer = $(`#${lineupContainerId}`);
+
+    // Clear previous content in the team and lineup containers
+    teamContainer.empty();
+    lineupContainer.empty();
+
+    // Render team details
+    teamContainer.append(`
+        <img src="/images/${team.badge}" alt="" class="sm-logo small-round">
+        <h4 class="bold cap">${team.teamName}</h4>
+    `);
+
+    // Sort players by position and render
+    sortPlayersByPosition(team.players).forEach(player => {
+        lineupContainer.append(`
+            <span class="row">
+                <small class="num">${player.number}</small>
+                <small class="cap">${player.playerName}</small>
+                <small class="uppercase move-right">${player.position}</small>
+            </span>
+        `);
+    });
+}
+
+/**
+ * Sorts players by position in the order GK, DF, MF, FW.
+ * @param {Array} players - List of players to sort.
+ * @returns {Array} - Sorted players by position.
+ */
+function sortPlayersByPosition(players) {
+    const positionOrder = { GK: 1, DF: 2, MF: 3, FW: 4 };
+    return players.sort((a, b) => positionOrder[a.position] - positionOrder[b.position]);
+}
+
+/**
+ * Updates the game period timer based on the data-start attribute.
+ */
+export function updateGamePeriodTimer() {
+    // Select the timer element inside #gamescores
+    const $timeElement = $('#gamescores').find('.time');
+
+    if ($timeElement.length === 0) {
+        return; // Exit if no timer element found
+    }
+
+    const startTime = new Date($timeElement.data('start-time')).getTime();
+    const currentTime = new Date().getTime();
+    const elapsed = currentTime - startTime;
+
+    if (elapsed > 0 && elapsed < 90 * 60 * 1000) {
+        // Game is live, calculate elapsed time
+        const minutes = Math.floor((elapsed / 1000) / 60);
+        const seconds = Math.floor((elapsed / 1000) % 60);
+        $timeElement.text(`${minutes}:${seconds < 10 ? '0' : ''}${seconds}`);
+    } else if (elapsed >= 90 * 60 * 1000) {
+        // Game has ended, show "FT"
+        $timeElement.text('FT');
+    }
+}
+

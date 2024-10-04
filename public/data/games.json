@@ -1,0 +1,27 @@
+[
+    {
+      "home": "Team A",
+      "away": "Team B",
+      "score1": 0,
+      "score2": 0,
+      "start": "2024-10-04 15:00:00",
+      "period": "Pending"
+    },
+    {
+      "home": "Team C",
+      "away": "Team D",
+      "score1": 1,
+      "score2": 1,
+      "start": "2024-10-04 13:30:00",
+      "period": "First Half"
+    },
+    {
+      "home": "Team E",
+      "away": "Team F",
+      "score1": 0,
+      "score2": 0,
+      "start": "2024-10-04 17:17:00",  
+      "period": "Pending"
+    }
+  ]
+  

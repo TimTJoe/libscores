@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Live Games</title>
+  <script src="/javascripts/jquery.js"></script>
+  <script src="/javascripts/timer.js"></script> <!-- Link to the timer logic -->
+  <script>
+    window.gameData = <%- JSON.stringify(games) %>;
+  </script>
+</head>
+<body>
+  <h1>Live Games</h1>
+  <div id="games-container">
+    <% games.forEach((game, index) => { %>
+      <div class="game" data-gameid="<%= index %>">
+        <h3><%= game.home %> vs <%= game.away %></h3>
+        <p>Score: <%= game.score1 %> - <%= game.score2 %></p>
+        <p>Period: <span class="period" id="period-<%= index %>"><%= game.period %></span></p>
+        <p>Time: <span class="live-timer" id="timer-<%= index %>">--:--</span></p>
+      </div>
+    <% }) %>
+  </div>
+</body>
+</html>
