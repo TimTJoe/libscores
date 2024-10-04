@@ -176,7 +176,8 @@ router.get('/:id/lineups', async (req, res) => {
         `;
 
         const result = await dbAll(db, query, [id]);
-
+        // console.log(result);
+        
         if (result.length === 0) {
             return res.status(404).json({ message: 'Game or lineups not found.' });
         }

@@ -2,7 +2,33 @@
 <body class="bg-rose">
 <%- include("./dash.bar.ejs") %>
     <main class="min-wide row top-align">
-        <div id="lineups"></div>
+        <aside class="small-pane">
+            aside
+        </aside>
+        <div class="small-main bg-white small-padding min-high ">
+            <small id="msg"></small>
+            <section class="row around margin-top margin-bottom">
+                <span class="row" id="hometeam"></span>
+                <span class="row align-center" id="gamescores">
+                    <!-- <h4>0</h4>
+                    <small class="red">88'</small>
+                    <h4>0</h4> -->
+                </span>
+                <span class="row cap" id="awayteam">
+                </span>
+            </section>
+            <hr class="divider">
+            <div class="details" id="summary">
+                march summary - libscores.com
+            </div>
+            <hr class="divider">
+            <div class="row flex top-align">
+                <section class="column padding-right" id="homelineups">
+                </section>
+                <section class="column" id="awaylineups">
+                </section>
+            </div>
+        </div>
     </main>
     <%- include("./dash.foot.ejs") %>
     <script type="module" src="/javascripts/readers/games.read.js"></script>

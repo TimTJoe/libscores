@@ -668,17 +668,28 @@ export function fetchAndRenderClubPlayers(clubId) {
  */
 export function fetchAndRenderLineups(gameId) {
     $.get(`/v1/api/games/${gameId}/lineups`, function(data) {
+
         // Check if the response contains the game lineup data
         if (!data || !data.lineup) {
-            $('#lineups').html('<p>No lineups available for this game.</p>');
+            $('#msg').html('<p>No lineups available for this game.</p>');
             return;
         }
 
         // Clear previous content in the lineups container
-        $('#lineups').empty();
+        $('#msg').empty();
+        console.log(data);
+
+            $(`#gamescores`).append(`
+                    <h4 class="bold">${data.home_goal}</h4>
+                    <small class="${data.period == 'Full-Time'? 'black': 'red'} bold">
+                    &middot;${data.period == 'Full-Time'? 'FT':  new Date(data.start).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}&middot;
+                    </small>
+                    <h4  class="bold">${data.away_goal}</h4>
+                    `);
+
 
         // Create a container for both teams (using a flexbox for layout)
-        const lineupsContainer = $('<div class="lineups-container" style="display: flex; justify-content: space-between;"></div>');
+        const lineupsContainer = $('<div class="lineups-container row bg-white"></div>');
 
         /**
          * Sort players by position in the order GK, DF, MF, FW.
@@ -695,41 +706,48 @@ export function fetchAndRenderLineups(gameId) {
          * @param {Object} team - The team data (badge, teamName, players).
          * @returns {Object} - The DOM element containing the team lineup.
          */
-        function renderTeamLineup(team) {
-            const teamContainer = $('<div class="team-lineup"></div>');
-            teamContainer.append(`<img src="/images/${team.badge}" alt="${team.teamName} Badge" style="width: 100px; height: 100px;">`);
-            teamContainer.append(`<h3>${team.teamName}</h3>`);
+        function renderTeamLineup(team, teamcontainer, lineupcontainer) {
+            const teamContainer = $(`#${teamcontainer}`);
+            const lineupsContainer = $(`#${lineupcontainer}`);
+            
+            teamContainer.append(`
+                <img src="/images/${team.badge}" alt="" class="sm-logo small-round">
+                <h4 class="bold cap">${team.teamName}</h4>
+                `);
+                        
 
             const sortedPlayers = sortPlayersByPosition(team.players);
             sortedPlayers.forEach(player => {
                 const playerInfo = `
-                    <div class="player-row">
-                        <p>${player.number} ${player.playerName} - ${player.position}</p>
-                    </div>
+                    <span class="row">
+                        <small class="num">${player.number}</small>
+                        <small class="cap">${player.playerName}</small>
+                        <small class="uppercase move-right">${player.position}</small>
+                    </span>
                 `;
-                teamContainer.append(playerInfo);
+                lineupsContainer.append(playerInfo);
             });
 
-            return teamContainer;
+            return null;
         }
 
         // Render Home Team's lineup (teamOne)
         const homeTeam = data.lineup.teamOne;
-        const homeTeamContainer = homeTeam ? renderTeamLineup(homeTeam) : $('<p>No players available for the home team.</p>');
+        let msg = homeTeam ? renderTeamLineup(homeTeam, 'hometeam', 'homelineups') : $('<p>No players available for the home team.</p>');
 
         // Render Away Team's lineup (teamTwo)
         const awayTeam = data.lineup.teamTwo;
-        const awayTeamContainer = awayTeam ? renderTeamLineup(awayTeam) : $('<p>No players available for the away team.</p>');
+         msg = awayTeam ? renderTeamLineup(awayTeam, 'awayteam', 'awaylineups') : $('<p>No players available for the away team.</p>');
 
         // Append both teams to the main container
-        lineupsContainer.append(homeTeamContainer);
-        lineupsContainer.append(awayTeamContainer);
+        $('#msg').append(msg);
+        // msg.append(msg);
 
         // Add the container to the page
-        $('#lineups').append(lineupsContainer);
+        // $('#lineups').append(lineupsContainer);
 
     }).fail(function() {
-        $('#lineups').html('<p>Error fetching the lineups. Please try again later.</p>');
+        $('#msg').html('<p>Error fetching the lineups. Please try again later.</p>');
     });
 }
 

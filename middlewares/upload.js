@@ -1,5 +1,4 @@
 const multer = require("multer");
-const sharp = require("sharp");
 const path = require("node:path");
 
 const dest = "./public/images";
@@ -11,11 +10,6 @@ const storage = multer.diskStorage({
   filename: (req, file, cb) => {
     cb(null, "IMG_" + Date.now() + path.extname(file.originalname));
   },
-  resize: (req, file, cb) => {
-    sharp(file.buffer)
-      .resize(270, 250) // Resize the image to 270px x 250px
-      .toBuffer((err, buffer) => cb(err, buffer));
-  }
 });
 
 const upload = multer({ 

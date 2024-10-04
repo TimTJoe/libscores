@@ -932,3 +932,27 @@ button.gray {
 .game-card {
  cursor: pointer;
 }
+
+.round-tab {
+  cursor: pointer;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  background-color: var(--fog);
+  border-radius: 17px;
+  color: var(--black);
+  text-transform: capitalize;
+  font-size: var(--tiny);
+ }
+
+ .round-tab:hover {
+  color: var(--crimson);
+  background-color: var(--light-gray);
+ }
+
+ .num {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: thin solid var(--light-gray);
+  display: grid;
+  place-items: center;
+ }
