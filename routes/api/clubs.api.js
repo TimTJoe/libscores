@@ -1,23 +1,29 @@
 const { dbQuery, dbRun, dbGet, dbAll, createDbConnection } = require('@utils/dbUtils');
-var router = require('express').Router()
-var sqlite3 = require("sqlite3").verbose();
-var getDbInstance = require('@js/getDBInstance');
-var db = getDbInstance(sqlite3)
+var router = require('express').Router();
+// var sqlite3 = require("sqlite3").verbose();
+// var getDbInstance = require('@js/getDBInstance');
+// var db = getDbInstance(sqlite3);
 
-router.get('/', async function(req, res, next) {
+router.get('/', async (req, res) => {
     try {
-        db.all("SELECT * FROM clubs", function (err, rows) {
-            if(err) {
-                    throw new Error(err);
-            } else {
-                    res.json({clubs: rows})
-            }
-            });
-        } catch (error) {
-            res.json({error, msg: "No club found."})
+        const db = await createDbConnection(); // Consistent database connection method
+        
+        const query = `SELECT * FROM clubs`;
+        const clubs = await dbAll(db, query);  // Use dbAll for querying all rows
+
+        if (!clubs.length) {
+            return res.status(404).json({ message: 'No clubs found.' });
         }
+
+        res.status(200).json({ clubs });
+    } catch (error) {
+        console.error('Error fetching clubs:', error);
+        res.status(500).json({ message: 'An error occurred while fetching the clubs.' });
+    }
 });
 
+
+// Route 2: Suggest clubs (query search)
 router.get('/suggest', async (req, res) => {
     const { q } = req.query; // Get the query parameter
 
@@ -29,7 +35,7 @@ router.get('/suggest', async (req, res) => {
         const query = `SELECT id, club FROM clubs WHERE club LIKE ? LIMIT 10`; // Adjust the query as necessary
         const params = [`%${q}%`]; // Use parameterized query to prevent SQL injection
 
-        let db = await createDbConnection()
+        let db = await createDbConnection();
 
         // Execute the database query
         const teams = await dbQuery(db, query, params); // Assuming dbQuery is defined in your dbUtils
@@ -42,12 +48,12 @@ router.get('/suggest', async (req, res) => {
     }
 });
 
-// Get all players for a specific club by clubId
+// Route 3: Get all players for a specific club by clubId
 router.get('/:clubId/players', async (req, res) => {
     const { clubId } = req.params;
 
     try {
-        const db = await createDbConnection(sqlite3);
+        const db = await createDbConnection();
         
         const query = `
             SELECT 
@@ -73,7 +79,7 @@ router.get('/:clubId/players', async (req, res) => {
 
         // If no players are found for the given clubId
         if (!players.length) {
-                return res.status(200).json({ message: 'No players available for this club.' });
+            return res.status(200).json({ message: 'No players available for this club.' });
         }
 
         // Format the response with club and player details
@@ -104,18 +110,19 @@ router.get('/:clubId/players', async (req, res) => {
     }
 });
 
+// Route 4: Get a specific club by its id
 router.get('/:id', async function(req, res, next) {
-    let {id} = req.params
+    let { id } = req.params;
     try {
-    db.all("SELECT * FROM clubs WHERE id=?",[id], function (err, rows) {
-           if(err || rows.length == 0) {
-                  throw new Error(err);
-           } else {
-                  res.status(200).json({club: rows, msg: false})
-           }
-           });
+        db.all("SELECT * FROM clubs WHERE id=?", [id], function (err, rows) {
+            if (err || rows.length === 0) {
+                throw new Error(err);
+            } else {
+                res.status(200).json({ club: rows, msg: false });
+            }
+        });
     } catch (error) {
-           res.status(400).json({error, msg: "Club doesn't exist"})
+        res.status(400).json({ error, msg: "Club doesn't exist" });
     }
 });
 

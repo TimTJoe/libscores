@@ -43,10 +43,8 @@ $(document).ready(function () {
     }).fail(function (jqXHR, textStatus, errorThrown) {
         // Handle error
         console.error('Error fetching phase:', textStatus, errorThrown);
-        alert('Failed to fetch the phase. Please try again later.');
+        // alert('Failed to fetch the phase. Please try again later.');
     });
     })
-
-    
 
 });

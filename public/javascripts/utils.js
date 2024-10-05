@@ -571,11 +571,11 @@ export function fetchTeamById(teamId) {
     
   // Make an AJAX GET request to fetch the phase by ID
   $.get(url, function (data) {
-    console.log(data)
+    // console.log(data)
 }).fail(function (jqXHR, textStatus, errorThrown) {
     // Handle error
     console.error('Error fetching phase:', textStatus, errorThrown);
-    alert('Failed to fetch the phase. Please try again later.');
+    // alert('Failed to fetch the phase. Please try again later.');
 });
   }
 
@@ -786,20 +786,20 @@ export function fetchAndRenderGames(dateId) {
                     <div class="row bg-white small-round small-padding game-card" data-game-id="${game.id}">
                         <small class="time" id="timer-${game.id}" data-start-time="${game.start}">${gameTimeDisplay}</small>
                         <section class="column">
-                            <span class="row between">
+                            <section class="row between">
                                 <span class="row">
-                                    <img src="/images/${game.homeTeamBadge}" alt="${game.homeTeamName}" class="tiny-logo">
+                                    <img src="/images/${game.homeTeamBadge}" alt="${game.homeTeamName}" class="tiny-logo mid-round">
                                     <h5 class="mid bold">${game.homeTeamName}</h5>
                                 </span>
                                 <h5 class="mid bold">${game.home_goal ?? 0}</h5>
-                            </span>
-                            <span class="row between">
+                            </section>
+                            <section class="row between">
                                 <span class="row">
-                                    <img src="/images/${game.awayTeamBadge}" alt="${game.awayTeamName}" class="tiny-logo">
+                                    <img src="/images/${game.awayTeamBadge}" alt="${game.awayTeamName}" class="tiny-logo mid-round">
                                     <h5 class="mid bold">${game.awayTeamName}</h5>
                                 </span>
-                                <h5 class="mid bold away-score">${game.away_goal ?? 0}</h5>
-                            </span>
+                                <h5 class="mid bold">${game.away_goal ?? 0}</h5>
+                            </section>
                         </section>
                     </div>
                 `;
@@ -889,8 +889,6 @@ export function fetchAndRenderLineups(gameId) {
                 <h4 class="bold">${data.away_goal}</h4>
                 `);
 
-       
-
         // Render lineups for both teams
         renderTeamLineup(data.lineup.teamOne, 'hometeam', 'homelineups');
         renderTeamLineup(data.lineup.teamTwo, 'awayteam', 'awaylineups');
@@ -955,6 +953,7 @@ export function updateGamePeriodTimer() {
     const startTime = new Date($timeElement.data('start-time')).getTime();
     const currentTime = new Date().getTime();
     const elapsed = currentTime - startTime;
+    // console.log($timeElement);
 
     if (elapsed > 0 && elapsed < 90 * 60 * 1000) {
         // Game is live, calculate elapsed time

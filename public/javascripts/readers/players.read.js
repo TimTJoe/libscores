@@ -33,6 +33,7 @@ export function fetchAndRenderClubPlayers(clubId) {
         // Find the target element by clubId
         const targetElement = $(`#${clubId}`);
 
+
         if (!targetElement.length) {
             console.error(`No element found with ID: ${clubId}`);
             return;
