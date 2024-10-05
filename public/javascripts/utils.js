@@ -685,16 +685,17 @@ export function getGameIdFromUrl() {
 }
 
 /**
- * Utility function to display the last 3 days and the next day in a tabbed format.
+ * Utility function to display the last 3 days, next day, and a "Live" tab.
  * Appends buttons to an element with the class 'dates'.
+ * "Live" tab shows current live games and is active when the page loads.
  */
 export function displayDateTabs() {
     const $datesContainer = $('.dates'); // Use jQuery to get the dates container
     const today = new Date(); // Get today's date
     const dateArray = []; // Create an array to hold the date objects
 
-    // Generate the last 3 days and the next day
-    for (let i = 3; i > 0; i--) {
+    // Generate the last 2 days, today, and the next day
+    for (let i = 2; i > 0; i--) {
         const pastDate = new Date(today);
         pastDate.setDate(today.getDate() - i); // Subtract i days from today
         dateArray.push(pastDate);
@@ -707,19 +708,43 @@ export function displayDateTabs() {
     // Clear existing buttons (if any)
     $datesContainer.empty();
 
+    // Create "Live" tab button
+    const $liveButton = $('<button class="tab-btn link-btn" data-live="true">Live</button>');
+
+    // Add the click event for the "Live" tab
+    $liveButton.on('click', function() {
+        // Remove active class from all buttons
+        $('.tab-btn').removeClass('active');
+
+        // Add active class to the clicked button (Live)
+        $(this).addClass('active');
+
+        // Get current date in the format YYYY-MM-DD
+        const currentDate = today.toISOString().split('T')[0];
+
+        // Fetch and render games for the current date (Live)
+        fetchAndRenderGames(currentDate);
+    });
+
+    // Append the "Live" button to the dates container
+    $datesContainer.append($liveButton);
+
     // Create buttons for each date
     $.each(dateArray, function(index, date) {
         const formattedDate = date.toISOString().split('T')[0]; // Get date in YYYY-MM-DD format
-        const displayDate = date.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: '2-digit' }); // e.g., "Wed, Oct 03"
+        const displayDate = date.toDateString() === today.toDateString() 
+            ? 'Today' // Display "Today" if the date is today
+            : date.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: '2-digit' }); // e.g., "Wed, Oct 03"
 
         // Create button element using jQuery
         const $button = $(`<button class="tab-btn link-btn" data-dateid="${formattedDate}">${displayDate}</button>`);
 
-        // Add active class to today's date button
+        // Add active class to today's date button if it's not the live tab
         if (date.toDateString() === today.toDateString()) {
             $button.addClass('active'); // Set active class for today's date
         }
 
+        // Add the click event for each date button
         $button.on('click', function() {
             // Remove active class from all buttons
             $('.tab-btn').removeClass('active');
@@ -734,7 +759,11 @@ export function displayDateTabs() {
         // Append button to the dates container
         $datesContainer.append($button);
     });
+
+    // Trigger click on the "Live" button to make it the default active tab on page load
+    $liveButton.trigger('click');
 }
+
 
 // ==============================================================
 
@@ -817,6 +846,16 @@ export function fetchAndRenderGames(dateId) {
                 window.location.href = `/dashboard/games/${gameId}/game`; // Redirect to the game details page
             });
 
+            // Start adding visible class for animation
+            let delay = 0; // Initial delay for animation
+            $('.game-card').each(function(index) {
+                const $this = $(this);
+                setTimeout(() => {
+                    $this.addClass('visible'); // Add visible class after a delay
+                }, delay);
+                delay += 100; // Increment delay for each game card
+            });
+
             // Start the timer updates after games are rendered
             startTimers();
         })
@@ -824,6 +863,7 @@ export function fetchAndRenderGames(dateId) {
             $gamesContainer.html('<p>Error fetching games. Please try again later.</p>');
         });
 }
+
 
 /**
  * Function to update the timer of live games.

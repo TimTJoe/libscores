@@ -975,3 +975,12 @@ button.gray {
   display: inline-block;
   animation: heartbeat 1s infinite ease-in-out;
 }
+
+.game-card {
+  opacity: 0; /* Start hidden */
+  transition: opacity 0.3s ease-in; /* Transition for fading in */
+}
+
+.game-card.visible {
+  opacity: 1; /* Fully visible */
+}
