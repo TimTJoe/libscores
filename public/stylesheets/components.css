@@ -943,10 +943,13 @@ button.gray {
   font-size: var(--tiny);
  }
 
+
  .round-tab:hover {
   color: var(--crimson);
   background-color: var(--light-gray);
  }
+
+
 
  .num {
   width: 20px;
@@ -956,3 +959,19 @@ button.gray {
   display: grid;
   place-items: center;
  }
+
+ @keyframes heartbeat {
+  0%, 100% {
+    /* opacity: 1; */
+    transform: scale(1);
+  }
+  50% {
+    /* opacity: 0.5; */
+    transform: scale(1.098);
+  }
+}
+
+.blink {
+  display: inline-block;
+  animation: heartbeat 1s infinite ease-in-out;
+}

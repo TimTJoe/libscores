@@ -786,19 +786,19 @@ export function fetchAndRenderGames(dateId) {
                     <div class="row bg-white small-round small-padding game-card" data-game-id="${game.id}">
                         <small class="time" id="timer-${game.id}" data-start-time="${game.start}">${gameTimeDisplay}</small>
                         <section class="column">
-                            <section class="row between">
-                                <span class="row">
+                            <section class="row">
+                                <span class="row max">
                                     <img src="/images/${game.homeTeamBadge}" alt="${game.homeTeamName}" class="tiny-logo mid-round">
                                     <h5 class="mid bold">${game.homeTeamName}</h5>
                                 </span>
                                 <h5 class="mid bold">${game.home_goal ?? 0}</h5>
                             </section>
                             <section class="row between">
-                                <span class="row">
+                                <span class="row max">
                                     <img src="/images/${game.awayTeamBadge}" alt="${game.awayTeamName}" class="tiny-logo mid-round">
                                     <h5 class="mid bold">${game.awayTeamName}</h5>
                                 </span>
-                                <h5 class="mid bold">${game.away_goal ?? 0}</h5>
+                                <h5 class="mid bold move-right">${game.away_goal ?? 0}</h5>
                             </section>
                         </section>
                     </div>
@@ -835,14 +835,20 @@ function updateTimers() {
         const startTime = new Date($timeElement.data('start-time')).getTime();
         const currentTime = new Date().getTime();
         const elapsed = currentTime - startTime;
+        $timeElement.addClass('bold red blink');
+
 
         if (elapsed > 0 && elapsed < 90 * 60 * 1000) {
             // Game is live, calculate elapsed time
             const minutes = Math.floor((elapsed / 1000) / 60);
             const seconds = Math.floor((elapsed / 1000) % 60);
-            $timeElement.text(`${minutes}:${seconds < 10 ? '0' : ''}${seconds}`);
+            // $timeElement.text(`${minutes}:${seconds < 10 ? '0' : ''}${seconds}`);
+
+            $timeElement.text(`${minutes}'`);
+
         } else if (elapsed >= 90 * 60 * 1000) {
             // Game has ended, show "FT"
+            $timeElement.removeClass('red blink').addClass('black');
             $timeElement.text('FT');
         } else {
             // Game has not started yet, keep the scheduled start time (already displayed)
@@ -911,6 +917,7 @@ function renderTeamLineup(team, teamContainerId, lineupContainerId) {
     teamContainer.empty();
     lineupContainer.empty();
 
+
     // Render team details
     teamContainer.append(`
         <img src="/images/${team.badge}" alt="" class="sm-logo small-round">
@@ -955,13 +962,21 @@ export function updateGamePeriodTimer() {
     const elapsed = currentTime - startTime;
     // console.log($timeElement);
 
+
     if (elapsed > 0 && elapsed < 90 * 60 * 1000) {
+        $('#gamescores').find('.time').addClass('blink');
+
         // Game is live, calculate elapsed time
         const minutes = Math.floor((elapsed / 1000) / 60);
         const seconds = Math.floor((elapsed / 1000) % 60);
-        $timeElement.text(`${minutes}:${seconds < 10 ? '0' : ''}${seconds}`);
+        // $timeElement.text(`${minutes}:${seconds < 10 ? '0' : ''}${seconds}`);
+        $timeElement.text(`${minutes}'`);
+
     } else if (elapsed >= 90 * 60 * 1000) {
         // Game has ended, show "FT"
+        // $timeElement.removeClass('red').addClass('black')
+        $('#gamescores').find('.time').removeClass('red blink').addClass('black')
+
         $timeElement.text('FT');
     }
 }

@@ -28,7 +28,7 @@ router.get('/date/:dateId', async (req, res) => {
             ORDER BY g.start ASC
         `;
         const games = await dbQuery(db, query, [dateId]);
-        console.log(games);
+        // console.log(games);
 
         if (games.length === 0) {
             return res.json({ message: 'No games found for this date.' });
@@ -48,22 +48,23 @@ router.get('/:id/lineups', async (req, res) => {
 
     try {
         const query = `
-            SELECT 
-                games.*, games.id AS game_id, games.status, games.period, games.season_id, 
-                lineups.team_id, lineups.player_id, lineups.number, lineups.position, lineups.start, 
-                clubs.*, clubs.id AS club_id, clubs.club AS club_name, clubs.badge, clubs.market_value, 
-                players.*, players.id AS player_id, players.fullname AS player_name, players.DOB, players.country_id, players.position AS player_position
-            FROM games
-            LEFT JOIN lineups ON games.id = lineups.game_id
-            LEFT JOIN clubs ON lineups.team_id = clubs.id
-            LEFT JOIN players ON lineups.player_id = players.id
-            WHERE games.id = ?;
-        `;
+           SELECT games.*,
+    games.start, games.id AS game_id, games.status, games.period, games.season_id, 
+    lineups.team_id, lineups.player_id, lineups.number, lineups.position, lineups.start AS lineup_start, 
+    clubs.id AS club_id, clubs.club AS club_name, clubs.badge, clubs.market_value, 
+    players.id AS player_id, players.fullname AS player_name, players.DOB, players.country_id, players.position AS player_position
+FROM games
+LEFT JOIN lineups ON games.id = lineups.game_id
+LEFT JOIN clubs ON lineups.team_id = clubs.id
+LEFT JOIN players ON lineups.player_id = players.id
+WHERE games.id = ?;
+`;
 
         const result = await dbAll(db, query, [id]);
+        console.log(result)
+        
 
         if (result.length === 0) {
-            console.log('Game or lineups not found.')
             return res.status(404).json({ message: 'Game or lineups not found.' });
         }
 
