@@ -6,6 +6,8 @@ $(document).ready(function() {
 
         let homeid = $(`#${game.home}`).attr('id');
         let awayid = $(`#${game.away}`).attr('id');
+        // let homesummary = $(`#homesummary`);
+        // let awaysummary = $(`#awaysummary`);
 
         if (homeid == game.home) {
             $(`#${game.home}`).text(game.home_goal)
@@ -13,6 +15,26 @@ $(document).ready(function() {
         if (awayid == game.away) {
             $(`#${game.away}`).text(game.away_goal)
         }
+
+        if (scorer.player_details.club_id == game.home) {
+            $(`
+                <section class="typegoal">
+                    <i class="fa fa-soccer-ball tiny"></i>
+                    <small class="tiny cap">${scorer.minutes}'</small>
+                    <small class="tiny cap">${scorer.player_details.fullname}</small>
+                </section>
+                `).appendTo(`#homesummary`)
+        }
+        if (scorer.player_details.club_id == game.away) {
+            $(`
+                <section class="typegoal">
+                    <i class="fa fa-soccer-ball tiny"></i>
+                    <small class="tiny cap">${scorer.minutes}'</small>
+                    <small class="tiny cap">${scorer.player_details.fullname}</small>
+                </section>
+                `).appendTo(`#awaysummary`)
+        }
+
         // Log the updated score to the console
         console.log('Updated Score Received: ', data);
     });
@@ -83,8 +105,10 @@ $(document).ready(function() {
             data: JSON.stringify(data),
             success: function(response) {
             // Listen for the 'scoreUpdated' event
-                console.log('response ', response);
                 showMessage($messageElement, 'Score updated successfully!', true);
+                // setTimeout(() => {
+                //     $messageElement.fadeOut();
+                // }, 3000);
             },
             error: function(xhr) {
                 showMessage($messageElement, `Error: ${xhr.responseJSON.error}`, false);

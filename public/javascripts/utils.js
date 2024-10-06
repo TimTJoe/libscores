@@ -1030,3 +1030,139 @@ export function updateGamePeriodTimer() {
     }
 }
 
+// ===========================================
+
+/**
+ * Fetches and renders the summary for the specified game.
+ * 
+ * This function fetches game activities, game details, and scorers, then appends 
+ * the summary into elements with IDs `homesummary` and `awaysummary`. It handles 
+ * cases where activities and scorers are empty, and sorts the scorers by minutes.
+ * 
+ * @param {number} gameId - The ID of the game to fetch data for.
+ */
+export function fetchAndRenderSummary(gameId) {
+    const $homeSummary = $('#homesummary'); // Cache home summary DOM reference
+    const $awaySummary = $('#awaysummary'); // Cache away summary DOM reference
+
+    $.get(`/v1/api/games/${gameId}/activities`)
+      .done(function (data) {
+        console.log('Game Data:', data);
+
+        // Clear existing content in both summaries
+        $homeSummary.empty();
+        $awaySummary.empty();
+
+        const homeTeamId = data.game.home_team.id;
+        const awayTeamId = data.game.away_team.id;
+
+        // Filter activities for home and away teams
+        const homeTeamActivities = data.activities.filter(activity => activity.team_id === homeTeamId);
+        const awayTeamActivities = data.activities.filter(activity => activity.team_id === awayTeamId);
+
+        // Filter scorers for home and away teams
+        const homeTeamScorers = data.scorers.filter(scorer => scorer.club_id === homeTeamId);
+        const awayTeamScorers = data.scorers.filter(scorer => scorer.club_id === awayTeamId);
+
+        // Handle and append home team activities
+        if (homeTeamActivities.length === 0) {
+            // $homeSummary.append('<p>No activities for the home team yet.</p>');
+        } else {
+            homeTeamActivities.forEach(activity => {
+                $homeSummary.append(renderActivity(activity));
+            });
+        }
+
+        // Handle and append away team activities
+        if (awayTeamActivities.length === 0) {
+            // $awaySummary.append('<p>No activities for the away team yet.</p>');
+        } else {
+            awayTeamActivities.forEach(activity => {
+                $awaySummary.append(renderActivity(activity));
+            });
+        }
+
+        // Sort and append home team scorers by minutes
+        if (homeTeamScorers.length > 0) {
+            homeTeamScorers.sort((a, b) => parseInt(a.minutes) - parseInt(b.minutes));
+            homeTeamScorers.forEach(scorer => {
+                $homeSummary.append(renderScorer(scorer));
+            });
+        }
+
+        // Sort and append away team scorers by minutes
+        if (awayTeamScorers.length > 0) {
+            awayTeamScorers.sort((a, b) => parseInt(a.minutes) - parseInt(b.minutes));
+            awayTeamScorers.forEach(scorer => {
+                $awaySummary.append(renderScorer(scorer));
+            });
+        }
+
+      })
+      .fail(function (error) {
+        console.error('Error fetching game activities:', error);
+        const errorHtml = '<p>Error loading game activities.</p>';
+        $homeSummary.append(errorHtml);
+        $awaySummary.append(errorHtml);
+      });
+}
+
+  
+  /**
+   * Renders an activity (goal or card) as HTML and appends it.
+   * 
+   * This function creates an HTML section for the activity type (goal or card) 
+   * with the appropriate icon and class (yellow, red, or goal) depending on the 
+   * activity type and color.
+   * 
+   * @param {Object} activity - The activity object containing details about the activity.
+   * @param {string} activity.type - The type of the activity (e.g., 'goal', 'yellow', 'red').
+   * @param {string} activity.player - The player's name involved in the activity.
+   * @param {number} activity.minute - The minute of the game when the activity occurred.
+   * @returns {string} - The HTML string representing the activity.
+   */
+  function renderActivity(activity) {
+    let activityHtml = '';
+  
+    // Check activity type and render accordingly
+    if (activity.type === 'goal') {
+      activityHtml = `
+        <section class="typegoal">
+          <i class="fa fa-soccer-ball tiny"></i>
+          <small class="tiny cap">${activity.minute}'</small>
+          <small class="tiny cap">${activity.player}</small>
+        </section>`;
+    } else if (activity.type === 'yellow' || activity.type === 'red') {
+      // Render yellow or red card
+      const cardClass = activity.type === 'yellow' ? 'yellow' : 'red';
+      activityHtml = `
+        <section class="typecard">
+          <i class="fa fa-square ${cardClass} tiny" aria-hidden="true"></i>
+          <small class="tiny cap">${activity.minute}'</small>
+          <small class="tiny cap">${activity.player}</small>
+        </section>`;
+    }
+  
+    return activityHtml;
+  }
+  
+  /**
+   * Renders a scorer as HTML and appends it.
+   * 
+   * This function creates an HTML section to display details about the scorer, 
+   * including the player's name and the minute they scored.
+   * 
+   * @param {Object} scorer - The scorer object containing details about the scoring event.
+   * @param {string} scorer.name - The name of the player who scored.
+   * @param {number} scorer.minutes - The minute at which the player scored.
+   * @returns {string} - The HTML string representing the scorer.
+   */
+  function renderScorer(scorer) {
+    return `
+      <section class="typegoal">
+        <i class="fa fa-soccer-ball tiny"></i>
+        <small class="tiny cap">${scorer.minutes}'</small>
+        <small class="tiny cap">${scorer.fullname}</small>
+      </section>`;
+  }
+  

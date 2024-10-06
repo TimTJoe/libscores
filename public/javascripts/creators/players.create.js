@@ -101,7 +101,7 @@ $(document).ready(function () {
             success: function (data) {
                 displayMsg('Player saved successfully');
 
-                console.log("new player", data.player)
+                // console.log("new player", data.player)
 
                 // Hide spinner and re-enable button
                 $('#spinner').hide();

@@ -1,5 +1,5 @@
 const express = require('express');
-const { dbQuery, dbRun, dbGet, dbAll, createDbConnection } = require('@utils/dbUtils');
+const { dbQuery, dbRun, dbGet, dbAll, createDbConnection, getGameDetails, getGameActivities, getPlayersInGame, getScorersInGame  } = require('@utils/dbUtils');
 const router = express.Router();
 const moment = require('moment');
 
@@ -18,7 +18,7 @@ router.get('/date/:dateId', async (req, res) => {
 
     try {
         const query = `
-            SELECT g.id, g.start,
+            SELECT g.id, g.start, g.home_goal,g.away_goal,
                    ht.club AS homeTeamName, ht.badge AS homeTeamBadge, 
                    at.club AS awayTeamName, at.badge AS awayTeamBadge
             FROM games g
@@ -179,10 +179,36 @@ router.get('/', async (req, res) => {
     }
 });
 
+// Route to get game activities, goals, and player scorers
+router.get('/:id/activities', async (req, res) => {
+    const gameId = req.params.id;
+
+    try {
+        // Fetch all the necessary data using utility functions
+        const gameDetails = await getGameDetails(gameId);
+        const activities = await getGameActivities(gameId);
+        // const players = await getPlayersInGame(gameId);
+        const scorers = await getScorersInGame(gameId);
+
+        // Structure the response data
+        const response = {
+            game: gameDetails,
+            activities: activities,
+            scorers: scorers
+        };
+
+        // Send the aggregated data as a JSON response
+        res.json(response);
+    } catch (error) {
+        console.error('Error fetching game activities:', error);
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+});
+
+
 // GET a single game by ID with season structure
 router.get('/:id', async (req, res) => {
     const { id } = req.params;
-
     try {
         const db = await createDbConnection();
         const query = `

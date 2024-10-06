@@ -3,6 +3,7 @@ const { dbQuery, dbRun, dbGet, dbAll, createDbConnection } = require('@utils/dbU
 const router = express.Router();
 const moment = require('moment');
 const games = require('@/data/games.json'); // Mock "database"
+const { getGameById, updateGameScore, insertScorer, getPlayerById } = require('@utils/gameUtils');
 
 // Helper function to handle errors
 const handleError = (res, err, customMessage = 'An error occurred') => {
@@ -123,83 +124,59 @@ router.get('/:dateId', async (req, res) => {
     }
 });
 
-// PUT route to update game score and scorer table
 router.put('/:game_id/score', async (req, res) => {
-    let io = req.io
+    let io = req.io;
 
     const { team_id, minutes, player_id } = req.body; // Get team_id, minutes, and player_id from the request
     const { game_id } = req.params; // Get game_id from the request parameters
 
-    // Query the games table to find the game based on game_id
-    const getGameSql = 'SELECT * FROM games WHERE id = ?';
-    const db = await createDbConnection();
-
-
     try {
-        const gameResult = await dbQuery(db, getGameSql, [game_id]);
-
-        if (!gameResult || gameResult.length === 0) {
+        // Fetch the game details using the utility function
+        const game = await getGameById(game_id);
+        if (!game) {
             return res.status(404).json({ error: 'Game not found' });
         }
 
-        const game = gameResult[0];
-        // console.log('team id', team_id)
-
-        let updateSql;
-        let updatedGoals;
-
-        // Check if the team_id matches the home or away team and update accordingly
-        if (game.home == team_id) {
-            updateSql = 'UPDATE games SET home_goal = home_goal + 1 WHERE id = ?';
-            updatedGoals = { ...game, home_goal: game.home_goal + 1 };
-        } else if (game.away == team_id) {
-            updateSql = 'UPDATE games SET away_goal = away_goal + 1 WHERE id = ?';
-            updatedGoals = { ...game, away_goal: game.away_goal + 1 };
-        } else {
+        // Determine whether to update the home or away team score
+        let isHomeTeam = game.home == team_id;
+        if (!isHomeTeam && game.away != team_id) {
             return res.status(400).json({ error: 'Team ID does not match game teams' });
         }
 
-        // Update the game in the database
-        await dbQuery(db,updateSql, [game_id]);
+        // Update the game score using the utility function
+        const updatedGoals = await updateGameScore(game_id, isHomeTeam);
 
-        // Insert into the scorer table with goal and minutes
-        const insertScorerSql = 'INSERT INTO scorers VALUES (?, ?, ?, ?, ?)';
-        await dbQuery(db, insertScorerSql, [null,player_id, game_id, 1, minutes]);
+        // Insert the scorer into the database using the utility function
+        const scorer = await insertScorer(player_id, game_id, 1, minutes);
 
-        // Query the scorer table to get the latest entry
-        const getScorerSql = 'SELECT * FROM scorers WHERE game_id = ? AND player_id = ? ORDER BY id DESC LIMIT 1';
-        const scorerResult = await dbQuery(db,getScorerSql, [game_id, player_id]);
-
-        // Query the players table to get player details
-        const getPlayerSql = 'SELECT * FROM players WHERE id = ?';
-        const playerResult = await dbQuery(db,getPlayerSql, [player_id]);
-
-        if (!playerResult || playerResult.length === 0) {
+        // Fetch player details using the utility function
+        const playerDetails = await getPlayerById(player_id);
+        if (!playerDetails) {
             return res.status(404).json({ error: 'Player not found' });
         }
-
-        const playerDetails = playerResult[0];
 
         // Emit updated game scores and scorer details to all connected clients
         io.emit('scoreUpdated', {
             game: updatedGoals,
             scorer: {
-                id: scorerResult[0].id,
-                player_id: scorerResult[0].playerid,
-                game_id: scorerResult[0].gameid,
-                goal: scorerResult[0].goal,
-                minutes: scorerResult[0].minutes,
+                id: scorer.id,
+                player_id: scorer.playerid,
+                game_id: scorer.gameid,
+                goal: scorer.goal,
+                minutes: scorer.minutes,
                 player_details: playerDetails, // Include player details
             },
         });
 
         // Return the updated game data and scorer to the client
-        res.status(200).json({ game: updatedGoals, scorer: scorerResult[0] });
+        res.status(200).json({ game: updatedGoals, scorer });
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: 'An error occurred while updating the game score' });
     }
 });
+
+
 
 
 

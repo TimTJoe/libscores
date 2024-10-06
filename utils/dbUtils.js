@@ -96,8 +96,81 @@ const dbGet = (db, query, params = []) => {
     });
 };
 
+// Function to get game details by gameId
+// async function getGameDetails(gameId) {
+//     const db = createDbConnection()
+//     const gameQuery = `SELECT * FROM games WHERE id = ?`;
+//     const game = await dbGet(db,gameQuery, [gameId]);
+//     return game;
+// }
+
+// Helper function to get full game details (including home and away team names)
+async function getGameDetails(game_id) {
+    const db = createDbConnection()
+    // Query to fetch game info
+    const gameSql = `SELECT g.id, g.home, g.away, g.start, g.status, g.period, g.home_goal, g.away_goal FROM games g WHERE g.id = ?`;
+    const game = await dbQuery(db,gameSql, [game_id]);
+    if (!game.length) return null;  // No game found
+
+    // Query to fetch home and away team info
+    const homeTeamSql = `SELECT id, club AS name FROM clubs WHERE id = ?`;
+    const awayTeamSql = `SELECT id, club AS name FROM clubs WHERE id = ?`;
+    
+    const homeTeam = await dbQuery(db,homeTeamSql, [game[0].home]);
+    const awayTeam = await dbQuery(db,awayTeamSql, [game[0].away]);
+
+    if (!homeTeam.length || !awayTeam.length) return null;  // If no teams found
+
+    // Return the game details with home and away teams
+    return {
+        id: game[0].id,
+        start: game[0].start,
+        status: game[0].status,
+        period: game[0].period,
+        home_goal: game[0].home_goal,
+        away_goal: game[0].away_goal,
+        home_team: homeTeam[0],
+        away_team: awayTeam[0]
+    };
+}
+
+// Function to get activities of a game by gameId
+async function getGameActivities(gameId) {
+    const db = createDbConnection()
+    const activityQuery = `SELECT * FROM activities WHERE game_id = ?`;
+    const activities = await dbAll(db,activityQuery, [gameId]);
+    return activities;
+}
+
+// Function to get the players who participated in the game
+async function getPlayersInGame(gameId) {
+    const db = createDbConnection()
+    const playerQuery = `
+        SELECT players.* FROM players 
+        JOIN scorers ON players.id = scorers.player_id 
+        WHERE scorers.game_id = ?`;
+    const players = await dbAll(db,playerQuery, [gameId]);
+    return players;
+}
+
+// Function to get the scorers and their goals in the game
+async function getScorersInGame(gameId) {
+    const db = createDbConnection()
+    const scorerQuery = `
+        SELECT players.id, players.fullname, players.club_id, scorers.goal, scorers.minutes FROM scorers
+        JOIN players ON scorers.player_id = players.id
+        WHERE scorers.game_id = ?`;
+    const scorers = await dbAll(db,scorerQuery, [gameId]);
+    return scorers;
+}
+
+
 // Export the utility functions
 module.exports = {
+    getGameDetails,
+    getGameActivities,
+    getPlayersInGame,
+    getScorersInGame,
     createDbConnection,
     dbQuery,
     dbRun,

@@ -1,37 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const { dbQuery } = require('@utils/dbUtils');
+// const {  } = require('@utils/dbUtils');
+const { getGameDetails, getGameActivities, getPlayersInGame, getScorersInGame ,dbQuery} = require('@utils/dbUtils');
 
-// Helper function to get full game details (including home and away team names)
-async function getGameDetails(game_id) {
-    // Query to fetch game info
-    const gameSql = `SELECT g.id, g.home, g.away, g.start, g.status, g.period, g.home_goal, g.away_goal
-                     FROM games g
-                     WHERE g.id = ?`;
-    const game = await dbQuery(gameSql, [game_id]);
-    if (!game.length) return null;  // No game found
 
-    // Query to fetch home and away team info
-    const homeTeamSql = `SELECT id, club AS name FROM clubs WHERE id = ?`;
-    const awayTeamSql = `SELECT id, club AS name FROM clubs WHERE id = ?`;
-    
-    const homeTeam = await dbQuery(homeTeamSql, [game[0].home]);
-    const awayTeam = await dbQuery(awayTeamSql, [game[0].away]);
-
-    if (!homeTeam.length || !awayTeam.length) return null;  // If no teams found
-
-    // Return the game details with home and away teams
-    return {
-        id: game[0].id,
-        start: game[0].start,
-        status: game[0].status,
-        period: game[0].period,
-        home_goal: game[0].home_goal,
-        away_goal: game[0].away_goal,
-        home_team: homeTeam[0],
-        away_team: awayTeam[0]
-    };
-}
 
 // POST route to add an activity
 router.post('/', async (req, res) => {
@@ -126,5 +98,38 @@ router.get('/:game_id', async (req, res) => {
         res.status(500).json({ error: 'An unexpected error occurred' });
     }
 });
+
+
+
+// Route to get game activities, goals, and player scorers
+router.get('/:id/activities', async (req, res) => {
+    const gameId = req.params.id;
+
+    try {
+        // Fetch all the necessary data using utility functions
+        const gameDetails = await getGameDetails(gameId);
+        const activities = await getGameActivities(gameId);
+        const players = await getPlayersInGame(gameId);
+        const scorers = await getScorersInGame(gameId);
+
+        // Structure the response data
+        const response = {
+            game: gameDetails,
+            activities: activities,
+            players: players,
+            scorers: scorers
+        };
+
+        // Send the aggregated data as a JSON response
+        res.json(response);
+    } catch (error) {
+        console.error('Error fetching game activities:', error);
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+});
+
+
+
+
 
 module.exports = router;
