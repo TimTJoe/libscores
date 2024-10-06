@@ -813,8 +813,8 @@ export function fetchAndRenderGames(dateId) {
                 // Generate the game HTML and use <small class="time"> for the time display
                 const gameInfo = `
                     <div class="row bg-white small-round small-padding game-card" data-game-id="${game.id}">
-                        <small class="time" id="timer-${game.id}" data-start-time="${game.start}">${gameTimeDisplay}</small>
-                        <section class="column">
+                        <small class="time small-padding" id="timer-${game.id}" data-start-time="${game.start}">${gameTimeDisplay}</small>
+                        <section class="column max">
                             <section class="row">
                                 <span class="row max">
                                     <img src="/images/${game.homeTeamBadge}" alt="${game.homeTeamName}" class="tiny-logo mid-round">

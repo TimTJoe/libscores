@@ -3,6 +3,10 @@ const { dbQuery, dbRun, dbGet, dbAll, createDbConnection } = require('@utils/dbU
 const router = express.Router();
 const moment = require('moment');
 const games = require('@/data/games.json'); // Mock "database"
+const { Server } = require('socket.io');
+// Initialize socket.io with the HTTP server
+let io; // We will initialize this later in our main server file
+
 
 
 // Helper function to handle errors
@@ -34,6 +38,7 @@ router.get("/new", async (req,res) => {
 router.get("/timer", async (req,res) => {
     res.render("dashboard/timer.ejs", {title: "live games", games})
 })
+
 
 router.post('/', async (req, res) => {
     const { homeTeamId, awayTeamId, homeGoals, awayGoals, gameTime, seasonId, players } = req.body;
@@ -101,6 +106,7 @@ router.post('/', async (req, res) => {
         } // Always close the database connection
     }
 });
+
 
 router.get("/:id/game", async (req, res) => {
     res.render("dashboard/game.info.ejs", {title: "Games info", gameId: req.params.id})

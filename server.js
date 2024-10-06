@@ -2,19 +2,25 @@ const dotenv = require('dotenv');
 dotenv.config();
 require('module-alias/register');
 var cookieParser = require('cookie-parser');
-var express = require('express');
 var path = require('path');
 var logger = require('morgan');
 
+const express = require('express');
+const http = require('http');
+const { Server } = require('socket.io');
+const app = express();
+const server = http.createServer(app);  // Create the HTTP server instance
+const io = new Server(server);          // Initialize Socket.io with the server
+
 var cors = require("cors");
 const getDbInstance = require('@js/getDBInstance');
-var app = express();
 var port = process.env.PORT || '3000'
 var sqlite3 = require("sqlite3").verbose();
 var restrict = require("@middleware/restrict");
 var protected = require("@middleware/restrict");
 var session = require("express-session");
 var SQLiteStore = require("connect-sqlite3")(session)
+
 
 app.use(cors()) 
 app.use(
@@ -54,9 +60,6 @@ var womenLeagueRouter = require('./routes/women.league.routes');
 var matchInfoRouter = require('./routes/match.info.routes');
 var signupRouter = require('./routes/signup.routes');
 const searchRoutes = require('./routes/search.routes'); 
-
-
-
 
 // dashboard/admin routes
 var adminRouter = require('./routes/admin/admin.routes');
@@ -111,11 +114,6 @@ db.serialize(function createDB() {
 });
 
 
-
-
-
-
-
 // Routes handlers
 app.use('/', indexRouter);
 app.use('/live', liveRouter);
@@ -124,8 +122,6 @@ app.use('/fixtures', fixtureRouter);
 app.use('/leagues', leaguesRouter);
 app.use('/teams', teamsRouter);
 app.use('/search', searchRoutes); // Make sure this points to where your search routes are defined
-
-
 
 // app.use('/create_leagues', createLeaguesRouter);
 app.use('/first_division', firstDivisionRouter);
@@ -167,6 +163,8 @@ var clubApiRouter = require('./routes/api/clubs.api');
 var creatorRouter = require('./routes/api/creator.routes')
 var gamesApiRouter = require('./routes/api/games.api')
 var competitionsApiRouter = require('./routes/api/competitions.api')
+var activitiesApiRouter = require('./routes/api/activities.api')
+
 
 // API v1 Endpoints
 app.use("/counties", countyRouter)
@@ -176,8 +174,20 @@ app.use("/v1/api/clubs", clubApiRouter)
 app.use("/v1/api/creates", creatorRouter)
 app.use("/v1/api/games", gamesApiRouter)
 app.use("/v1/api/competitions", competitionsApiRouter)
+app.use("/v1/api/activities", activitiesApiRouter)
+
+
+// Listen for socket connections
+io.on('connection', (socket) => {
+  console.log('a user connected');
+  
+  // Optional: Handle disconnect
+  socket.on('disconnect', () => {
+      console.log('user disconnected');
+  });
+});
 
 // start server
-app.listen(port, function listener() {
+server.listen(port, function listener() {
   console.log(`App is listening at http//localhost:${port}`);
 });
