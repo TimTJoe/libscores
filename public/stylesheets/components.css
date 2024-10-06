@@ -990,3 +990,20 @@ button.gray {
 .game-card.visible {
   opacity: 1; /* Fully visible */
 }
+
+.message {
+  margin-top: var(--spacing-md);
+}
+
+.success {
+  color: var(--green);
+}
+
+.error {
+  color: var(--red);
+}
+
+.spinner {
+  /* margin-left: var(--spacing-md); */
+  display: inline-block;
+}

@@ -11,6 +11,10 @@ const { Server } = require('socket.io');
 const app = express();
 const server = http.createServer(app);  // Create the HTTP server instance
 const io = new Server(server);          // Initialize Socket.io with the server
+app.use((req, res, next) => {
+  req.io = io;
+  next();
+});
 
 var cors = require("cors");
 const getDbInstance = require('@js/getDBInstance');
@@ -43,6 +47,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 const db = getDbInstance(sqlite3)
+// Export io for use in other files
 
 // leagues and frontend routes
 var indexRouter = require('./routes/index.routes');
@@ -176,16 +181,18 @@ app.use("/v1/api/games", gamesApiRouter)
 app.use("/v1/api/competitions", competitionsApiRouter)
 app.use("/v1/api/activities", activitiesApiRouter)
 
-
 // Listen for socket connections
 io.on('connection', (socket) => {
-  console.log('a user connected');
-  
+  console.log('a socket.io user connected');
+
   // Optional: Handle disconnect
   socket.on('disconnect', () => {
-      console.log('user disconnected');
+      console.log('user socket.io disconnected');
   });
 });
+
+// Export io for use in other files
+module.exports = io;
 
 // start server
 server.listen(port, function listener() {

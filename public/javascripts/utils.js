@@ -914,6 +914,7 @@ function startTimers() {
  * @param {number} gameId - The ID of the game to fetch lineups for.
  */
 export function fetchAndRenderLineups(gameId) {
+    window.gameId = gameId
     $.get(`/v1/api/games/${gameId}/lineups`, function(data) {
         // Check if the response contains the game lineup data
         if (!data || !data.lineup) {
@@ -933,14 +934,14 @@ export function fetchAndRenderLineups(gameId) {
             const option = $('<option></option>').val(team.id).text(team.team);
             $('.team-select').append(option);
         });
-        console.log(data);
+        // console.log(data);
         
         $scoresContainer.append(`
-                <h4 class="bold">${data.home_goal}</h4>
+                <h4 class="bold" id="${data.home}">${data.home_goal}</h4>
                 &middot;
                 <small class="time red bold" data-start-time="${data.start}">00:00</small>
                 &middot;
-                <h4 class="bold">${data.away_goal}</h4>
+                <h4 class="bold"  id="${data.away}">${data.away_goal}</h4>
                 `);
 
         // Render lineups for both teams
