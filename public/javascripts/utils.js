@@ -515,7 +515,7 @@ export function updateCountdown(dateTimeInput, timerTag) {
 
             const newSeconds = Math.floor(newTimeDifference / 1000);
             const newMinutes = Math.floor(newSeconds / 60);
-            $timerTag.text(`${formattedDate} - ${newMinutes} : ${newSeconds % 60}`);
+            $timerTag.text(`${formattedDate}`);
         }, 1000);
     } else {
         $timerTag.text(`${formattedDate}`);
@@ -927,19 +927,26 @@ export function fetchAndRenderLineups(gameId) {
 
         // Update scores and display timer
         const $scoresContainer = $('#gamescores');
+        let options = '<option value="">Select a Team</option>';
         [
-            {team: data.lineup.teamOne.teamName, id:data.lineup.teamOne.teamId},
-            {team: data.lineup.teamTwo.teamName, id:data.lineup.teamTwo.teamId}
+            {
+                id:data.lineup.teamOne.teamId,
+                name: data.lineup.teamOne.teamName 
+            },
+            {
+                id:data.lineup.teamTwo.teamId,
+                name: data.lineup.teamTwo.teamName 
+            }
         ].forEach(team => {
-            const option = $('<option></option>').val(team.id).text(team.team);
-            $('.team-select').append(option);
+            options += `<option value="${team.id}">${team.name}</option>`;
         });
+        $('.team-select').append(options);
         // console.log(data);
         
         $scoresContainer.append(`
                 <h4 class="bold" id="${data.home}">${data.home_goal}</h4>
                 &middot;
-                <small class="time red bold" data-start-time="${data.start}">00:00</small>
+                <small class="time red bold" data-start-time="${data.start}">${new Date(data.start).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}"</small>
                 &middot;
                 <h4 class="bold"  id="${data.away}">${data.away_goal}</h4>
                 `);
@@ -1037,7 +1044,7 @@ export function updateGamePeriodTimer() {
  * 
  * This function fetches game activities, game details, and scorers, then appends 
  * the summary into elements with IDs `homesummary` and `awaysummary`. It handles 
- * cases where activities and scorers are empty, and sorts the scorers by minutes.
+ * cases where activities and scorers are empty, and sorts them by minutes.
  * 
  * @param {number} gameId - The ID of the game to fetch data for.
  */
@@ -1046,65 +1053,69 @@ export function fetchAndRenderSummary(gameId) {
     const $awaySummary = $('#awaysummary'); // Cache away summary DOM reference
 
     $.get(`/v1/api/games/${gameId}/activities`)
-      .done(function (data) {
-        console.log('Game Data:', data);
+        .done(function (data) {
+            // Clear existing content in both summaries
+            $homeSummary.empty();
+            $awaySummary.empty();
 
-        // Clear existing content in both summaries
-        $homeSummary.empty();
-        $awaySummary.empty();
+            const homeTeamId = data.game.home_team.id;
+            const awayTeamId = data.game.away_team.id;
 
-        const homeTeamId = data.game.home_team.id;
-        const awayTeamId = data.game.away_team.id;
+            // Combine home and away team activities and scorers
+            const homeActivities = [
+                ...data.activities.filter(activity => activity.team_id == homeTeamId && (activity.type == 'yellow' || activity.type == 'red')),
+                ...data.scorers.filter(scorer => scorer.club_id == homeTeamId)
+            ];
 
-        // Filter activities for home and away teams
-        const homeTeamActivities = data.activities.filter(activity => activity.team_id === homeTeamId);
-        const awayTeamActivities = data.activities.filter(activity => activity.team_id === awayTeamId);
+            const awayActivities = [
+                ...data.activities.filter(activity => activity.team_id == awayTeamId && (activity.type == 'yellow' || activity.type == 'red')),
+                ...data.scorers.filter(scorer => scorer.club_id == awayTeamId)
+            ];
 
-        // Filter scorers for home and away teams
-        const homeTeamScorers = data.scorers.filter(scorer => scorer.club_id === homeTeamId);
-        const awayTeamScorers = data.scorers.filter(scorer => scorer.club_id === awayTeamId);
+            // Sort combined activities by minutes
+            const sortActivities = (activity) => parseInt(activity.minutes || activity.minute);
+            homeActivities.sort((a, b) => sortActivities(a) - sortActivities(b));
+            awayActivities.sort((a, b) => sortActivities(a) - sortActivities(b));
 
-        // Handle and append home team activities
-        if (homeTeamActivities.length === 0) {
-            // $homeSummary.append('<p>No activities for the home team yet.</p>');
-        } else {
-            homeTeamActivities.forEach(activity => {
-                $homeSummary.append(renderActivity(activity));
-            });
-        }
+            // Render home team activities and scorers
+            if (homeActivities.length == 0) {
+                // $homeSummary.append('<p>No activities for the home team yet.</p>');
+            } else {
+                homeActivities.forEach(activity => {
+                    if (activity.goal) {
+                        $homeSummary.append(renderScorer(activity));
+                    } else {
+                        // Only append activities if they are yellow or red cards
+                        if (activity.type == 'yellow' || activity.type == 'red') {
+                            $homeSummary.append(renderActivity(activity));
+                        }
+                    }
+                });
+            }
 
-        // Handle and append away team activities
-        if (awayTeamActivities.length === 0) {
-            // $awaySummary.append('<p>No activities for the away team yet.</p>');
-        } else {
-            awayTeamActivities.forEach(activity => {
-                $awaySummary.append(renderActivity(activity));
-            });
-        }
+            // Render away team activities and scorers
+            if (awayActivities.length == 0) {
+                // $awaySummary.append('<p>No activities for the away team yet.</p>');
+            } else {
+                awayActivities.forEach(activity => {
+                    if (activity.goal) {
+                        $awaySummary.append(renderScorer(activity));
+                    } else {
+                        // Only append activities if they are yellow or red cards
+                        if (activity.type == 'yellow' || activity.type == 'red') {
+                            $awaySummary.append(renderActivity(activity));
+                        }
+                    }
+                });
+            }
 
-        // Sort and append home team scorers by minutes
-        if (homeTeamScorers.length > 0) {
-            homeTeamScorers.sort((a, b) => parseInt(a.minutes) - parseInt(b.minutes));
-            homeTeamScorers.forEach(scorer => {
-                $homeSummary.append(renderScorer(scorer));
-            });
-        }
-
-        // Sort and append away team scorers by minutes
-        if (awayTeamScorers.length > 0) {
-            awayTeamScorers.sort((a, b) => parseInt(a.minutes) - parseInt(b.minutes));
-            awayTeamScorers.forEach(scorer => {
-                $awaySummary.append(renderScorer(scorer));
-            });
-        }
-
-      })
-      .fail(function (error) {
-        console.error('Error fetching game activities:', error);
-        const errorHtml = '<p>Error loading game activities.</p>';
-        $homeSummary.append(errorHtml);
-        $awaySummary.append(errorHtml);
-      });
+        })
+        .fail(function (error) {
+            console.error('Error fetching game activities:', error);
+            const errorHtml = '<p>Error loading game activities.</p>';
+            $homeSummary.append(errorHtml);
+            $awaySummary.append(errorHtml);
+        });
 }
 
   
@@ -1121,7 +1132,7 @@ export function fetchAndRenderSummary(gameId) {
    * @param {number} activity.minute - The minute of the game when the activity occurred.
    * @returns {string} - The HTML string representing the activity.
    */
-  function renderActivity(activity) {
+  export function renderActivity(activity) {
     let activityHtml = '';
   
     // Check activity type and render accordingly
@@ -1132,15 +1143,14 @@ export function fetchAndRenderSummary(gameId) {
           <small class="tiny cap">${activity.minute}'</small>
           <small class="tiny cap">${activity.player}</small>
         </section>`;
-    } else if (activity.type === 'yellow' || activity.type === 'red') {
+    } else if (activity.type == 'yellow' || activity.type === 'red') {
       // Render yellow or red card
-      const cardClass = activity.type === 'yellow' ? 'yellow' : 'red';
+      const cardClass = activity.type == 'yellow' ? 'yellow' : 'red';
       activityHtml = `
         <section class="typecard">
           <i class="fa fa-square ${cardClass} tiny" aria-hidden="true"></i>
-          <small class="tiny cap">${activity.minute}'</small>
-          <small class="tiny cap">${activity.player}</small>
-        </section>`;
+          <small class="tiny cap">${activity.minutes}'</small>
+          </section>`;
     }
   
     return activityHtml;

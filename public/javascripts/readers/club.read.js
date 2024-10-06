@@ -2,7 +2,7 @@ $(document).ready(function () {
     $.get("/v1/api/clubs",
         function (data, textStatus, jqXHR) {
             if (textStatus == "success") {
-                console.log(data)
+                // console.log(data)
                 $.each(data.clubs, function (index, team) { 
                     $(` 
                         <tr class="tr " id="${index}">

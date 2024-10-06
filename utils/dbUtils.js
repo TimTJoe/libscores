@@ -134,12 +134,20 @@ async function getGameDetails(game_id) {
     };
 }
 
+
 // Function to get activities of a game by gameId
 async function getGameActivities(gameId) {
     const db = createDbConnection()
     const activityQuery = `SELECT * FROM activities WHERE game_id = ?`;
     const activities = await dbAll(db,activityQuery, [gameId]);
     return activities;
+}
+
+async function getTeamDetails(teamId) {
+    const db = createDbConnection()
+    const clubQuery = `SELECT * FROM clubs WHERE id = ?`;
+    const clubs = await dbAll(db,clubQuery, [teamId]);
+    return clubs;
 }
 
 // Function to get the players who participated in the game
@@ -167,6 +175,7 @@ async function getScorersInGame(gameId) {
 
 // Export the utility functions
 module.exports = {
+    getTeamDetails,
     getGameDetails,
     getGameActivities,
     getPlayersInGame,

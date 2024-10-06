@@ -10,8 +10,8 @@
             <select name="goal-player" id="goal-player" class="small-select max player-select" title="select player who scored"></select>
             <!-- <input type="text" id="goal" class="tiny-input" value="1" disabled hidden> -->
             <input type="text" id="goal-minute" class="tiny-input" placeholder="25'" title="minute goal scored">
-            <button id="savescore" class="small-button blue max align-center ">
-                <i class="fas fa-spinner fa-spin spinner scoreSpinner" style="display: none;"></i>
+            <button id="savescore" class="small-button blue max align-center">
+                <i class="fas fa-spinner fa-spin spinner tiny scoreSpinner" style="display: none;"></i>
                 save score
             </button>
         </span>
@@ -33,11 +33,11 @@
                 <option value="attempt">Goal Attempt</option>
             </select>
             <input type="text" id="activity-minute" class="tiny-input" placeholder="25'" title="minute activity occurred">
-            <button id="saveactivity" class="small-button blue max align-center">Save Activity</button>
-            <div id="activityMessage" class="message"></div>
-            <div id="activitySpinner" class="spinner" style="display: none;">
-                <i class="fas fa-spinner fa-spin"></i> Saving...
-            </div>
+            <button id="saveactivity" class="small-button blue max align-center ">
+                <i id="activitySpinner" class="fas fa-spinner fa-spin tiny small activitySpinner" style="display: none;"></i>
+                Save Activity
+            </button>
+            <small id="activityMessage" class='tiny align-center margin-top no-line block'></small>
         </span>
     </section>
 </aside>

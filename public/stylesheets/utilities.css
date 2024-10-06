@@ -121,6 +121,8 @@
 
 /* Set text color to yellow */
 .warning { color: var(--yellow); }
+.yellow { color: var(--yellow); } /* Warning color */
+
 
 /* Set text color to black */
 .black { color: var(--coal); }

@@ -1,5 +1,5 @@
 const express = require('express');
-const { dbQuery, dbRun, dbGet, dbAll, createDbConnection } = require('@utils/dbUtils');
+const { dbQuery, dbRun, dbGet, dbAll,getGameDetails, createDbConnection } = require('@utils/dbUtils');
 const router = express.Router();
 const moment = require('moment');
 const games = require('@/data/games.json'); // Mock "database"
@@ -176,9 +176,62 @@ router.put('/:game_id/score', async (req, res) => {
     }
 });
 
+// POST route to add an activity
+router.post('/activities', async (req, res) => {
+    let io = req.io;
 
+    const { game_id, team_id, type, minutes } = req.body;
+    console.log('teamid', team_id)
+    const db = await createDbConnection();
 
+    // SQL query to insert activity
+    const activitySql = 'INSERT INTO activities VALUES (?,?, ?, ?, ?)';
 
+    try {
+        // Insert activity
+        const result = await dbQuery(db, activitySql, [null,game_id, team_id, type, minutes]);
+
+        // Get full game details (with teams)
+        const gameDetails = await getGameDetails(game_id);
+        if (!gameDetails) {
+            return res.status(404).json({ error: 'Game or teams not found' });
+        }
+
+        // Determine which team's name to return based on team_id
+        const teamName = team_id == gameDetails.home_team.id ? gameDetails.home_team.name : gameDetails.away_team.name;
+
+        // Emit activityAdded event with full details, including the team name instead of team_id
+        io.emit('activityAdded', {
+            id: result.lastID,  // ID of the newly inserted activity
+            game: gameDetails,  // Full game details
+            activity: {
+                team_id,
+                id: result.lastID,
+                game: gameDetails,  // Pass the game details instead of just the game_id
+                team: teamName,     // Pass the specific team name instead of team_id
+                type,
+                minutes
+            }
+        });
+
+        // Respond with success and full details
+        res.status(201).json({
+            id: result.lastID,
+            game: gameDetails,  // Full game details
+            activity: {
+                team_id,
+                id: result.lastID,
+                game: gameDetails,  // Pass the game details instead of just the game_id
+                team: teamName,     // Pass the specific team name instead of team_id
+                type,
+                minutes
+            }
+        });
+    } catch (err) {
+        console.error('Error adding activity:', err.message);
+        res.status(500).json({ error: 'An unexpected error occurred' });
+    }
+});
 
 // Helper function to determine game status and period
 const calculateGameStatusAndPeriod = (gameTime) => {

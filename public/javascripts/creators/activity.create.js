@@ -1,3 +1,4 @@
+
 $(document).ready(function() {
     const socket = io(); // Initialize socket.io
 
@@ -6,8 +7,6 @@ $(document).ready(function() {
 
         let homeid = $(`#${game.home}`).attr('id');
         let awayid = $(`#${game.away}`).attr('id');
-        // let homesummary = $(`#homesummary`);
-        // let awaysummary = $(`#awaysummary`);
 
         if (homeid == game.home) {
             $(`#${game.home}`).text(game.home_goal)
@@ -23,7 +22,7 @@ $(document).ready(function() {
                     <small class="tiny cap">${scorer.minutes}'</small>
                     <small class="tiny cap">${scorer.player_details.fullname}</small>
                 </section>
-                `).appendTo(`#homesummary`)
+            `).appendTo(`#homesummary`)
         }
         if (scorer.player_details.club_id == game.away) {
             $(`
@@ -32,14 +31,37 @@ $(document).ready(function() {
                     <small class="tiny cap">${scorer.minutes}'</small>
                     <small class="tiny cap">${scorer.player_details.fullname}</small>
                 </section>
-                `).appendTo(`#awaysummary`)
+            `).appendTo(`#awaysummary`)
         }
 
-        // Log the updated score to the console
-        console.log('Updated Score Received: ', data);
     });
 
-
+    socket.on('activityAdded', function (data) {
+        let { game, activity } = data;
+    
+        // Check if the activity type is yellow or red
+        if (activity.type == 'yellow' || activity.type == 'red') {
+            // Determine the card class based on activity type
+            const cardClass = activity.type == 'yellow' ? 'yellow' : 'red';
+            const activityCard = `
+                <section class="typecard">
+                    <i class="fa fa-square ${cardClass} tiny" aria-hidden="true"></i>
+                    <small class="tiny cap">${activity.minutes}'</small>
+                </section>`;
+    
+            // Check if the activity is for the home or away team
+            if (activity.team_id == game.home_team.id) {
+                // Append to home summary
+                $('#homesummary').append(activityCard);
+            } else if (activity.team_id == game.away_team.id) {
+                // Append to away summary
+                $('#awaysummary').append(activityCard);
+            }
+    
+            console.log('Activity added:', data);
+        }
+    });
+    
     // Get game ID from the URL (assuming it's in the format '/dashboard/games/:gameId/game')
     const gameId = window.location.pathname.split('/')[3] ; // Extract game ID from URL
 
@@ -106,9 +128,6 @@ $(document).ready(function() {
             success: function(response) {
             // Listen for the 'scoreUpdated' event
                 showMessage($messageElement, 'Score updated successfully!', true);
-                // setTimeout(() => {
-                //     $messageElement.fadeOut();
-                // }, 3000);
             },
             error: function(xhr) {
                 showMessage($messageElement, `Error: ${xhr.responseJSON.error}`, false);
@@ -117,6 +136,9 @@ $(document).ready(function() {
                 // Hide spinner and re-enable button
                 $spinner.hide();
                 $this.prop('disabled', false);
+                setTimeout(() => {
+                    $messageElement.hide();
+                }, 3000);
             }
         });
     });
@@ -132,7 +154,7 @@ $(document).ready(function() {
 
         // Validate inputs
         if (!activityTeam || !activityType || !activityMinute) {
-            alert('All fields are required!');
+            showMessage($messageElement, 'All fields are required!', false);
             return;
         }
 
@@ -150,17 +172,12 @@ $(document).ready(function() {
 
         // Send PUT request to update the activity
         $.ajax({
-            url: `/api/games/${gameId}/activity`, // Adjust the URL based on your routing
-            method: 'PUT',
+            url: `/dashboard/games/activities`, // Adjust the URL based on your routing
+            method: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(activityData),
             success: function(response) {
-                // Emit updated activity to the client UI
-                socket.emit('activityUpdated', {
-                    game_id: gameId,
-                    team_id: activityTeam,
-                    activity: response.activity // Assuming your response contains the new activity
-                });
+                // console.log(response)
                 showMessage($messageElement, 'Activity updated successfully!', true);
             },
             error: function(xhr) {
@@ -170,6 +187,9 @@ $(document).ready(function() {
                 // Hide spinner and re-enable button
                 $spinner.hide();
                 $this.prop('disabled', false);
+                setTimeout(() => {
+                    $messageElement.hide();
+                }, 3000);
             }
         });
     });
