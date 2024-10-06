@@ -1,0 +1,36 @@
+<aside class="mid-pane small-padding  bg-white">
+
+    <section class="border-bottom">
+        <h4 class="bold mid cap center-align">Quick Updates</h4>
+    </section>
+
+    <section class="small-padding ">
+            <h5 class="bold cap align-center small-bottom">update game score</h5>
+            <span class="row">
+                <select name="teams" id="teams" class="small-select max team-select" title="select team"></select>
+                <input type="text" id="goal" class="tiny-input" value="1" disabled>
+                <input type="text" id="minute" class="tiny-input" placeholder="25'" title="minute goal scored">
+                <button id="savescore" class="small-button blue max align-center">save score</button>
+            </span>
+    </section>
+
+    <hr class="divider">
+
+    <section class="small-padding">
+        <h5 class="bold cap align-center small-bottom">update game activity</h5>
+            <span class="row">
+                <select name="teams" id="teams" class="small-select max team-select" title="select team"></select>
+                <select name="teams" id="teams" class="small-select max cap">
+                    <option value="yellow">yellow card</option>
+                    <option value="red">red card</option>
+                    <option value="foul">foul</option>
+                    <option value="corner">corner</option>
+                    <option value="throw">throw in</option>
+                    <option value="attempt">goal attempt</option>
+                </select>
+               
+                <input type="text" id="minute" class="tiny-input" placeholder="25'" title="minute activity occured">
+                <button id="savescore" class="small-button blue max align-center">save activity</button>
+            </span>
+    </section>
+</aside>

@@ -926,6 +926,14 @@ export function fetchAndRenderLineups(gameId) {
 
         // Update scores and display timer
         const $scoresContainer = $('#gamescores');
+        [
+            {team: data.lineup.teamOne.teamName, id:data.lineup.teamOne.teamId},
+            {team: data.lineup.teamTwo.teamName, id:data.lineup.teamTwo.teamId}
+        ].forEach(team => {
+            const option = $('<option></option>').val(team.id).text(team.team);
+            $('.team-select').append(option);
+        });
+        console.log(data);
         
         $scoresContainer.append(`
                 <h4 class="bold">${data.home_goal}</h4>

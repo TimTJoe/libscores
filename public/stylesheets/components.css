@@ -828,11 +828,13 @@ body.dialog-active::before {
   min-width: 80px;
   display: flex;
   align-items: center;
+  justify-content: space-around;
   font-weight: bold;
   gap: var(--spacing-xs);
   padding: var(--spacing-sm);
   cursor: pointer;
   transition: transform .1 ease-out;
+  text-transform: capitalize;
 }
 
 button.blue {
@@ -907,6 +909,10 @@ button.gray {
 }
 .small-main {
   width: 470px;
+}
+
+.mid-pane {
+  width: 220px;
 }
 
 .mid-main {
