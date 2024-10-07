@@ -1030,6 +1030,9 @@ button.gray {
   width: 178px;
 }
 
+.side-tab:hover {
+  background-color: var(--dark-gray);
+}
 
 .input.search {
   display: unset;

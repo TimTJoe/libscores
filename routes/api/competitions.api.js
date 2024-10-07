@@ -14,6 +14,103 @@ const handleError = (res, err, customMessage = 'An error occurred') => {
 };
 
 /**
+ * GET all competition details with their seasons and associated teams.
+ * Endpoint: v1/api/competitions
+ */
+router.get('/', async (req, res) => {
+    try {
+        const db = await createDbConnection();
+
+        // Query to get all competitions
+        const competitionQuery = `
+            SELECT 
+                competitions.id, 
+                competitions.competition, 
+                competitions.founded, 
+                competitions.players, 
+                competitions.continent, 
+                competitions.market_value, 
+                competitions.logo, 
+                competitions.type 
+            FROM competitions
+        `;
+        const competitions = await dbAll(db, competitionQuery);
+
+        if (!competitions || competitions.length === 0) {
+            return res.status(404).json({ message: 'No competitions found.' });
+        }
+
+        // Iterate over all competitions to fetch their seasons and related teams
+        const competitionResults = await Promise.all(competitions.map(async (competition) => {
+            // Query to get the seasons for each competition
+            const seasonQuery = `
+                SELECT id AS season_id, start, end, status 
+                FROM seasons 
+                WHERE competition_id = ?
+            `;
+            const seasons = await dbAll(db, seasonQuery, [competition.id]);
+
+            if (seasons.length === 0) {
+                return {
+                    id: competition.id,
+                    name: competition.competition,
+                    founded: competition.founded,
+                    players: competition.players,
+                    continent: competition.continent,
+                    market_value: competition.market_value,
+                    logo: competition.logo,
+                    type: competition.type,
+                    seasons: [] // No seasons found
+                };
+            }
+
+            // Fetch teams for each season
+            const seasonResults = await Promise.all(seasons.map(async (season) => {
+                const phaseQuery = `
+                    SELECT clubs.id AS club_id, clubs.club AS club_name, clubs.badge AS club_logo
+                    FROM phases
+                    JOIN clubs ON phases.team_id = clubs.id
+                    WHERE phases.season_id = ?
+                `;
+                const teams = await dbAll(db, phaseQuery, [season.season_id]);
+
+                return {
+                    id: season.season_id,
+                    start: season.start,
+                    end: season.end,
+                    status: season.status,
+                    teams: teams.map(team => ({
+                        id: team.club_id,
+                        name: team.club_name,
+                        logo: team.club_logo
+                    }))
+                };
+            }));
+
+            // Return competition details along with the fetched seasons
+            return {
+                id: competition.id,
+                name: competition.competition,
+                founded: competition.founded,
+                players: competition.players,
+                continent: competition.continent,
+                market_value: competition.market_value,
+                logo: competition.logo,
+                type: competition.type,
+                seasons: seasonResults
+            };
+        }));
+
+        // Return all competitions with their season details
+        return res.status(200).json(competitionResults);
+
+    } catch (err) {
+        handleError(res, err, 'Error fetching competition details.');
+    }
+});
+
+
+/**
  * GET competition details with optional seasons and clubs data.
  * Endpoint: v1/api/competitions/:id
  */
