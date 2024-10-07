@@ -3,8 +3,8 @@
     <%- include("./nav.ui.ejs") %>
     <span class="space"></span>
     <main class="mid-main row top-align">
-        <aside class="small-pane" id="sidebar">
-            aside
+        <aside class="small-pane" id="sidebar" data-modal="sidebar">
+            <%- include("./sidebar.ui.ejs") %>
         </aside>
         <div class="column no-gap small-main">
             <nav class="dates bg-white tab-nav">
@@ -15,6 +15,6 @@
         </div>
     </main>
     <%- include("./foot.ui.ejs") %>
-    <script type="module" src="/javascripts/games.dash.js"></script>
+    <script type="module" src="/javascripts/games.feed.js"></script>
 </body>
 

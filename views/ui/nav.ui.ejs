@@ -1,8 +1,13 @@
 <nav class="bg-white row bg-white small-padding">
     <section class="fix-main row">
-        <a href="/">
-            <img src="/images/newlogo.png" alt="libscore logo" class="site-logo">
-        </a>
+        <span class="row">
+            <button class="small-button" data-modal="#sidebar">
+                <i class="fa fa-bars large" aria-hidden="true"></i>
+            </button>
+            <a href="/">
+                <img src="/images/newlogo.png" alt="libscore logo" class="site-logo">
+            </a>
+        </span>
         <section class="move-right row">
             <form action="/search" method="get" class="row search-fields padding-right">
                 <input type="search" class="input search max" name="q" placeholder="What are you looking for?">
@@ -12,7 +17,7 @@
             </form>
             <a href="/login" class="small-button blue">
                 <i class="fa fa-user"></i>
-                login
+                <span class="button-text">login</span>
             </a>
         </section>
     </section>

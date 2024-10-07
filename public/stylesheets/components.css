@@ -825,7 +825,7 @@ body.dialog-active::before {
   font-size: var(--tiny);
   background-color: var(--light-gray);
   border-radius: var(--round-sm);
-  min-width: 80px;
+  min-width: 38px;
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -1044,6 +1044,51 @@ button.gray {
   border-radius: var(--round-sm);
   color: var(--navy-blue);
   border: thin solid var(--ash);
-  min-width: 250px;
-;
+}
+
+/* Show on large screens (768px and above) */
+@media (min-width: 768px) {
+  .search-fields {
+    min-width: 192px;
+}
+  #sidebar {
+    display: block;
+}
+}
+
+@media (max-width: 767px) {
+  .site-logo {
+    width: 148px;
+}
+.button-text {
+  display: none;
+}
+  .search-fields {
+    width: 150px;
+    overflow: hidden;
+}
+.input.search {
+  width: 89px;
+}
+  #sidebar {
+    display: none;
+    position: absolute;
+    top: 68px;
+    left: 0;
+    height: 89vh;
+}
+.small-main {
+  width: 100%;
+}
+.mid-main{
+  width: auto;
+  padding: var(--spacing-sm);
+
+}
+
+}
+
+/* Utility class to override and show on small screens */
+.show-on-small {
+  display: block !important;
 }
