@@ -1,0 +1,34 @@
+<%- include("./head.ui.ejs") %>
+<body class="bg-rose">
+    <%- include("./nav.ui.ejs") %>
+    <span class="space"></span>
+    <main class="min-wide row top-align">
+        <aside class="small-pane" id="sidebar" data-modal="sidebar">
+            <%- include("./sidebar.ui.ejs") %>
+        </aside>
+        <div class="small-main bg-white small-padding min-high ">
+            <small id="msg"></small>
+            <section class="row around margin-top margin-bottom">
+                <span class="row cap" id="hometeam"></span>
+                <span class="row align-center" id="gamescores"></span>
+                <span class="row cap" id="awayteam"></span>
+            </section>
+            <hr class="divider">
+            <div id="summary" class="row flex top-align">
+                <div id="homesummary" class="column">
+                   
+                </div>
+                <section id="awaysummary" class="align-right"></section>
+            </div>
+            <hr class="divider">
+            <div class="row flex top-align">
+                <section class="column padding-right" id="homelineups">
+                </section>
+                <section class="column" id="awaylineups">
+                </section>
+            </div>
+        </div>
+    </main>
+    <%- include("./foot.ui.ejs") %>
+    <script type="module" src="/javascripts/readers/games.read.js"></script>
+</body>

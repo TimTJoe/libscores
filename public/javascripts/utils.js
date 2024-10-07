@@ -766,7 +766,6 @@ export function displayDateTabs() {
 
 
 // ==============================================================
-
 /**
  * Fetch and render games for a specific date.
  * Sends a request to the server and updates the UI with the game information.
@@ -840,11 +839,8 @@ export function fetchAndRenderGames(dateId) {
             // Append the fragment to the container
             $gamesContainer.append($fragment);
 
-            // Add click event listener to each game card
-            $('.game-card').on('click', function() {
-                const gameId = $(this).data('game-id'); // Get the game ID from the clicked card
-                window.location.href = `/dashboard/games/${gameId}/game`; // Redirect to the game details page
-            });
+            // Add click event listeners to game cards after they are rendered
+            // addGameCardClickListener('.game-card', '/dashboard');
 
             // Start adding visible class for animation
             let delay = 0; // Initial delay for animation
@@ -863,7 +859,6 @@ export function fetchAndRenderGames(dateId) {
             $gamesContainer.html('<p>Error fetching games. Please try again later.</p>');
         });
 }
-
 
 /**
  * Function to update the timer of live games.
@@ -903,6 +898,40 @@ function startTimers() {
     // Update timers every second
     setInterval(updateTimers, 1000);
 }
+
+/**
+ * Add click event listeners to game cards using event delegation.
+ * The listener is added to the parent element, and it listens for clicks on
+ * elements with the specified class.
+ * 
+ * If the base URL contains the word "dashboard", the generated URL will be in the format:
+ * /dashboard/games/{gameId}/game.
+ * Otherwise, it will be in the format: /games/{gameId}.
+ * 
+ * @param {string} parentSelector - The parent element that will delegate the click event.
+ * @param {string} className - The class of the elements to attach the click listener.
+ * @param {string} baseUrl - The base URL to use when constructing the full URL.
+ */
+export function addGameCardClickListener(parentSelector, className, baseUrl) {
+    // Use event delegation: attach the event listener to the parent element
+    $(parentSelector).on('click', className, function() {
+        const gameId = $(this).data('game-id'); // Get the game ID from the clicked card
+
+        // Determine the URL based on whether "dashboard" is in the base URL
+        let fullUrl;
+        if (baseUrl.includes('dashboard')) {
+            fullUrl = `${baseUrl}/games/${gameId}/game`;
+        } else {
+            fullUrl = `${baseUrl}/${gameId}`;
+        }
+
+        // Redirect to the constructed URL
+        window.location.href = fullUrl;
+    });
+}
+
+
+
 
 // ==============================================================
 

@@ -12,5 +12,16 @@ router.get('/', async function(req, res, next) {
   }
 });
 
+/* GET home page. */
+router.get('/games/:gameId', async function(req, res, next) {
+  let options = { title: 'libScores', league: "/" }
+  try {
+       res.render('ui/game.ui.ejs', options);
+  } catch (err) {
+    options.err = err
+    res.render('ui/game.ui.ejs', options);
+  }
+});
+
 
 module.exports = router;
