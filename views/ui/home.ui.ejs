@@ -1,6 +1,20 @@
 <%- include("./head.ui.ejs") %>
 <body class="bg-rose">
     <%- include("./nav.ui.ejs") %>
+    <span class="space"></span>
+    <main class="mid-main row top-align">
+        <aside class="small-pane" id="sidebar">
+            aside
+        </aside>
+        <div class="column no-gap small-main">
+            <nav class="dates bg-white tab-nav">
+            </nav>
+            <span class="space small"></span>
+            <section class="games-container column small-top">
+            </section>
+        </div>
+    </main>
     <%- include("./foot.ui.ejs") %>
+    <script type="module" src="/javascripts/games.dash.js"></script>
 </body>
 

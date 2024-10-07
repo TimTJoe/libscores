@@ -923,17 +923,24 @@ button.gray {
 
 .tab-nav {
   padding: var(--spacing-sm);
-  margin-bottom: var(--spacing-sm);
+  display: flex;
+  align-items: center;
+  border-radius: var(--round-sm);
+  gap: var(--space-sm);
 }
 
 .tab-btn {
-  width: 78px;
-  height: 45px;
+  width: 75px;
+  font-weight: bolder;
+  color: var(--navy-blue);
 }
 
 .tab-btn.active {
+  height: 23px;
   font-weight: bold;
-  color: var(--crimson);
+  color: var(--white);
+  background-color: var(--crimson);
+  border-radius: var(--round-sm);
 }
 
 .game-card {

@@ -695,7 +695,7 @@ export function displayDateTabs() {
     const dateArray = []; // Create an array to hold the date objects
 
     // Generate the last 2 days, today, and the next day
-    for (let i = 2; i > 0; i--) {
+    for (let i = 3; i > 0; i--) {
         const pastDate = new Date(today);
         pastDate.setDate(today.getDate() - i); // Subtract i days from today
         dateArray.push(pastDate);
