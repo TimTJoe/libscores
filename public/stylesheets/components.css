@@ -355,7 +355,6 @@ table, th, td {
    /* Input */
 .input,  .form-input {
   width: 100%;
-  height: 48px;
   padding: var(--spacing-xs);
   border: 1px solid var(--fog);
   font-size: var(--small);
@@ -365,6 +364,7 @@ table, th, td {
   height: 38px;
   border-radius: var(--round-sm);
   font-weight: normal;
+  display: block;
 }
 
 .input:focus,.form-input:focus {
@@ -835,9 +835,10 @@ body.dialog-active::before {
   cursor: pointer;
   transition: transform .1 ease-out;
   text-transform: capitalize;
+  height: 38px;
 }
 
-button.blue {
+button.blue, a.small-button.blue {
   color: var(--white);
   background-color: var(--blue);
 }
@@ -1006,4 +1007,36 @@ button.gray {
 .spinner {
   /* margin-left: var(--spacing-md); */
   display: inline-block;
+}
+
+.fix-main {
+  width: 1000px;
+  margin: 0 auto;
+}
+
+.bg-navy {
+  background-color: var(--navy-blue);
+  color: var(--white);
+}
+
+.site-logo {
+  width: 178px;
+}
+
+
+.input.search {
+  display: unset;
+  width: unset;
+  border: unset;
+  font-weight: bolder;
+  font-size: var(--tiny)
+}
+.search-fields {
+  display: flex;
+  background-color: var(--white);
+  border-radius: var(--round-sm);
+  color: var(--navy-blue);
+  border: thin solid var(--ash);
+  min-width: 250px;
+;
 }

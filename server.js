@@ -119,8 +119,11 @@ db.serialize(function createDB() {
 });
 
 
+// NEW UI ROUTES HANDLERS
+var homeUIRouter = require('./routes/ui/index.ui.routes');
+
 // Routes handlers
-app.use('/', indexRouter);
+app.use('/', homeUIRouter);
 app.use('/live', liveRouter);
 app.use('/results', resultRouter);
 app.use('/fixtures', fixtureRouter);
