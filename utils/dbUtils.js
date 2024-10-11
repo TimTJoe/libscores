@@ -3,26 +3,54 @@ const sqlite3 = require('sqlite3').verbose();
 /**
  * Creates a database connection based on the environment.
  * @returns {sqlite3.Database} The SQLite database connection.
- */
-function createDbConnection() {
+//  */
+// function useLeaguesDB() {
+//     let db;
+
+//     if (process.env.NODE_ENV === 'development') {
+//         // Use local SQLite file in development
+//         db = new sqlite3.Database(process.env.LEAGUES_DB_PATH, (err) => {
+//             if (err) {
+//                 console.error('Error connecting to the local leagues database:', err.message);
+//             } else {
+//                 console.log('Connected to the local leagues  database.');
+//             }
+//         });
+//     } else if (process.env.NODE_ENV === 'production') {
+//         // Use the cloud SQLite URL in production
+//         db = new sqlite3.Database(process.env.PROD_DB_URL, (err) => {
+//             if (err) {
+//                 console.error('Error connecting to the cloud leagues database:', err.message);
+//             } else {
+//                 console.log('Connected to the  cloud leagues database.');
+//             }
+//         });
+//     } else {
+//         console.error('NODE_ENV is not set or is unrecognized.');
+//     }
+
+//     return db;
+// }
+
+function useTournamentDB() {
     let db;
 
     if (process.env.NODE_ENV === 'development') {
         // Use local SQLite file in development
-        db = new sqlite3.Database(process.env.DEV_DB_PATH, (err) => {
+        db = new sqlite3.Database(process.env.TOURNAMENTS_DB_PATH, (err) => {
             if (err) {
-                console.error('Error connecting to the local database:', err.message);
+                console.error('Error connecting to the local leagues database:', err.message);
             } else {
-                console.log('Connected to the local SQLite database.');
+                console.log('Connected to the local TOURNAMENTS database.');
             }
         });
     } else if (process.env.NODE_ENV === 'production') {
         // Use the cloud SQLite URL in production
         db = new sqlite3.Database(process.env.PROD_DB_URL, (err) => {
             if (err) {
-                console.error('Error connecting to the cloud database:', err.message);
+                console.error('Error connecting to the cloud tournament database:', err.message);
             } else {
-                console.log('Connected to the SQLite cloud database.');
+                console.log('Connected to the  cloud tournaments database.');
             }
         });
     } else {
@@ -31,6 +59,34 @@ function createDbConnection() {
 
     return db;
 }
+
+function useLeaguesDB() {
+    let db;
+    if (process.env.NODE_ENV === 'development') {
+        // Use local SQLite file in development
+        db = new sqlite3.Database(process.env.LEAGUES_DB_PATH, (err) => {
+            if (err) {
+                console.error('Error connecting to the local LEAGUES database:', err.message);
+            } else {
+                console.log('Connected to the local LEAGUES database.');
+            }
+        });
+    } else if (process.env.NODE_ENV === 'production') {
+        // Use the cloud SQLite URL in production
+        db = new sqlite3.Database(process.env.PROD_DB_URL, (err) => {
+            if (err) {
+                console.error('Error connecting to the cloud LEAGUES database:', err.message);
+            } else {
+                console.log('Connected to the LEAGUESET cloud database.');
+            }
+        });
+    } else {
+        console.error('NODE_ENV is not set or is unrecognized.');
+    }
+
+    return db;
+}
+
 
 /**
  * Executes a query that returns multiple rows.
@@ -98,7 +154,7 @@ const dbGet = (db, query, params = []) => {
 
 // Function to get game details by gameId
 // async function getGameDetails(gameId) {
-//     const db = createDbConnection()
+//     const db = useLeaguesDB()
 //     const gameQuery = `SELECT * FROM games WHERE id = ?`;
 //     const game = await dbGet(db,gameQuery, [gameId]);
 //     return game;
@@ -106,7 +162,7 @@ const dbGet = (db, query, params = []) => {
 
 // Helper function to get full game details (including home and away team names)
 async function getGameDetails(game_id) {
-    const db = createDbConnection()
+    const db = useLeaguesDB()
     // Query to fetch game info
     const gameSql = `SELECT g.id, g.home, g.away, g.start, g.status, g.period, g.home_goal, g.away_goal FROM games g WHERE g.id = ?`;
     const game = await dbQuery(db,gameSql, [game_id]);
@@ -137,14 +193,14 @@ async function getGameDetails(game_id) {
 
 // Function to get activities of a game by gameId
 async function getGameActivities(gameId) {
-    const db = createDbConnection()
+    const db = useLeaguesDB()
     const activityQuery = `SELECT * FROM activities WHERE game_id = ?`;
     const activities = await dbAll(db,activityQuery, [gameId]);
     return activities;
 }
 
 async function getTeamDetails(teamId) {
-    const db = createDbConnection()
+    const db = useLeaguesDB()
     const clubQuery = `SELECT * FROM clubs WHERE id = ?`;
     const clubs = await dbAll(db,clubQuery, [teamId]);
     return clubs;
@@ -152,7 +208,7 @@ async function getTeamDetails(teamId) {
 
 // Function to get the players who participated in the game
 async function getPlayersInGame(gameId) {
-    const db = createDbConnection()
+    const db = useLeaguesDB()
     const playerQuery = `
         SELECT players.* FROM players 
         JOIN scorers ON players.id = scorers.player_id 
@@ -163,7 +219,7 @@ async function getPlayersInGame(gameId) {
 
 // Function to get the scorers and their goals in the game
 async function getScorersInGame(gameId) {
-    const db = createDbConnection()
+    const db = useLeaguesDB()
     const scorerQuery = `
         SELECT players.id, players.fullname, players.club_id, scorers.goal, scorers.minutes FROM scorers
         JOIN players ON scorers.player_id = players.id
@@ -171,6 +227,17 @@ async function getScorersInGame(gameId) {
     const scorers = await dbAll(db,scorerQuery, [gameId]);
     return scorers;
 }
+
+/**
+ * Helper function to handle errors and send a response.
+ * @param {Response} res - Express response object.
+ * @param {Error} err - The error object.
+ * @param {string} [customMessage='An error occurred'] - Optional custom error message.
+ */
+const handleError = (res, err, customMessage = 'An error occurred') => {
+    console.error(err);
+    res.status(500).json({ message: customMessage });
+};
 
 
 // Export the utility functions
@@ -180,9 +247,11 @@ module.exports = {
     getGameActivities,
     getPlayersInGame,
     getScorersInGame,
-    createDbConnection,
+    useLeaguesDB,
     dbQuery,
     dbRun,
     dbGet,
-    dbAll
+    dbAll,
+    useTournamentDB,
+    handleError
 };

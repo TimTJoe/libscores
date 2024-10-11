@@ -1,14 +1,13 @@
 <aside class="mid-pane small-padding bg-white">
-    <section class="border-bottom">
+    <!-- <section class="border-bottom">
         <h4 class="bold mid cap center-align">Quick Updates</h4>
-    </section>
+    </section> -->
 
-    <section class="small-padding">
+    <section class="small-padding no-top">
         <h5 class="bold cap align-center small-bottom">Update Game Score</h5>
         <span class="row">
             <select name="goal-team" id="goal-team" class="small-select max team-select" title="select team"></select>
             <select name="goal-player" id="goal-player" class="small-select max player-select" title="select player who scored"></select>
-            <!-- <input type="text" id="goal" class="tiny-input" value="1" disabled hidden> -->
             <input type="text" id="goal-minute" class="tiny-input" placeholder="25'" title="minute goal scored">
             <button id="savescore" class="small-button blue max align-center">
                 <i class="fas fa-spinner fa-spin spinner tiny scoreSpinner" style="display: none;"></i>
@@ -18,9 +17,9 @@
         <small id="scoreMessage" class='tiny align-center margin-top no-line block'></small>
     </section>
 
-    <hr class="divider">
+    <!-- <hr class="divider"> -->
 
-    <section class="small-padding">
+    <section class="small-padding no-top">
         <h5 class="bold cap align-center small-bottom">Update Game Activity</h5>
         <span class="row">
             <select name="activity-team" id="activity-team" class="small-select max team-select" title="select team"></select>
@@ -40,4 +39,20 @@
             <small id="activityMessage" class='tiny align-center margin-top no-line block'></small>
         </span>
     </section>
+
+    
+    <!-- <section class="small-padding">
+        <h5 class="bold cap align-center small-bottom">Update Substitutions</h5>
+        <span class="row">
+            <select name="goal-team" id="goal-team" class="small-select max team-select" title="select team"></select>
+            <select name="goal-player" id="goal-player" class="small-select max player-select" title="select player who scored"></select>
+            <input type="text" id="goal-minute" class="tiny-input" placeholder="25'" title="minute goal scored">
+            <button id="savescore" class="small-button blue max align-center">
+                <i class="fas fa-spinner fa-spin spinner tiny scoreSpinner" style="display: none;"></i>
+                save score
+            </button>
+        </span>
+        <small id="scoreMessage" class='tiny align-center margin-top no-line block'></small>
+    </section> -->
+
 </aside>

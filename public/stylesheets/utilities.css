@@ -50,14 +50,20 @@
 .font-huge { font-size: 24px; } /* Custom large font */
 .tiny { font-size: var(--tiny); } /* Tiny font */
 .small { font-size: var(--small); } /* Small font (rem unit) */
-.large { font-size: var(--large); font-weight: bold; } /* Large font with bold */
 .huge { font-size: var(--huge); font-weight: bold; } /* Huge font with bold */
+.x-huge { 
+  font-size: calc(var(--huge) + 48px) ; 
+  font-weight: normal; 
+  line-height: .8;
+}
 .bold { font-weight: 700; } /* Bold font */
 .error { color: var(--red); } /* Error color */
 .muted { color: var(--shadow); } /* Muted color */
 .success { color: var(--green); } /* Success color */
 .warning { color: var(--yellow); } /* Warning color */
 .black { color: var(--black); } /* Black color */
+.no-bold, .normal { font-weight: normal !important; }
+
 
 /* Spacing classes */
 /** Utility classes to manage padding **/
@@ -426,6 +432,8 @@ hr.divider { border: 0; border-top: 1px solid var(--light-gray); margin: var(--s
 
 /* Set background color to gray */
 .bg-gray { background-color: var(--dark-gray); }
+.dark-gray { color: var(--midnight); }
+
 
 .light-gray { background-color: #edecec;}
 
@@ -439,4 +447,5 @@ hr.divider { border: 0; border-top: 1px solid var(--light-gray); margin: var(--s
 
 .tiny-bottom { margin-bottom: var(--spacing-xs); }
 
-
+.bg-green { background-color: var(--light-green); }
+.bg-teal { background-color: var(--teal-alt); }

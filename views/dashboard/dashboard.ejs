@@ -1,25 +1,99 @@
 <%- include("./dash.nav.ejs") %>
 <body class="">
 <%- include("./dash.bar.ejs") %>
-    <div class="min-wide column padding">
-        <h1 class='center-align'>welcome to dashboard</h1>
-        <section class="row flex">
-            <section class="border">
-                <nav class="row small-round bg-white small-padding">
-                    <a href="/dashboard/clubs">Clubs</a>
-                </nav>
-            </section>
-            <section class="border">
-                <nav class="row small-round bg-white small-padding">
-                    <a href="/dashboard/competitions">competition</a>
-                </nav>
-            </section>
-            <section class="border">
-                <nav class="row small-round bg-white small-padding">
-                    <a href="/dashboard/games">games</a>
-                </nav>
-            </section>
-        </section>
+    <div class="fix-main">
+        <span class="space"></span>
+            <header class='row small-margin align-center block'>
+                <h1 class='cap'>Get Started on Your Journey!</h1>
+            </header>
+        <span class="space"></span>
+        <div class="grid">
+            <div class="row bg-white small-padding small-elevate small-round top-align">
+                <section class="max border-right">
+                    <h2 class="large margin-bottom">Competitions</h2>
+                    <p class="mid normal small-line dark-gray">
+                    Update live scores and match activities such as red cards, substitutions, corners, fouls, and extra time seamlessly. Create new competitions and schedule matches to keep your league exciting.
+                    </p>
+                </section>
+                <section class="align-center column fill-height">
+                    <small class="tiny cap bold">total competitions</small>
+                    <h1 class="x-huge">10</h1>
+                    <span class="row move-down">
+                        <button class="icon-button small-button" title="Create new competition">
+                            <i class="fa fa-plus"></i>
+                        </button>
+                        <a href="/dashboard/competitions" class=" link-btn small-button blue cap">
+                            View All
+                            <i class="fa fa-arrow-right tiny" aria-hidden="true"></i>
+                        </a>
+                    </span>
+                </section>
+            </div>
+
+            <div class="row bg-white small-padding small-elevate small-round top-align">
+                <section class="max border-right">
+                    <h2 class="large margin-bottom">Games</h2>
+                    <p class="mid normal small-line dark-gray">
+                        View all games—both live and past— and select any game to access detailed information. Make quick updates on crucial moments like red cards, goals, scorers, corners, and fouls. Take control of the action by diving into the Games section now!
+                </section>
+                <section class="align-center column fill-height">
+                    <small class="tiny cap bold">Numbers of Marches</small>
+                    <h1 class="x-huge">10</h1>
+                    <span class="row move-down">
+                        <button class="icon-button small-button" title="Create new competition">
+                            <i class="fa fa-plus"></i>
+                        </button>
+                        <a href="/dashboard/games" class=" link-btn blue small-button cap">
+                            View All
+                            <i class="fa fa-arrow-right tiny" aria-hidden="true"></i>
+                        </a>
+                    </span>
+                </section>
+            </div>
+            
+            <div class="row bg-white small-padding small-elevate small-round top-align">
+                <section class="max border-right">
+                    <h2 class="large margin-bottom">Tournaments</h2>
+                    <p class="mid normal small-line dark-gray">
+                        Create a new Annual National County Meet or design a tournament for any unique purpose. Dive in to manage existing tournaments, add teams and players, and group them effortlessly.
+                    </p>
+                </section>
+                <section class="align-center column fill-height">
+                    <small class="tiny cap bold">total competitions</small>
+                    <h1 class="x-huge">10</h1>
+                    <span class="row move-down">
+                        <button class="icon-button small-button" title="Create new competition">
+                            <i class="fa fa-plus"></i>
+                        </button>
+                        <a href="/dashboard/tournaments" class=" link-btn small-button blue cap">
+                            View All
+                            <i class="fa fa-arrow-right tiny" aria-hidden="true"></i>
+                        </a>
+                    </span>
+                </section>
+            </div>
+
+            <div class="row bg-white small-padding small-elevate small-round top-align">
+                <section class="max border-right">
+                    <h2 class="large margin-bottom">Sports News</h2>
+                    <p class="mid normal small-line dark-gray">
+                        Create and share the latest news, transfer rumors, and insightful articles. Easily view, edit, or delete the news you’ve written to keep your content fresh and relevant. Engage with fans and keep them informed about the latest developments in sports!
+                </section>
+                <section class="align-center column fill-height">
+                    <small class="tiny cap bold">total Articles</small>
+                    <h1 class="x-huge">10</h1>
+                    <span class="row move-down">
+                        <button class="icon-button small-button" title="Create new competition">
+                            <i class="fa fa-plus"></i>
+                        </button>
+                        <a href="/dashboard/news" class=" link-btn blue small-button cap">
+                            View All
+                            <i class="fa fa-arrow-right tiny" aria-hidden="true"></i>
+                        </a>
+                    </span>
+                </section>
+            </div>
+        </div>
     </div>
     <%- include("./dash.foot.ejs") %>
 </body>

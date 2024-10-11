@@ -1,5 +1,6 @@
 // dbService.js
 const getDbInstance = require('@js/getDBInstance');
+const { useLeaguesDB } = require('@utils/dbUtils');
 const sqlite3 = require('sqlite3').verbose();
 
 /**
@@ -13,7 +14,7 @@ async function getItemById(tableName, id) {
         throw new Error("Table name and ID must be provided.");
     }
 
-    const db = await getDbInstance(sqlite3); // Get the DB instance
+    const db = await useLeaguesDB(); // Get the DB instance
 
     const query = `SELECT * FROM ${tableName} WHERE id = ?`;
     

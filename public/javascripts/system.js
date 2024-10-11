@@ -30,4 +30,67 @@ $(document).ready(function () {
             $(document).on('click', function () {
                 $('[menu-data]').hide(); // Hide all dropdowns
             });
+});
+
+$(document).ready(function() {
+    // By default, hide all dropdowns that don't have a '#' in their data-menu
+    $('[data-menu]').each(function() {
+        if (!$(this).attr('data-menu').startsWith('#')) {
+            $(this).hide(); // Hide them initially
+        }
+    });
+
+    // Click event for any element with data-menu starting with '#'
+    $('[data-menu^="#"]').click(function(e) {
+        const menuId = $(this).attr('data-menu'); // Get the clicked element's data-menu value
+        const $dropdown = $(`[data-menu="${menuId.slice(1)}"]`); // Find corresponding dropdown with same data-menu (without #)
+
+        // Hide all other dropdowns
+        $('[data-menu]').not($dropdown).each(function() {
+            if (!$(this).attr('data-menu').startsWith('#')) {
+                $(this).slideUp(); // Use slideUp to hide with animation
+            }
         });
+
+        // Position the dropdown before toggling visibility
+        const triggerPosition = $(this).offset();
+        const dropdownWidth = $dropdown.outerWidth();
+        const viewportWidth = $(window).width();
+        const offsetLeft = triggerPosition.left;
+
+        // Adjust dropdown position to prevent overflow
+        if (offsetLeft + dropdownWidth > viewportWidth) {
+            $dropdown.css({
+                position: 'absolute',
+                top: triggerPosition.top + $(this).outerHeight(),
+                left: viewportWidth - dropdownWidth // Position it to the far right of the viewport
+            });
+        } else {
+            $dropdown.css({
+                position: 'absolute',
+                top: triggerPosition.top + $(this).outerHeight(),
+                left: offsetLeft // Position it normally
+            });
+        }
+
+        // Toggle the corresponding dropdown's visibility with slideDown or slideUp
+        if ($dropdown.is(':visible')) {
+            $dropdown.slideUp(); // If already visible, slide it up
+        } else {
+            $dropdown.slideDown(); // If hidden, slide it down
+        }
+
+        // Prevent the event from propagating to the document
+        e.stopPropagation();
+    });
+
+    // Hide dropdowns when clicking outside
+    $(document).click(function() {
+        $('[data-menu]').each(function() {
+            if (!$(this).attr('data-menu').startsWith('#')) {
+                $(this).slideUp(); // Ensure all dropdowns hide with slideUp
+            }
+        });
+    });
+});
+

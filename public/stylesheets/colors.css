@@ -7,6 +7,36 @@
  */
 
  :root {
+  --white: #ffffff;
+  --white-transparent: #ffffff80;
+  --light-gray: #f6f6f7;
+  --pale-green: #ebf6f1;
+  --pale-blue: #ecf4f7;
+  --soft-gray: #eeeff1;
+  --lightest-gray: #ececeb;
+  --mint-green: #d6ece3;
+  --seafoam: #99d2ba;
+  --grayish-blue: #bbbfc6;
+  --golden-yellow: #e4ae3a;
+  --teal: #33a474;
+  --coral-red: #f25e62;
+  --sky-blue: #4298b4;
+  --lavender: #88619a;
+  --white-alt: #ffffff;
+  --golden-yellow-alt: #e4ae3a;
+  --light-steel: #abafb8;
+  --teal-alt: #3cca8fe5;
+  --coral-red-alt: #f25e62;
+  --sky-blue-alt: #4298b4;
+  --slate-gray: #7f8691;
+  --dark-gray: #787f8d;
+  --lavender-alt: #88619a;
+  --charcoal: #343c4b;
+  --charcoal-transparent: #343c4b80;
+  --charcoal-semi-transparent: #343c4bb3;
+  --forest-green: #14412e;
+  --black: #000000;
+
   /* Background colors */
   --frost: rgba(255, 255, 255, 0.12); /* Light frosted overlay background */
   --mist: rgba(255, 255, 255, 0.08); /* Misty white overlay */
@@ -38,6 +68,7 @@
   --blue: #0074D9; /* Primary blue for fill */
   --sun: #fbbc04; /* Sunny yellow fill */
   --green: #34a853; /* Standard green fill */
+  --light-green: #51d6748f; /* Standard green fill */
   --royal: #0075fa; /* Royal blue fill */
   --shadow: rgba(22, 24, 35, 0.6); /* Deep shadow fill */
   --smoke: rgba(22, 24, 35, 0.341); /* Light smoke gray fill */

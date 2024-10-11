@@ -51,3 +51,6 @@ jspm_packages/
 
 # Optional: TypeScript cache
 *.tsbuildinfo
+sessions
+sessions.db
+

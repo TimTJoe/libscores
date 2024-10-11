@@ -1,0 +1,44 @@
+<%- include("./head.ui.ejs") %>
+<body class="bg-rose">
+    <%- include("./nav.ui.ejs") %>
+    <span class="space"></span>
+    <main class="mid-main row top-align">
+        <aside class="small-pane" id="sidebar" data-modal="sidebar">
+            <%- include("./sidebar.ui.ejs") %>
+        </aside>
+        <div class="column no-gap small-main">
+            <nav class="bg-white column small-padding small-round">
+                <span class="row">
+                    <img src="/images/county_meet_new.png" alt="" class="lg-logo">
+                    <h6 class="large">National County Meet</h6>
+                </span>
+                <span class="row between ">
+                    <small class="dark-gray small bold cap" id="edition">edition: 2024</small>
+                    <select name="filter" id="filter" class="small-select move-right">
+                        <option class="cap">filter by year</option>
+                        <option value="2022">2022</option>
+                        <option class="2023">2023</option>
+                        <option class="2024">2024</option>
+                    </select>
+                </span>
+            </nav>
+            <span class="space small"></span>
+            <section  class="column small-top bg-white small-round">
+                <div class="row small-padding border-bottom">
+                    <button class="small-chip active" data-tab="matches">Matches</button>
+                    <button class="small-chip" data-tab="teams">Teams</button>
+                    <button class="small-chip" data-tab="groups">Groups</button>
+                </div>
+                <small id="msg"></small>
+                <section class="column small-padding" data-content="tournament">
+                    content
+                </section>
+            </section>
+        </div>
+    </main>
+    <%- include("./foot.ui.ejs") %>
+    <script type="module" src="/javascripts/games.feed.js"></script>
+    <script type="module" src="/javascripts/ui/game.ui.js"></script>
+    <script type="module" src="/javascripts/tournaments.info.js"></script>
+</body>
+

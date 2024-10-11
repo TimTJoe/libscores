@@ -1,7 +1,8 @@
 var router = require('express').Router();
 const getDbInstance = require('@js/getDBInstance');
 var sqlite3 = require("sqlite3").verbose();
-var db = getDbInstance(sqlite3)
+const { useLeaguesDB  } = require('@utils/dbUtils');
+const db = useLeaguesDB()
 const upload = require('@middleware/upload');
 
 router.get('/', async function(req, res, next) {

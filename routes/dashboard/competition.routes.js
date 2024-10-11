@@ -1,9 +1,8 @@
 const { getItemById } = require('@js/dbService');
 const router = require('express').Router();
 const sqlite3 = require('sqlite3').verbose();
-const getDbInstance = require('@js/getDBInstance');
 const upload = require('@middleware/upload');
-const { dbQuery, dbRun, dbGet,dbAll, createDbConnection } = require('@utils/dbUtils');
+const { dbQuery, dbRun, dbGet,dbAll, useLeaguesDB  } = require('@utils/dbUtils');
 
 
 // PUT, DELETE, and other specific methods related to competitions can go here.
@@ -13,7 +12,7 @@ router.get('/:id/games/new', async (req, res) => {
     const competitionId = req.params.id;
 
     try {
-        const db = await createDbConnection();
+        const db = await useLeaguesDB();
         const competition = await dbQuery(db, 'SELECT * FROM competitions WHERE id = ?', [competitionId]);
 
         if (!competition.length) {
@@ -48,7 +47,7 @@ router.get('/:id', async (req, res) => {
 
     try {
         const competition = await getItemById('competitions', id);
-        const db = await createDbConnection();
+        const db = await useLeaguesDB();
         const seasons = await dbQuery(db, 'SELECT * FROM seasons ORDER BY id DESC');
 
         if (!competition) {
@@ -81,7 +80,7 @@ router.get('/:id', async (req, res) => {
 // GET route to display all competitions (generic route)
 router.get('/', async (req, res) => {
     try {
-        const db = await getDbInstance(sqlite3);
+        const db = await useLeaguesDB();
         const query = 'SELECT * FROM competitions ORDER BY id DESC';
         const leagues = await dbQuery(db, query);
 
@@ -120,7 +119,7 @@ router.post('/', upload.single('logo'), async (req, res) => { // Changed the pat
     }
 
     try {
-        const db = await getDbInstance(sqlite3);
+        const db = await useLeaguesDB();
         const sql = `INSERT INTO competitions VALUES (?,?,?, ?, ?, ?, ?, ?,?)`;
         const values = [null, league, country, players, market_value, continent,logo, founded, type];
 
@@ -142,13 +141,9 @@ router.put('/', async (req, res) => {
        const { id, competition, founded, continent, country, market_value, type } = req.body;
        console.log(req.body)
    
-       // Input validation
-       // if (!id || !league || !founded || !continent || !country || !market_value) {
-       //     return res.status(400).json({ message: 'All fields are required.' });
-       // }
    
        try {
-           const db = await getDbInstance(sqlite3);
+           const db = await useLeaguesDB();
            
            // Prepare the SQL statement for updating the competition
            const sql = `

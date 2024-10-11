@@ -1,33 +1,182 @@
-<%- include("./partial/head") %>
+<%- include("./partial/head") %> 
 <%- include("./partial/top-nav") %>
-
-<div class="container row">
-    <div class="bg-gray mid-round border padding">
-        <img src="/images/bea_logo_lg.png" alt="">
-    </div>
-    <div class="max">
-        <%- include("./partial/team-tabs.ejs") %>
-        <section>
-            <h1 class="huge ">BEA Mountain FC</h1>
-            <p class="font-large">The BEA Mountain Football Club is a Liberian football club . The club is based in the capital city of Monrovia . The club currently plays in the country's first league, the First Division. <a href="www.wikipedia/wiki">Learn More</a>
-            </p>
-            <span class="space"></span>
-            <span class="row large">
-                <p class="max">Head Coach: </p> 
-                <h3>Jane N. Doe</h3>
-            </span>
-            <span class="row large">
-                <p class="max">League Position: </p> 
-                <h3>2</h3>
-            </span>
-            <span class="row large">
-                <p class="max">Stadium: </p> 
-                <h3>Samuel K. Doe</h3>
-            </span>
-            <span class="row large">
-                <p class="max">Capacity: </p> 
-                <h3>15,000</h3>
-            </span>
-        </section>
+<div class="bg-rose">
+    <div id="main-body" class="container row constraint">
+        <div class="bg-white mid-round border padding">
+            <img src="<%= team.badge %>" alt="<%= team.club %> Logo" style="width: 150px; height: 150px;">
+        </div>
+        <div class="max" >
+            <div class="dates bg-white tab-nav margin-bottom" style="width: 350px; justify-content: space-between;">
+                <button id="summary" class="tab-btn active">Summary</button>
+                <button id="games" class="tab-btn">Games</button>
+                <button id="squad" class="tab-btn">Squad</button>
+            </div>
+            <!-- Summary Section -->
+            <div class="column">
+    
+           
+                <section id="summaryDisplay" class="display">
+                        <h1 class="huge"><%= team.club %></h1>
+                            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quisquam corporis tempora nostrum, incidunt, saepe nesciunt minima quia impedit quidem, voluptatem commodi nobis. Molestiae asperiores rem itaque molestias officia quas illum corrupti, sunt facere cupiditate vitae dignissimos soluta tenetur voluptatibus quisquam saepe magnam nesciunt dicta dolorem ea voluptatum. Nihil, eligendi voluptatibus!</p>
+                            <div class="team-details">
+                                <p><strong>Founded:</strong> <%= team.founded %></p>
+                                <p><strong>Country:</strong> <%= team.country_id %></p>
+                            </div>
+                </section>
+                    
+                    <!-- games Section -->
+                <section id="gamesDisplay" class="none">
+                    <% if (games.length === 0) { %>
+                        <p class="no-games">No games found for this team.</p>
+                    <% } else { %>
+                                <% games.forEach(game => { %>
+                                    <div class="border row max bg-white padding mid-round margin-bottom space" style="width: 350px;">
+                                        <div class="column">
+                                            <h5 style="margin-right: 20px;"><%= game.date %></h5>
+                                            <h5 style="text-align: center;">
+                                                <%= game.start %>
+                                            </h5>
+                                        </div>
+                                        
+                                        <div class="column" style="width: 220px; height: auto;">
+                                            <span class="row" style="justify-content:space-between; align-items:baseline;">
+                                                <img src="/images/shield.webp" alt="" style="float: left;">
+                                                <h3><%= game.home %></h3>
+                                                <h4><%= game.home_goal %></h4>
+                                            </span>
+                                            <span class="row" style="justify-content: space-between; align-items:baseline;">
+                                                <img src="/images/shield.webp" alt="" style="float: left;">
+                                                <h3><%= game.away %></h3>
+                                                <h4><%= game.away_goal %></h4>
+                                            </span>
+                                        </div> 
+                                    </div>
+                                <% }); %>
+                    <% } %>
+                </section>
+    
+                <!-- Squad Section -->
+                <section id="squadDisplay" class="none">
+                    <% 
+                    // Group players by position
+                    const playersByPosition = squad.reduce((acc, player) => {
+                        acc[player.position] = acc[player.position] || [];
+                        acc[player.position].push(player);
+                        return acc;
+                    }, {});
+                    %>
+                
+                    <% if (squad.length === 0) { %>
+                        <div class="no-players">No players found for this team.</div>
+                    <% } else { %>
+                        <% Object.keys(playersByPosition).forEach(position => { %>
+                                <h3 style="color: var(--navy-blue);"><%= position %></h3>
+                                    <% playersByPosition[position].forEach(player => { %>
+    
+                                        <div class="row">
+                                            <img src="/images/shield.webp" alt="" style="width: 30px; height: auto;">
+                                            <h3><%= player.fullname %></h3> 
+                                        </div>
+                                            
+                                    <% }); %>
+                        <% }); %>   
+                    <% } %>
+                </section>
+            </div>
+        </div>
+    </div> 
     </div>
 </div>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const summary = document.getElementById('summary');
+        const games = document.getElementById('games');
+        const squad = document.getElementById('squad');
+        const summaryDisplay = document.getElementById('summaryDisplay');
+        const gamesDisplay = document.getElementById('gamesDisplay');
+        const squadDisplay = document.getElementById('squadDisplay');
+
+        const tabButtons = [summary, games, squad];  // Group the tab buttons for easy management
+
+        // Function to remove 'active' class from all buttons
+        function removeActiveClass() {
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+        }
+
+        // Handle clicking on the games (Games) tab
+        games.addEventListener('click', function() {
+            console.log('games clicked');
+            removeActiveClass();  // Remove 'active' class from all buttons
+            games.classList.add('active');  // Add 'active' class to the clicked button
+            gamesDisplay.style.display = 'block';
+            summaryDisplay.style.display = 'none';
+            squadDisplay.style.display = 'none';
+            
+        });
+
+        // Handle clicking on the Summary tab
+        summary.addEventListener('click', function() {
+            console.log('Summary clicked');
+            removeActiveClass();  // Remove 'active' class from all buttons
+            summary.classList.add('active');  // Add 'active' class to the clicked button
+            summaryDisplay.style.display = 'block';
+            squadDisplay.style.display = 'none';
+            gamesDisplay.style.display = 'none';
+        });
+
+        // Handle clicking on the Squad tab
+        squad.addEventListener('click', function() {
+            console.log('Squad clicked');
+            removeActiveClass();  // Remove 'active' class from all buttons
+            squad.classList.add('active');  // Add 'active' class to the clicked button
+            summaryDisplay.style.display = 'none';
+            squadDisplay.style.display = 'block';
+            gamesDisplay.style.display = 'none';
+        });
+    });
+
+    function updateTimers() {
+        const now = new Date();  // Current time
+
+        document.querySelectorAll('[data-start-time]').forEach(timerElement => {
+            const startTime = new Date(timerElement.getAttribute('data-start-time'));  // Game start time
+            const timeDifference = now - startTime;  // Time difference in milliseconds
+
+            // Calculate time in minutes for more precise conditions
+            const timeInMinutes = timeDifference / (1000 * 60);
+
+            // Pre-game: Countdown to start
+            if (timeInMinutes < 0) {
+                const remainingTime = Math.abs(timeInMinutes);  // Time left until the game starts
+                const hours = Math.floor(remainingTime / 60);
+                const minutes = Math.floor(remainingTime % 60);
+                timerElement.innerText = `${hours}h ${minutes}m to start`;
+            }
+            // First half: Show time elapsed
+            else if (timeInMinutes >= 0 && timeInMinutes <= 45) {
+                timerElement.innerText = `${Math.floor(timeInMinutes)}'`;
+            }
+            // Half-time (HT): Between 45 and 60 minutes
+            else if (timeInMinutes > 45 && timeInMinutes <= 60) {
+                timerElement.innerText = 'HT';
+            }
+            // Second half: Show time elapsed after half-time
+            else if (timeInMinutes > 60 && timeInMinutes <= 105) {
+                timerElement.innerText = `${Math.floor(timeInMinutes - 15)}'`;
+            }
+            // Full-time (FT): After 90+ minutes
+            else if (timeInMinutes > 105) {
+                timerElement.innerText = 'FT';
+            }
+        });
+    }
+
+    // Update timers every second
+    setInterval(updateTimers, 1000);
+
+    // Initial call to update the timers on page load
+    updateTimers();
+</script>
+    

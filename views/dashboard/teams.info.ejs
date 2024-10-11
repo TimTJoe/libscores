@@ -1,0 +1,34 @@
+<body class="bg-rose">
+    <%- include("./dash.nav.ejs") %>
+    <%- include("./dash.bar.ejs") %>
+    
+    <main class="min-wide row top-align">
+        <aside class="bg-white padding column no-gap small-pane" aria-live="polite">
+            <% if (team) { %> <!-- Check if the team variable is defined -->
+                <div class="team-info">
+                    <img src="<%= team.logo %>" alt="<%= team.name %> Logo" class="team-logo" />
+                    <h2 class="team-name"><%= team.name %></h2>
+                    <input type="hidden" id="teamId" value="<%= team.id %>" />
+                </div>
+            <% } %>
+        </aside>
+
+        <div class="small-main bg-white min-high">
+            <nav class="small-padding border-bottom row between">
+                <%- include("./back.btn.ejs") %>
+                <div class="row">
+                    <button class="small-chip active" data-tab="squad">Squad</button>
+                    <button class="small-chip" data-tab="games">Games</button>
+                    <button class="small-chip" data-tab="group">Group</button>
+                </div>
+            </nav>
+            <small id="msg"></small>
+            <section class="column small-padding" data-content="team">
+                <!-- Content will be loaded here via AJAX -->
+            </section>
+        </div>
+        <!-- <div class="">pane</div> -->
+    </main>
+    <%- include("./dash.foot.ejs") %>
+    <script type="module" src="/javascripts/teams.info.js"></script>
+</body>

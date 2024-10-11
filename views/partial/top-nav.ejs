@@ -1,16 +1,27 @@
 <header>
-    <nav class="row between nav padding relative">
-        <i class="fas fa-bars menu-toggle" id="mobile-menu"></i>
-        <a href="/"><img class="logo" src="/images/logo.png" alt="Logo"></a>
-
-        <span class="row">
-            <!-- Update search form to submit to /search -->
-            <form action="/search" method="get" class="row">
-                <input type="text" name="q" id="search-bar" placeholder="Search teams..." class="form-input padding border" required>
-                <button type="submit"><i class="fa-magnifying-glass"></i></button>
-            </form>
-            <button id="contribute" style="cursor: pointer;"> + Contribute</button>
-        </span>
+    <nav class="bg-white row bg-white small-padding">
+        <section class="fix-main row">
+            <span class="row">
+                <button class="small-button" data-modal="#sidebar">
+                    <i class="fa fa-bars large" aria-hidden="true"></i>
+                </button>
+                <a href="/">
+                    <img src="/images/newlogo.png" alt="libscore logo" class="site-logo">
+                </a>
+            </span>
+            <section class="move-right row">
+                <form action="/search" method="get" class="row search-fields padding-right">
+                    <input type="search" class="input search max" name="q" placeholder="What are you looking for?">
+                    <button type="submit">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </form>
+                <a href="/login" class="small-button blue">
+                    <i class="fa fa-user"></i>
+                    <button id="contribute" style="cursor: pointer;"> Login</button>
+                </a>
+            </section>
+        </section>
     </nav>
 </header>
 

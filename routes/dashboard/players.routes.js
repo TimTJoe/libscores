@@ -1,13 +1,13 @@
 const express = require('express');
 const sqlite3 = require('sqlite3').verbose();
 const router = express.Router();
-const { dbQuery, dbRun, dbGet, dbAll, createDbConnection } = require('@utils/dbUtils');
+const { dbQuery, dbRun, dbGet, dbAll, useLeaguesDB  } = require('@utils/dbUtils');
 const upload = require('@middleware/upload');
 
 // GET route to fetch all players
 router.get('/', async (req, res) => {
     try {
-        const db = await createDbConnection(sqlite3);
+        const db = await useLeaguesDB()(sqlite3);
         const players = await dbQuery(db, 'SELECT * FROM players ORDER BY id DESC');
 
         res.status(200).json(players); // Return the list of players
@@ -29,7 +29,7 @@ router.post('/', upload.single("photo"), async (req, res) => {
     }
 
     try {
-        const db = await createDbConnection(sqlite3);
+        const db = await useLeaguesDB()(sqlite3);
 
         // Insert the player data into the database
         const insertSql = `
@@ -60,7 +60,7 @@ router.post('/', upload.single("photo"), async (req, res) => {
 // Get all players
 router.get('/', async (req, res) => {
     try {
-        const db = await createDbConnection(sqlite3);
+        const db = await useLeaguesDB()(sqlite3);
         const query = 'SELECT * FROM players ORDER BY id DESC';
         const players = await dbQuery(db, query);
 
@@ -76,7 +76,7 @@ router.get('/:id', async (req, res) => {
     const { id } = req.params;
 
     try {
-        const db = await createDbConnection(sqlite3);
+        const db = await useLeaguesDB()(sqlite3);
         const query = `
         SELECT players.*,
                clubs.id AS club_id,
@@ -109,7 +109,7 @@ router.put('/:id', async (req, res) => {
     }
 
     try {
-        const db = await createDbConnection(sqlite3);
+        const db = await useLeaguesDB()(sqlite3);
 
         // Determine the new status of the player
         // const status = determineplayerStatus(start, end);
@@ -142,7 +142,7 @@ router.delete('/:id', async (req, res) => {
     const { id } = req.params;
 
     try {
-        const db = await createDbConnection(sqlite3);
+        const db = await useLeaguesDB()(sqlite3);
 
         const result = await dbRun(db, 'DELETE FROM players WHERE id = ?', [id]);
 

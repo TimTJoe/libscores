@@ -1,0 +1,24 @@
+<%- include("./dash.nav.ejs") %>
+<body class="bg-rose">
+<%- include("./dash.bar.ejs") %>
+    <main class="min-wide row top-align">
+        <aside class="small-pane">
+            
+        </aside>
+        <div class="small-main bg-white min-high ">
+            <nav class="small-padding row between border-bottom">
+                <h6 class="cap large">tournaments</h6>
+                <%- include("./tournament.dialog.ejs") %>
+            </nav>
+            <small id="msg"></small>
+           <section class="column small-padding" id="tournamentList">
+           </section>
+        </div>
+       <div class="mid-pane small-padding bg-white">pane</div>
+    </main>
+    <%- include("./dash.foot.ejs") %>
+    <script type="module" src="/javascripts/tournaments.dash.js"></script>
+    <script type="module" src="/javascripts/creators/tournaments.create.js"></script>
+    <script type="module" src="/javascripts/readers/tournaments.read.js"></script>
+
+</body>

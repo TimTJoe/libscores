@@ -1,0 +1,64 @@
+{
+  "counties": [
+    {
+      "name": "Montserrado",
+      "flag": "montserrado_flag.png"
+    },
+    {
+      "name": "Bong",
+      "flag": "bong_flag.png"
+    },
+    {
+      "name": "Lofa",
+      "flag": "lofa_flag.png"
+    },
+    {
+      "name": "Grand Bassa",
+      "flag": "grand_bassa_flag.png"
+    },
+    {
+      "name": "Grand Cape Mount",
+      "flag": "grand_cape_flag.png"
+    },
+    {
+      "name": "Margibi",
+      "flag": "margibi_flag.png"
+    },
+    {
+      "name": "Grand Gedeh",
+      "flag": "grand_gedeh_flag.png"
+    },
+    {
+      "name": "River Gee",
+      "flag": "river_gee_flag.png"
+    },
+    {
+      "name": "Nimba",
+      "flag": "nimba_flag.png"
+    },
+    {
+      "name": "Maryland",
+      "flag": "maryland_flag.png"
+    },
+    {
+      "name": "Bomi",
+      "flag": "bomi_flag.png"
+    },
+    {
+      "name": "Gbarpolu",
+      "flag": "gbarpolu_flag.png"
+    },
+    {
+      "name": "Grand Kru",
+      "flag": "grand_kru_flag.png"
+    },
+    {
+      "name": "Rivercess",
+      "flag": "rivercess_flag.png"
+    },
+    {
+      "name": "Sinoe",
+      "flag": "sinoe_flag.png"
+    }
+  ]
+}

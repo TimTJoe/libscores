@@ -1,7 +1,8 @@
 var router = require('express').Router()
 var sqlite3 = require("sqlite3").verbose();
 var getDbInstance = require('@js/getDBInstance');
-var db = getDbInstance(sqlite3)
+const { useLeaguesDB  } = require('@utils/dbUtils');
+const db = useLeaguesDB()
 
 router.get('/', function(req, res, next) {
     res.render("login.ejs", {title: "Login"})

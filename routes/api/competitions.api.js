@@ -1,5 +1,5 @@
 const express = require('express');
-const { dbQuery, dbGet, dbAll, createDbConnection } = require('@utils/dbUtils');
+const { dbQuery, dbGet, dbAll, useLeaguesDB  } = require('@utils/dbUtils');
 const router = express.Router();
 
 /**
@@ -19,7 +19,7 @@ const handleError = (res, err, customMessage = 'An error occurred') => {
  */
 router.get('/', async (req, res) => {
     try {
-        const db = await createDbConnection();
+        const db = await useLeaguesDB();
 
         // Query to get all competitions
         const competitionQuery = `
@@ -118,7 +118,7 @@ router.get('/:id', async (req, res) => {
     const { id } = req.params;
 
     try {
-        const db = await createDbConnection();
+        const db = await useLeaguesDB();
 
         // Query the competition
         const competitionQuery = `
@@ -208,7 +208,7 @@ router.get('/:competitionId/seasons/:seasonId/clubs', async (req, res) => {
     const { competitionId, seasonId } = req.params;
 
     try {
-        const db = await createDbConnection();
+        const db = await useLeaguesDB();
 
         // Query competition details
         const competitionQuery = `

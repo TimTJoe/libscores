@@ -1,8 +1,4 @@
 document.addEventListener('click', (event) => {
-    const openPopup = document.getElementById("openPopup");
-    const closePopup = document.getElementById("closePopup");
-    const popup = document.getElementById("popup");
-    const overlay = document.getElementById("overlay");
     const openContribute = document.getElementById("contribute");
     const closeBtn = document.getElementById("closeBtn");
     const contributeBtn = document.getElementById("contributeButton");
@@ -18,6 +14,7 @@ document.addEventListener('click', (event) => {
     closeBtn.onclick = function() {
         contributeBtn.style.display = "none";
         overaActive.style.display = "none";
+
     };
 });
 

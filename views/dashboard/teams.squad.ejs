@@ -1,0 +1,23 @@
+<section class="players-section bg-white mid-round small-padding">
+    <div class="row flex-wrap">
+
+        <% if (players && players.length > 0) { %>
+            <% players.forEach(player => { %>
+                <div class="player-card small-round border">
+                    <!-- Player image -->
+                    <div class="player-image">
+                        <img src="/images/<%= player.image %>" alt="<%= player.name %>" class="player-photo">
+                    </div>
+                    <!-- Player details -->
+                    <div class="player-info text-center">
+                        <h4 class="player-name"><%= player.name %></h4>
+                        <p class="player-position dark-gray"><%= player.position %></p>
+                    </div>
+                </div>
+            <% }); %>
+        <% } else { %>
+            <p>No players available for this team.</p>
+        <% } %>
+
+    </div>
+</section>

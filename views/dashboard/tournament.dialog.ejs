@@ -1,0 +1,58 @@
+<!-- Button to open dialog -->
+<button class="small-button" data-ui="#tournamentDialog">
+    <i class="fa fa-plus"></i>
+    New Tournament
+</button>
+
+<!-- Dialog to add phase -->
+<dialog class="dialog small" data-ui="tournamentDialog">
+    <header class="dialog-header">
+        <h4 class="large align-center">New Tournament</h4>
+        <button class="icon-button" id="closeDialog">
+            <i class="fa fa-close" data-ui="#tournamentDialog"></i>
+        </button>
+    </header>
+
+    <section class="dialog-content">
+        <small id="tournamentMsg" class="message small align-center"></small> 
+        <!-- Success/Error Message -->
+
+        <!-- Hidden input for competition_id -->
+        <input type="hidden" id="competition_id" name="competition_id" value="">
+
+        <!-- Form Fields -->
+        <span>
+            <label for="name" class="label">Tournament Name</label>
+            <input autocomplete="off" type="text" name="name" id="name" class="block input" placeholder="Enter tournament name">
+        </span>
+        <section class="row flex">
+            <span>
+                <label for="badge" class="label">Logo</label>
+                <input type="file" name="badge" id="badge" class="block input" >
+            </span>
+            <span>
+                <label for="host" class="label">Host</label>
+                <input autocomplete="off" type="text" name="host" id="host" class="block input" placeholder="Enter host name">
+                <div id="county-suggestions" class="suggestions" style="display:none;"></div> 
+            </span>
+            
+        </section>
+        <section class="row flex">
+            <span>
+                <label for="start" class="label">Start Date</label>
+                <input  type="date" name="start" id="start" class="block input">
+            </span>
+            <span>
+                <label for="end" class="label">End Date</label>
+                <input type="date" name="end" id="end" class="block input">
+            </span>
+        </section>
+    </section>
+
+    <footer class="dialog-footer">
+        <button type="button" class="button center row around" id="saveTournament">
+            <i class="fas fa-spinner fa-spin spinner tiny" id="spinner" style="display: none;"></i>
+            <span>Save Tournament</span>
+        </button> 
+    </footer>
+</dialog>

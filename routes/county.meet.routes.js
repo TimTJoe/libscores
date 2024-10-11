@@ -2,7 +2,8 @@ var express = require('express');
 var router = express.Router();
 const getDbInstance = require('@js/getDBInstance');
 var sqlite3 = require("sqlite3").verbose();
-var db = getDbInstance(sqlite3)
+const { useLeaguesDB  } = require('@utils/dbUtils');
+const db = useLeaguesDB()
 
 
 /* GET users listing. */

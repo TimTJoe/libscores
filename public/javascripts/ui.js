@@ -29,8 +29,10 @@ $(document).ready(function() {
                 data.forEach(competition => {
                     const competitionItem = `
                     
-                        <a href="/competitions/3/name-of-thecomp" class="side-tab small-round bg-gray row tiny-padding">
-                            <img src="/images/${competition.logo}" class="sm-logo small-round" alt="">  <small class="tiny bold black" title="${competition.name}">${competition.name.substring(1, 20)}...</small>
+                        <a href="/competitions/${competition.id}" class="side-tab small-round bg-gray row tiny-padding cap">
+                            <img src="/images/${competition.logo}" class="sm-logo small-round" alt="">  
+                            <small class="tiny bold black" title="${competition.name}">${competition.name.substring(0, 16) + '...'}
+                            </small>
                         </a>
                     `;
                     $competitionList.append(competitionItem);

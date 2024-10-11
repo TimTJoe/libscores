@@ -1,23 +1,29 @@
 
 <%- include("./partial/head") %>
 <body class="no-overflow">
-    <%- include("./partial/top-nav.ejs") %>
+    <%- include("./ui/nav.ui.ejs") %>
     <div class="container center">
         <div method="post" class="border box padding small-round small-box column">
             <h1 class="huge align-center">Contributor Login</h1>
 
-            <hr class="divider">
-    
-            <label for="username" class="label bold">What's your usename?</label>
-            <input type="text" id="username" name="username" placeholder="Enter your username" class="form-input large-input" required>
+            <span class="space small"></span>
             
-            <label for="password" class="label bold">Password</label>
-            <input type="password" id="password" name="password" placeholder="********" required class="form-input large-input">
+            <section class="block">
+                <label for="username" class="label bold">What's your usename?</label>
+                <input type="text" id="username" name="username" placeholder="Enter your username" class="input large-input block" required>
+            </section>
+            
+            <section class="block">
+                <label for="password" class="label bold">Password</label>
+                <input type="password" id="password" name="password" placeholder="********" required class="input large-input">
+            </section>
 
             <small class="small error" id="errorMsg">Email or password incorrect. Try again.</small>
+
+            <span class="space small"></span>
     
             <button  class="button large center" id="loginBtn">
-                <div id="loader"></div> 
+                <div id="loader" class="small"></div> 
                 <p id="text">Log in</p>
             </button>
     

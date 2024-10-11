@@ -1,5 +1,5 @@
 const express = require('express');
-const { dbQuery, dbRun, dbGet,dbAll, createDbConnection } = require('@utils/dbUtils');
+const { dbQuery, dbRun, dbGet,dbAll, useLeaguesDB  } = require('@utils/dbUtils');
 const router = express.Router();
 
 // Helper function to handle errors
@@ -11,7 +11,7 @@ const handleError = (res, err, customMessage = 'An error occurred') => {
 // GET route to fetch all phases with season and club details
 router.get('/', async (req, res) => {
     try {
-        const db = await createDbConnection();
+        const db = await useLeaguesDB();
 
         // Query to join the phases table with seasons and clubs using foreign keys
         const query = `
@@ -49,7 +49,7 @@ router.post('/', async (req, res) => {
     }
 
     try {
-        const db = await createDbConnection();
+        const db = await useLeaguesDB();
         
         // Check if the season exists
         const _season = await dbGet(db, 'SELECT status FROM seasons WHERE id = ?', [season]);
@@ -78,7 +78,7 @@ router.get('/:id', async (req, res) => {
     const { id } = req.params;
 
     try {
-        const db = await createDbConnection();
+        const db = await useLeaguesDB();
         const query = `SELECT phases.id AS phase_id,
     phases.season_id,
     phases.status,
@@ -108,7 +108,7 @@ router.put('/:id', async (req, res) => {
     }
 
     try {
-        const db = await createDbConnection();
+        const db = await useLeaguesDB();
         
         // Check if the season exists
         const season = await dbGet(db, 'SELECT status FROM seasons WHERE id = ?', [season_id]);
@@ -140,7 +140,7 @@ router.delete('/:id', async (req, res) => {
     const { id } = req.params;
 
     try {
-        const db = await createDbConnection();
+        const db = await useLeaguesDB();
 
         const result = await dbRun(db, 'DELETE FROM phases WHERE id = ?', [id]);
         if (result.changes === 0) {

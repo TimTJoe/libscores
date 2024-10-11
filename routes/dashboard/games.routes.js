@@ -1,5 +1,5 @@
 const express = require('express');
-const { dbQuery, dbRun, dbGet, dbAll,getGameDetails, createDbConnection } = require('@utils/dbUtils');
+const { dbQuery, dbRun, dbGet, dbAll,getGameDetails, useLeaguesDB  } = require('@utils/dbUtils');
 const router = express.Router();
 const moment = require('moment');
 const games = require('@/data/games.json'); // Mock "database"
@@ -39,7 +39,7 @@ router.get("/timer", async (req,res) => {
 router.post('/', async (req, res) => {
     const { homeTeamId, awayTeamId, homeGoals, awayGoals, gameTime, seasonId, players } = req.body;
 
-    const db = await createDbConnection();
+    const db = await useLeaguesDB();
     try {
 
 
@@ -182,7 +182,7 @@ router.post('/activities', async (req, res) => {
 
     const { game_id, team_id, type, minutes } = req.body;
     console.log('teamid', team_id)
-    const db = await createDbConnection();
+    const db = await useLeaguesDB();
 
     // SQL query to insert activity
     const activitySql = 'INSERT INTO activities VALUES (?,?, ?, ?, ?)';

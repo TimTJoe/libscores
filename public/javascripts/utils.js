@@ -169,6 +169,23 @@ export function fetchTeamSuggestions(query) {
   
 }
 
+export function fetchCountySuggestions(query) {
+    return new Promise((resolve, reject) => {
+        $.ajax({
+            url: '/v1/api/counties/suggest', // This is the endpoint we just defined
+            method: 'GET',
+            data: { q: query },
+            success: function (data) {
+                resolve(data);
+            },
+            error: function (err) {
+                reject(err);
+            }
+        });
+    });
+    
+  }
+
 // Helper function to handle errors
 export const handleError = (res, err, customMessage = 'An error occurred') => {
   console.error(err);

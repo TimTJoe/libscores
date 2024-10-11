@@ -1,0 +1,48 @@
+<body>
+    <!-- Button to open dialog -->
+    <button data-ui="#matchDialog" class="small-button move-right">
+        <i class="fa fa-plus"></i> Add Team
+    </button>
+
+    <!-- Dialog to add team -->
+    <dialog class="dialog small" data-ui="matchDialog" >
+        <header class="dialog-header">
+            <h4 class="large align-center">Add Team</h4>
+            <button class="icon-button" id="closeDialog">
+                <i class="fa fa-close" data-ui="#matchDialog"></i>
+            </button>
+        </header>
+
+        <section class="dialog-content">
+            <small id="teamMsg" class="message align-center" style="display:none;"></small>
+                <span class="row flex">
+                    <span>
+                        <label for="name" class="label">Team Name</label>
+                        <input name="name" id="name" class="block input" placeholder="Enter team name">
+                        <div id="county-suggestions" class="suggestions" style="display:none;"></div>
+                    </span>
+                    <span>
+                        <label for="group" class="label">Group</label>
+                        <select name="group" id="group" class="block input">
+                            <option value="A">A</option>
+                            <option value="B">B</option>
+                            <option value="C">C</option>
+                            <option value="D">D</option>
+                        </select>
+                    </span>
+                </span>
+                    <span>
+                        <label for="badge" class="label">Team Badge/Flag</label>
+                        <input type="file" class="block input" name="badge" id="badge">
+                    </span>
+            </section>
+        <footer class="dialog-footer">
+            <button type="submit" class="button" id="saveTeam">
+                <i class="fa fa-spinner fa-spin spinner tiny teamSpinner" style="display: none;"></i>
+                Save Team
+            </button>
+        </footer>
+    </dialog>
+
+    <!-- Include your JS file -->
+</body>

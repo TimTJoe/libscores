@@ -206,6 +206,11 @@
     height: 28px; /* Set width for small logo */
 }
 
+.tiny-logo {
+  width: 16px; /* Set width for small logo */
+  height: 16px; /* Set width for small logo */
+}
+
 .mid-logo {
     width: 38px; /* Set width for medium logo */
     height: 38px; /* Set height for medium logo */
@@ -391,6 +396,10 @@ table, th, td {
         width: 100%;
     }
   }
+.avatar.medium {
+  width:34px ;
+  height: 34px;
+}
 
   /* Input */
 .input {
@@ -703,6 +712,8 @@ body.dialog-active::before {
   font-size: var(--tiny);
   cursor: pointer;
 }
+
+
 .link-btn:hover {
   color: var(--ocean-wave);
 }
@@ -821,7 +832,7 @@ body.dialog-active::before {
   gap: var(--spacing-sm);
 }
 
-.small-button {
+.small-button,.small-chip {
   font-size: var(--tiny);
   background-color: var(--light-gray);
   border-radius: var(--round-sm);
@@ -836,6 +847,11 @@ body.dialog-active::before {
   transition: transform .1 ease-out;
   text-transform: capitalize;
   height: 38px;
+}
+
+.small-chip:hover,.small-chip.active {
+  background-color: var(--crimson);
+  color: var(--white);
 }
 
 button.blue, a.small-button.blue {
@@ -905,7 +921,7 @@ button.gray {
   display: block;
 }
 
-.small-pane{
+.small-pane {
   width: 190px;
 }
 .small-main {
@@ -1094,4 +1110,46 @@ button.gray {
 /* Utility class to override and show on small screens */
 .show-on-small {
   display: block !important;
+}
+
+#contributeButton{
+  box-shadow: white 3px 4px 8px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Two columns */
+  grid-template-rows: repeat(2, 1fr); /* Two rows */
+  gap: 16px; /* Adjust the gap as needed */
+}
+
+.mid-side {
+  min-width: 200px;
+}
+
+.small-chip {
+  border-radius: var(--round-lg);
+}
+
+.small-chip:hover {
+  background-color: var(--crimson);
+  color: var(--white);
+}
+
+.fa  {
+  transition: all .2s ease-in-out;
+}
+
+a:hover .fa.fa-arrow-right  {
+  transform: scale(1.2);
+}
+
+.link-card {
+  color: inherit;
+}
+
+.squard-img {
+  width: 128px; 
+  height: 64px; 
+  border-radius: var(--round-md);
 }

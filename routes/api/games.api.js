@@ -1,5 +1,5 @@
 const express = require('express');
-const { dbQuery, dbRun, dbGet, dbAll, createDbConnection, getGameDetails, getGameActivities, getPlayersInGame, getScorersInGame  } = require('@utils/dbUtils');
+const { dbQuery, dbRun, dbGet, dbAll, useLeaguesDB, getGameDetails, getGameActivities, getPlayersInGame, getScorersInGame  } = require('@utils/dbUtils');
 const router = express.Router();
 const moment = require('moment');
 
@@ -14,7 +14,7 @@ const handleError = (res, err, customMessage = 'An error occurred') => {
 // GET all games for a specific date
 router.get('/date/:dateId', async (req, res) => {
     const { dateId } = req.params;
-    const db = await createDbConnection();
+    const db = await useLeaguesDB();
 
     try {
         const query = `
@@ -44,7 +44,7 @@ router.get('/date/:dateId', async (req, res) => {
 // GET lineups for a specific game by ID
 router.get('/:id/lineups', async (req, res) => {
     const { id } = req.params;
-    const db = await createDbConnection();
+    const db = await useLeaguesDB();
 
     try {
         const query = `
@@ -134,7 +134,7 @@ router.put('/:id/period', async (req, res) => {
     }
 
     try {
-        const db = await createDbConnection();
+        const db = await useLeaguesDB();
         const result = await dbRun(db, 'UPDATE games SET period = ? WHERE id = ?', [period, id]);
 
         if (result.changes === 0) {
@@ -151,7 +151,7 @@ router.put('/:id/period', async (req, res) => {
 // GET all games with modified season structure
 router.get('/', async (req, res) => {
     try {
-        const db = await createDbConnection();
+        const db = await useLeaguesDB();
         const query = `
             SELECT 
                 games.*, 
@@ -210,7 +210,7 @@ router.get('/:id/activities', async (req, res) => {
 router.get('/:id', async (req, res) => {
     const { id } = req.params;
     try {
-        const db = await createDbConnection();
+        const db = await useLeaguesDB();
         const query = `
             SELECT 
                 games.*, 
