@@ -29,7 +29,7 @@ $(document).ready(function() {
                 data.forEach(competition => {
                     const competitionItem = `
                     
-                        <a href="/competitions/${competition.id}" class="side-tab small-round bg-gray row tiny-padding cap">
+                        <a href="#" class="side-tab small-round bg-gray row tiny-padding cap">
                             <img src="/images/${competition.logo}" class="sm-logo small-round" alt="">  
                             <small class="tiny bold black" title="${competition.name}">${competition.name.substring(0, 16) + '...'}
                             </small>
