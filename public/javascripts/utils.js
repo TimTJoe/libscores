@@ -887,7 +887,7 @@ function updateTimers() {
         const startTime = new Date($timeElement.data('start-time')).getTime();
         const currentTime = new Date().getTime();
         const elapsed = currentTime - startTime;
-        $timeElement.addClass('bold red blink');
+        $timeElement.addClass('bold red ');
 
 
         if (elapsed > 0 && elapsed < 90 * 60 * 1000) {
@@ -900,7 +900,7 @@ function updateTimers() {
 
         } else if (elapsed >= 90 * 60 * 1000) {
             // Game has ended, show "FT"
-            $timeElement.removeClass('red blink').addClass('black');
+            $timeElement.removeClass('red').addClass('black');
             $timeElement.text('FT');
         } else {
             // Game has not started yet, keep the scheduled start time (already displayed)
@@ -1066,7 +1066,7 @@ export function updateGamePeriodTimer() {
 
 
     if (elapsed > 0 && elapsed < 90 * 60 * 1000) {
-        $('#gamescores').find('.time').addClass('blink');
+        $('#gamescores').find('.time').addClass('');
 
         // Game is live, calculate elapsed time
         const minutes = Math.floor((elapsed / 1000) / 60);
@@ -1077,7 +1077,7 @@ export function updateGamePeriodTimer() {
     } else if (elapsed >= 90 * 60 * 1000) {
         // Game has ended, show "FT"
         // $timeElement.removeClass('red').addClass('black')
-        $('#gamescores').find('.time').removeClass('red blink').addClass('black')
+        $('#gamescores').find('.time').removeClass('red').addClass('black')
 
         $timeElement.text('FT');
     }

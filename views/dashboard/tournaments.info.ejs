@@ -55,10 +55,7 @@
                 <div class="row border-bottom padding-bottom">
                     <h4 class="mid bold"><%= tournament ? tournament.name : 'No Tournament' %></h4>
                     <%- include("./team.dialog.ejs") %>
-                    <a href="/dashboard/tournaments/new-match" class="link-btn small-button">
-                        New Match
-                        <i class="fa fa-arrow-right"></i>
-                    </a>
+                    <%- include("./fixtures.dialog.ejs") %>
                 </div>
                 <div class="row">
                     <button class="small-chip active" data-tab="matches">Matches</button>

@@ -1155,7 +1155,7 @@ a:hover .fa.fa-arrow-right  {
 }
 
 .player-photo {
-  height: 128px; 
-  width: 128px; 
+  width: 128px;  
+  height: 64px; 
   border-radius: var(--round-md);
 }
