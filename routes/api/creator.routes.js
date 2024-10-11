@@ -61,6 +61,13 @@ router.get('/counties', function (req, res) {
     });
 });
 
+// Define the route to populate the players table
+router.get('/populate-players', (req, res) => {
+    const filePath = './public/data/localplayers.json'; // Path to the JSON file with player data
+
+    populatePlayersTable(filePath, res);
+});
+
 // Function to get all counties data
 function getCountiesData(res) {
     const getAllCountiesQuery = 'SELECT * FROM counties';
@@ -75,6 +82,8 @@ function getCountiesData(res) {
         res.status(200).json(rows);
     });
 }
+
+
 
 // Function to populate the counties table and return data
 function populateCountiesTable(req, res) {
@@ -170,6 +179,52 @@ function populateCountriesTable(req, res) {
 
                 // After successful insertion, return the data
                 getCountriesData(res);
+            });
+        });
+    });
+}
+
+/**
+ * Utility function to populate the players table from a JSON file.
+ * 
+ * @param {string} filePath - Path to the JSON file containing player data.
+ * @param {object} res - Express response object.
+ */
+function populatePlayersTable(filePath, res) {
+    const db = useTournamentDB();
+
+    // Read the JSON file
+    fs.readFile(filePath, 'utf8', (err, data) => {
+        if (err) {
+            console.error('Error reading file:', err.message);
+            return res.status(500).json({ error: 'Error reading players file' });
+        }
+
+        const players = JSON.parse(data); // Assuming the JSON file directly contains an array of players
+
+        // Use a transaction to insert all data at once
+        db.serialize(() => {
+            const insertQuery = 'INSERT INTO players (id, team_id, name, position, photo) VALUES (?, ?, ?, ?, ?)';
+
+            db.run('BEGIN TRANSACTION');
+
+            players.forEach(player => {
+                const { team_id, name, position, photo } = player;
+                db.run(insertQuery, [null, team_id, name, position, photo], function (err) {
+                    if (err) {
+                        console.error('Error inserting data:', err.message);
+                    }
+                });
+            });
+
+            db.run('COMMIT', (err) => {
+                if (err) {
+                    console.error('Error committing transaction:', err.message);
+                    return res.status(500).json({ error: 'Error saving players' });
+                }
+
+                // Return the inserted players data
+                res.status(201).json(players);
             });
         });
     });

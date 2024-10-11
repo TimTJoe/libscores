@@ -1153,3 +1153,9 @@ a:hover .fa.fa-arrow-right  {
   height: 64px; 
   border-radius: var(--round-md);
 }
+
+.player-photo {
+  height: 128px; 
+  width: 128px; 
+  border-radius: var(--round-md);
+}

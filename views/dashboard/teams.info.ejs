@@ -3,11 +3,11 @@
     <%- include("./dash.bar.ejs") %>
     
     <main class="min-wide row top-align">
-        <aside class="bg-white padding column no-gap small-pane" aria-live="polite">
+        <aside class="bg-white small-padding small-pane small-round" aria-live="polite">
             <% if (team) { %> <!-- Check if the team variable is defined -->
                 <div class="team-info">
-                    <img src="<%= team.logo %>" alt="<%= team.name %> Logo" class="team-logo" />
-                    <h2 class="team-name"><%= team.name %></h2>
+                    <img src="/images/<%= team.badge %>" alt="<%= team.name %> Logo" class="team-logo squard-img" />
+                    <h2 class=" large small-top"><%= team.name %></h2>
                     <input type="hidden" id="teamId" value="<%= team.id %>" />
                 </div>
             <% } %>
@@ -18,7 +18,7 @@
                 <%- include("./back.btn.ejs") %>
                 <div class="row">
                     <button class="small-chip active" data-tab="squad">Squad</button>
-                    <button class="small-chip" data-tab="games">Games</button>
+                    <button class="small-chip" data-tab="games">Fixtures</button>
                     <button class="small-chip" data-tab="group">Group</button>
                 </div>
             </nav>

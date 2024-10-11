@@ -1,0 +1,156 @@
+[
+    {
+        "id": 1,
+        "team_id": 5,
+        "name": "John Doe",
+        "position": "Goalkeeper",
+        "photo": "john_doe.png"
+    },
+    {
+        "id": 2,
+        "team_id": 5,
+        "name": "David Smith",
+        "position": "Defender",
+        "photo": "david_smith.png"
+    },
+    {
+        "id": 3,
+        "team_id": 5,
+        "name": "Michael Johnson",
+        "position": "Defender",
+        "photo": "michael_johnson.png"
+    },
+    {
+        "id": 4,
+        "team_id": 5,
+        "name": "James Williams",
+        "position": "Midfielder",
+        "photo": "james_williams.png"
+    },
+    {
+        "id": 5,
+        "team_id": 5,
+        "name": "Robert Brown",
+        "position": "Midfielder",
+        "photo": "robert_brown.png"
+    },
+    {
+        "id": 6,
+        "team_id": 5,
+        "name": "William Jones",
+        "position": "Forward",
+        "photo": "william_jones.png"
+    },
+    {
+        "id": 7,
+        "team_id": 5,
+        "name": "Charles Miller",
+        "position": "Forward",
+        "photo": "charles_miller.png"
+    },
+    {
+        "id": 8,
+        "team_id": 5,
+        "name": "Joseph Davis",
+        "position": "Defender",
+        "photo": "joseph_davis.png"
+    },
+    {
+        "id": 9,
+        "team_id": 5,
+        "name": "Thomas Garcia",
+        "position": "Midfielder",
+        "photo": "thomas_garcia.png"
+    },
+    {
+        "id": 10,
+        "team_id": 5,
+        "name": "Daniel Martinez",
+        "position": "Forward",
+        "photo": "daniel_martinez.png"
+    },
+    {
+        "id": 11,
+        "team_id": 5,
+        "name": "Matthew Hernandez",
+        "position": "Defender",
+        "photo": "matthew_hernandez.png"
+    },
+    {
+        "id": 12,
+        "team_id": 6,
+        "name": "Ethan Taylor",
+        "position": "Goalkeeper",
+        "photo": "ethan_taylor.png"
+    },
+    {
+        "id": 13,
+        "team_id": 6,
+        "name": "Alexander Wilson",
+        "position": "Defender",
+        "photo": "alexander_wilson.png"
+    },
+    {
+        "id": 14,
+        "team_id": 6,
+        "name": "Joshua Anderson",
+        "position": "Defender",
+        "photo": "joshua_anderson.png"
+    },
+    {
+        "id": 15,
+        "team_id": 6,
+        "name": "Christopher Thomas",
+        "position": "Midfielder",
+        "photo": "christopher_thomas.png"
+    },
+    {
+        "id": 16,
+        "team_id": 6,
+        "name": "Nicholas Jackson",
+        "position": "Midfielder",
+        "photo": "nicholas_jackson.png"
+    },
+    {
+        "id": 17,
+        "team_id": 6,
+        "name": "Ryan White",
+        "position": "Forward",
+        "photo": "ryan_white.png"
+    },
+    {
+        "id": 18,
+        "team_id": 6,
+        "name": "Jacob Harris",
+        "position": "Forward",
+        "photo": "jacob_harris.png"
+    },
+    {
+        "id": 19,
+        "team_id": 6,
+        "name": "Mason Clark",
+        "position": "Defender",
+        "photo": "mason_clark.png"
+    },
+    {
+        "id": 20,
+        "team_id": 6,
+        "name": "Logan Lewis",
+        "position": "Midfielder",
+        "photo": "logan_lewis.png"
+    },
+    {
+        "id": 21,
+        "team_id": 6,
+        "name": "Aiden Robinson",
+        "position": "Forward",
+        "photo": "aiden_robinson.png"
+    },
+    {
+        "id": 22,
+        "team_id": 6,
+        "name": "Jackson Walker",
+        "position": "Defender",
+        "photo": "jackson_walker.png"
+    }
+]

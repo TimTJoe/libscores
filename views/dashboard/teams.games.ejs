@@ -1,0 +1,19 @@
+<section class="matches-list">
+    <div class="row">
+        <% if (fixtures && fixtures.length > 0) { %>
+            <% fixtures.forEach(fixture => { %>
+                <div class="match-card">
+                    <h4 class="bold" id="<%= fixture.home_team %>"><%= fixture.home_goals %></h4>
+                    &middot;
+                    <small class="time red bold" data-start-time="<%= fixture.start %>">
+                        <%= new Date(fixture.start).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) %>
+                    </small>
+                    &middot;
+                    <h4 class="bold" id="<%= fixture.away_team %>"><%= fixture.away_goals %></h4>
+                </div>
+            <% }); %>
+        <% } else { %>
+            <p>No matches available.</p>
+        <% } %>
+    </div>
+</section>

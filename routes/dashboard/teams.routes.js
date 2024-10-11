@@ -9,19 +9,20 @@ router.get('/:id/tab/games', async function(req, res, next) {
     const db = useTournamentDB(); // Get the database instance
 
     try {
-        // Query for games related to the team
-        const gamesQuery = `
-            SELECT * FROM games 
-            WHERE home_team_id = ? OR away_team_id = ?`;
-        const games = await dbQuery(db, gamesQuery, [teamId, teamId]);
+        // Query for fixtures related to the team
+        const fixturesQuery = `
+            SELECT * FROM fixtures 
+            WHERE home_team = ? OR away_team = ?`;
+        const fixtures = await dbQuery(db, fixturesQuery, [teamId, teamId]);
 
         // Render the games EJS
-        res.render('dashboard/teams.games.ejs', { games }); // Pass games data to the template
+        res.render('dashboard/teams.games.ejs', { fixtures }); // Pass fixtures data to the template
     } catch (err) {
-        console.error("Error fetching games:", err);
-        res.status(500).send("Error loading games");
+        console.error("Error fetching fixtures:", err);
+        res.status(500).send("Error loading fixtures");
     }
 });
+
 
 // Route to get squad for a team
 router.get('/:id/tab/squad', async function(req, res, next) {
@@ -49,11 +50,24 @@ router.get('/:id/tab/group', async function(req, res, next) {
     const db = useTournamentDB(); // Get the database instance
 
     try {
-        // Query for groups related to the team
+        // Query to get the group for the specified team
+        const teamGroupQuery = `
+            SELECT g.name, g.tournament_id 
+            FROM groups g 
+            WHERE g.team_id = ?`;
+        const teamGroup = await dbQuery(db, teamGroupQuery, [teamId]);
+
+        if (teamGroup.length === 0) {
+            return res.render('dashboard/teams.group.ejs', { groups: [] });
+        }
+
+        const { group_name, tournament_id } = teamGroup[0];
+
+        // Query to get all teams in the same group and tournament
         const groupsQuery = `
             SELECT * FROM groups 
-            WHERE team_id = ?`;
-        const groups = await dbQuery(db, groupsQuery, [teamId]);
+            WHERE tournament_id = ? AND name = ?`;
+        const groups = await dbQuery(db, groupsQuery, [tournament_id, group_name]);
 
         // Render the groups EJS
         res.render('dashboard/teams.group.ejs', { groups }); // Pass groups data to the template
